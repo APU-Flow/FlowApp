@@ -4,6 +4,11 @@
  * @flow
  */
 
+// /**
+//  * index.android.js
+//  * Flow
+//  */
+//
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -11,6 +16,8 @@ import {
   Text,
   View
 } from 'react-native';
+
+import Splash from './Splash';
 
 export default class FlowApp extends Component {
   render() {
