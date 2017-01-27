@@ -20,83 +20,101 @@ export default class Register extends Component {
       address: '',
       city: '',
       state: '',
-      zip: ''
+      zip: '',
+      submitReport: ''
     }
+
+    this.verifyInput= this.verifyInput.bind(this);
   }
 
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Text>{this.state.firstName}</Text>
         <TextInput style={styles.field}
           placeholder="First Name:"
           autoCapitalize="words"
           returnKeyType="next"
-          onChangeText={(input) => this.setState({firstName: input})}
+          onChangeText={(text) => this.verifyInput('firstName', text)}
         />
-        <Text>{this.state.lastName}</Text>
+        <Text>{this.state.firstName}</Text>
         <TextInput style={styles.field}
           placeholder="Last Name:"
           autoCapitalize="words"
           returnKeyType="next"
-          onChangeText={(input) => this.setState({lastName: input})}
+          onChangeText={(text) => this.verifyInput('lastName', text)}
         />
-        <Text>{this.state.email}</Text>
+        <Text>{this.state.lastName}</Text>
         <TextInput style={styles.field}
           placeholder="Email Address:"
           keyboardType="email-address"
           autoCapitalize="none"
           returnKeyType="next"
-          onChangeText={(input) => this.setState({email: input})}
+          onChangeText={(text) => this.verifyInput('Email Address:', text)}
         />
-        <Text>{this.state.password}</Text>
+        <Text>{this.state.email}</Text>
         <TextInput style={styles.field}
           placeholder="Password:"
           autoCapitalize="none"
           returnKeyType="next"
-          onChangeText={(input) => this.setState({password: input})}
-          //secureTextEntry="true"
+          onChangeText={(text) => this.verifyInput('password', text)}
         />
-        <Text>{this.state.passwordVerification}</Text>
+        <Text>{this.state.password}</Text>
         <TextInput style={styles.field}
           placeholder="Re-enter Password:"
           autoCapitalize="none"
           returnKeyType="next"
-          onChangeText={(input) => this.setState({passwordVerification: input})}
-          //secureTextEntry="true"
+          onChangeText={(text) => this.verifyInput('passwordVerification', text)}
         />
-        <Text>{this.state.address}</Text>
+        <Text>{this.state.passwordVerification}</Text>
         <TextInput style={styles.field}
           placeholder="Street Address:"
           autoCapitalize="words"
           returnKeyType="next"
-          onChangeText={(input) => this.setState({address: input})}
+          onChangeText={(text) => this.verifyInput('address', text)}
         />
-        <Text>{this.state.city}</Text>
+        <Text>{this.state.address}</Text>
         <TextInput style={styles.field}
           placeholder="City:"
           autoCapitalize="words"
           returnKeyType="next"
-          onChangeText={(input) => this.setState({city: input})}
+          onChangeText={(text) => this.verifyInput('city', text)}
         />
-        <Text>{this.state.state}</Text>
+        <Text>{this.state.city}</Text>
         <TextInput style={styles.field}
           placeholder="State:"
           autoCapitalize="characters"
           returnKeyType="next"
-          onChangeText={(input) => this.setState({state: input})}
+          onChangeText={(text) => this.verifyInput('state', text)}
         />
         <Text>{this.state.zip}</Text>
         <TextInput style={styles.field}
           placeholder="Zip:"
           keyboardType="numeric"
           returnKeyType="done"
-          onChangeText={(input) => this.setState({zip: input})}
+          onChangeText={(text) => this.verifyInput('zip', text)}
         />
-        <Button title="Submit" onPress={() => console.log('Yo, button pressed!')} />
+        <Text>{this.state.zip}</Text>
+        <Button title="Submit" onPress={() => {
+          this.setState({submitReport: 'Submitted! Thanks, ' + this.state.firstName + '!'});
+        }} />
+        <Text>{this.state.submitReport}</Text>
+
+        
       </ScrollView>
     )
   }
+
+  verifyInput(name, text) {
+   let msg = '';
+
+    if (name === 'zip') {
+      let zipPatt = /^\d{5}(-\d{4})?$/
+      msg = (zipPatt.test(text)) ? 'Nice job, good zip!\n' : 'Failure! Bad zip.\n';
+    }
+
+    this.setState({submitReport: msg});
+  }
+
 }
 
 const styles = StyleSheet.create({
