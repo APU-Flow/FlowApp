@@ -12,11 +12,12 @@ import {
 } from 'react-native';
 
 import Splash from './Splash';
+import Login from './src/components/Login/Login';
 
 export default class FlowApp extends Component {
   render() {
     return (
-      <Splash/>
+      <Login />
     );
   }
 }

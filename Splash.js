@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
 import { View, Text, StyleSheet } from 'react-native';
 export default class Splash extends Component{
   render (){
@@ -15,7 +14,7 @@ export default class Splash extends Component{
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor:'rgb(44,62,80)'
+    backgroundColor:'rgb(52, 152, 219)'
     , flex:1
     , justifyContent:'center'
     , alignItems:'center'
