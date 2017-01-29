@@ -1,19 +1,26 @@
+// /**
+//  * Login.js
+//  * Flow
+//  */
+//
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
 import LoginForm from './LoginForm';
 
 export default class Login extends Component{
   render (){
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require('../../Images/flow.jpg')}
+            source={require('../Images/flow.jpg')}
           />
         </View>
-        <LoginForm />
-      </View>
+        <View>
+          <LoginForm />
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
