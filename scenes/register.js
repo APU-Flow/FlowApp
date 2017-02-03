@@ -22,7 +22,8 @@ export default class Register extends Component {
       city: '',
       state: '',
       zip: '',
-      submitReport: []
+      fieldValidities: [false, false, false, false, false, false, false, false, false],
+      allValid: false
     }
 
     this.verifyInput = this.verifyInput.bind(this);
@@ -31,75 +32,81 @@ export default class Register extends Component {
 
   render() {
     return (
-      <KeyboardAwareScrollView keyboardDismissMode="interactive" style={styles.container}>
-        <TextInput style={styles.field}
-          placeholder="First Name:"
+      <KeyboardAwareScrollView style={styles.container}>
+        <TextInput style={[styles.field, !this.state.fieldValidities[0] && styles.invalid]}
+          underlineColorAndroid={this.state.fieldValidities[0] ? 'black' : 'red'}
+          placeholder="First Name"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('firstName', text)}
         />
-        <Text>{this.state.firstName}</Text>
-        <TextInput style={styles.field}
-          placeholder="Last Name:"
+        <Text>First Name{'\n'}</Text>
+        <TextInput style={[styles.field, !this.state.fieldValidities[1] && styles.invalid]}
+          underlineColorAndroid={this.state.fieldValidities[1] ? 'black' : 'red'}
+          placeholder="Last Name"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('lastName', text)}
         />
-        <Text>{this.state.lastName}</Text>
-        <TextInput style={styles.field}
-          placeholder="Email Address:"
+        <Text>Last Name{'\n'}</Text>
+        <TextInput style={[styles.field, !this.state.fieldValidities[2] && styles.invalid]}
+          underlineColorAndroid={this.state.fieldValidities[2] ? 'black' : 'red'}
+          placeholder="Email Address"
           keyboardType="email-address"
           autoCapitalize="none"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('email', text)}
         />
-        <Text>{this.state.email}</Text>
-        <TextInput style={styles.field}
-          placeholder="Password:"
+        <Text>Email Address{'\n'}</Text>
+        <TextInput style={[styles.field, !this.state.fieldValidities[3] && styles.invalid]}
+          underlineColorAndroid={this.state.fieldValidities[3] ? 'black' : 'red'}
+          placeholder="Password"
           autoCapitalize="none"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('password', text)}
         />
-        <Text>{this.state.password}</Text>
-        <TextInput style={styles.field}
-          placeholder="Re-enter Password:"
+        <Text>Password{'\n'}</Text>
+        <TextInput style={[styles.field, !this.state.fieldValidities[4] && styles.invalid]}
+          underlineColorAndroid={this.state.fieldValidities[4] ? 'black' : 'red'}
+          placeholder="Re-enter Password"
           autoCapitalize="none"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('passwordVerification', text)}
         />
-        <Text>{this.state.passwordVerification}</Text>
-        <TextInput style={styles.field}
-          placeholder="Street Address:"
+        <Text>Re-enter Password{'\n'}</Text>
+        <TextInput style={[styles.field, !this.state.fieldValidities[5] && styles.invalid]}
+          underlineColorAndroid={this.state.fieldValidities[5] ? 'black' : 'red'}
+          placeholder="Street Address"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('address', text)}
         />
-        <Text>{this.state.address}</Text>
-        <TextInput style={styles.field}
-          placeholder="City:"
+        <Text>Street Address{'\n'}</Text>
+        <TextInput style={[styles.field, !this.state.fieldValidities[6] && styles.invalid]}
+          underlineColorAndroid={this.state.fieldValidities[6] ? 'black' : 'red'}
+          placeholder="City"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('city', text)}
         />
-        <Text>{this.state.city}</Text>
-        <TextInput style={styles.field}
-          placeholder="State:"
+        <Text>City{'\n'}</Text>
+        <TextInput style={[styles.field, !this.state.fieldValidities[7] && styles.invalid]}
+          underlineColorAndroid={this.state.fieldValidities[7] ? 'black' : 'red'}
+          placeholder="State"
           autoCapitalize="characters"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('state', text)}
         />
-        <Text>{this.state.zip}</Text>
-        <TextInput style={styles.field}
-          placeholder="Zip:"
+        <Text>State{'\n'}</Text>
+        <TextInput style={[styles.field, !this.state.fieldValidities[8] && styles.invalid]}
+          underlineColorAndroid={this.state.fieldValidities[8] ? 'black' : 'red'}
+          placeholder="Zip"
           keyboardType="numeric"
           returnKeyType="done"
           onChangeText={(text) => this.verifyInput('zip', text)}
         />
-        <Text>{this.state.zip}</Text>
-        <Button title="Submit" onPress={this.submitToServer} />
-        <Text>{this.state.submitReport}</Text>
-        <Text>{'\n\n'}</Text>
-        <Text>{this.state.serverResponse}</Text>
+        <Text>Zip{'\n'}</Text>
+        <Button title="Submit" onPress={this.submitToServer} disabled={!this.state.allValid}/>
       </KeyboardAwareScrollView>
     )
   }
@@ -107,33 +114,35 @@ export default class Register extends Component {
   verifyInput(name, text) {
     switch(name) {
       case 'firstName':
-        this.state.submitReport[0] = (/^[A-Z' \-]$/i.test(text)) ? 'Good firstName\n' : 'Bad firstName\n';
+        this.state.fieldValidities[0] = /^[A-Z' \-]{1,20}$/i.test(text);
         break;
       case 'lastName':
-        this.state.submitReport[1] = (/^[A-Z'\-]$/i.test(text)) ? 'Good zlastNameip\n' : 'Bad zip\n';
+        this.state.fieldValidities[1] = (/^[A-Z'\-]{1,20}$/i.test(text));
         break;
       case 'email':
-        this.state.submitReport[2] = (/^[A-Z0-9._\-%+]+@[A-Z0-9\-.]+\.[A-Z]{2,4}$/i.test(text)) ? 'Good email\n' : 'Bad email\n';
+        this.state.fieldValidities[2] = (/^[A-Z0-9._\-%+]{1,20}@[A-Z0-9\-.]{1,20}\.[A-Z]{2,4}$/i.test(text));
         break;
       case 'password':
-        this.state.submitReport[3] = (/^[A-Z0-9`~!@#%^&*()\-=_+<>,.?]{5,20}$/i.test(text)) ? 'Good password\n' : 'Bad password\n';
-        break;
+        this.state.fieldValidities[3] = (/^[A-Z0-9`~!@#$%^&*()\-=_+<>,.?]{5,20}$/i.test(text));
+        //Intentional lack of 'break;' to update passsword verification styles when password changes
       case 'passwordVerification':
-        this.state.submitReport[4] = (text == this.state.password) ? 'Passwords match\n' : 'Passwords do not match\n';
+        this.state.fieldValidities[4] = (text == this.state.password);
         break;
       case 'address':
-        this.state.submitReport[5] = (/^[0-9]{1,8} [A-Z'#.& \-]{2,}[^ ]$/i.test(text)) ? 'Good address\n' : 'Bad address\n';
+        this.state.fieldValidities[5] = (/^[0-9]{1,8} [A-Z'#.& \-]{2,30}$/i.test(text));
         break;
       case 'city':
-        this.state.submitReport[6] = (/^[A-Z' \-]{2,}[^ ]$/i.test(text)) ? 'Good city\n' : 'Bad city\n';
+        this.state.fieldValidities[6] = (/^[A-Z' \-]{2,25}$/i.test(text));
         break;
       case 'state':
-        this.state.submitReport[7] = (/^[A-Z]{2}$/.test(text)) ? 'Good state\n' : 'Bad state\n';
+        this.state.fieldValidities[7] = (/^[A-Z]{2}$/.test(text));
         break;
       case 'zip':
-        this.state.submitReport[8] = (/^\d{5}(-\d{4})?$/.test(text)) ? 'Good zip\n' : 'Bad zip\n';
+        this.state.fieldValidities[8] = (/^\d{5}(-\d{4})?$/.test(text));
         break;
     }
+
+    this.setState({allValid: this.state.fieldValidities.every((value) => value === true)});
 
     this.setState({[name]: text});
   }
@@ -170,6 +179,10 @@ const styles = StyleSheet.create({
   },
   field: {
     fontSize: 14,
-    textAlign: 'left'
+    textAlign: 'left',
+    borderColor: 'black'
+  },
+  invalid: {
+    borderColor: 'red'
   }
 });
