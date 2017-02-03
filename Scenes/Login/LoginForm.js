@@ -63,9 +63,9 @@ export default class LoginForm extends Component {
         email: this.state.email,
         password: this.state.password
       })
-    })
-      .then((response) => response.text())
-      .then((responseText) => this.setState({ serverResponse: responseText }));
+    })    
+    .then((response) => response.text())
+    .then((responseText) => console.log(responseText));
   }
 
 }
