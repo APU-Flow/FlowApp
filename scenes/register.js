@@ -166,7 +166,7 @@ export default class Register extends Component {
       })
     })
     .then((response) => response.text())
-    .then((responseText) => this.setState({serverResponse: responseText}));
+    .then((responseText) => console.log(responseText));
   }
 
 }
