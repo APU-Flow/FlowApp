@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, TextInput, Button, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-export default class Register extends Component {
+export default class Overview extends Component {
   static get defaultProps() {
     return {
-      title: 'Register'
+      title: 'Overview'
     };
   }
 
