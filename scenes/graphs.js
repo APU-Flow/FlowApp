@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import { StyleSheet, TextInput, Button, Text, Alert, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-//this file is the overview screen with a main menu, overview,
-//and hopefully presents what the graphs class does.
+//plan on being where graphs are made
 const onButtonPress = () => {
   Alert.alert('Button has been pressed!');
 };
-export default class Overview extends Component {
+export default class Graphs extends Component {
   static get defaultProps() {
     return {
-      title: 'Overview'
+      title: 'Graphs'
     };
   }
 
