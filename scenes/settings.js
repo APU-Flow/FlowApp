@@ -1,13 +1,11 @@
-// /**
-//  * Settings.js
-//  * Flow
-//  */
-//
+// settings.js
+// Flow
+
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
 export default class Login extends Component{
-  render (){
+  render() {
     return (
         <View>
         </View>

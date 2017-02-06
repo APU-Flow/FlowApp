@@ -1,3 +1,6 @@
+// register.js
+// Flow
+
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Button, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';

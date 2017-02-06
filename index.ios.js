@@ -1,8 +1,6 @@
-// /**
-//  * index.ios.js
-//  * Flow
-//  */
-//
+// index.ios.js
+// Flow
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
