@@ -30,45 +30,57 @@ export default class LoginForm extends Component {
           placeholder="username or email"
           placeholderTextColor="rgba(255,255,255,0.7)"
           returnKeyType="next"
+          onChangeText={(text) => this.setState({ email: text })}
           onSubmitEditing={() => this.passwordInput.focus()}
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
           style={styles.input}
-          />
+        />
         <TextInput
           placeholder="password"
           placeholderTextColor="rgba(255,255,255,0.7)"
+          onChangeText={(text) => this.setState({ password: text })}
           returnKeyType="go"
           secureTextEntry
           style={styles.input}
           ref={(input) => this.passwordInput = input}
-          />
+        />
         <Button title="LOGIN" onPress={this.submitToServer} />
         <Text>{this.state.submitReport}</Text>
-        <Text>{'\n\n'}</Text>
-        <Text>{this.state.serverResponse}</Text>
+        {/*<Text>{this.state.serverResponse}</Text>*/}
       </View>
     );
   }
 
+  //   submitToServer() {
+  //     fetch('http://138.68.56.236:3000/api/login', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         email: this.state.email,
+  //         password: this.state.password
+  //       })
+  //     })    
+  //     .then((response) => response.text())
+  //     .then((responseText) => console.log(responseText));
+  //   }
+  // }
   submitToServer() {
-    fetch('http://138.68.56.236:3000/api/login', { //newUser
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password
+    fetch('http://138.68.56.236:3000/api/login')
+      .then((response) => response.text())
+      .then((responseText) => {
+        console.log(responseText);
       })
-    })    
-    .then((response) => response.text())
-    .then((responseText) => console.log(responseText));
+      .catch((error) => {
+        console.warn(error);
+      });
   }
-
 }
+
 
 const styles = StyleSheet.create({
   container: {

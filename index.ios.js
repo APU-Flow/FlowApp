@@ -11,8 +11,8 @@ import {
   View
 } from 'react-native';
 
-import Splash from './Splash';
 import Login from './Scenes/Login/Login';
+import Register from './Scenes/register';
 
 export default class FlowApp extends Component {
   render() {
