@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Button, Text, Alert, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import ModalDropdown from 'react-native-modal-dropdown';
+//export default ModalDropdown;
 //this file is the overview screen with a main menu, overview,
 //and hopefully presents what the graphs class does.
 const onButtonPress = () => {
   Alert.alert('Button has been pressed!');
 };
-export default class Overview extends Component {
+export default class DropDownMenu extends Component {
   static get defaultProps() {
     return {
-      title: 'Overview'
+      title: 'DropDownMenu'
     };
   }
 
@@ -31,7 +32,7 @@ export default class Overview extends Component {
         <Text style={styles.title}>
           Overview
         </Text>
-        
+        <ModalDropdown options={['option 1', 'option 2']}/>
         <Button title="Main Menu" onPress={onButtonPress} />
       </KeyboardAwareScrollView>
     )
@@ -47,6 +48,10 @@ export default class Overview extends Component {
     this.setState({[name]: text});
   }
 }
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {
