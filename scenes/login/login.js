@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
-import LoginForm from './LoginForm';
+import LoginForm from './login-form';
 
 export default class Login extends Component{
   render() {
@@ -12,7 +12,7 @@ export default class Login extends Component{
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require('../Images/flow.jpg')}
+            source={require('../images/flow.jpg')}
           />
         </View>
         <View>

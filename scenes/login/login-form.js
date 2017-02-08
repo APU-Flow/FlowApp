@@ -44,7 +44,11 @@ export default class LoginForm extends Component {
           style={styles.input}
           ref={(input) => this.passwordInput = input}
         />
-        <Button title="LOGIN" onPress={this.submitToServer} />
+        <Button 
+          title="LOGIN" 
+          onPress={this.submitToServer} 
+          style={styles.buttonContainer}
+        />
         <Text>{this.state.submitReport}</Text>
       </View>
     );
@@ -65,7 +69,6 @@ export default class LoginForm extends Component {
     .then((response) => response.text())
     .then((responseText) => console.log(responseText));
   }
-
 }
 
 const styles = StyleSheet.create({

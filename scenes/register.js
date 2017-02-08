@@ -36,80 +36,93 @@ export default class Register extends Component {
   render() {
     return (
       <KeyboardAwareScrollView style={styles.container}>
+        {/*<Text>First Name{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[0] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[0] ? 'black' : 'red'}
           placeholder="First Name"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('firstName', text)}
         />
-        <Text>First Name{'\n'}</Text>
+        {/*<Text>Last Name{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[1] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[1] ? 'black' : 'red'}
           placeholder="Last Name"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('lastName', text)}
         />
-        <Text>Last Name{'\n'}</Text>
+        {/*<Text>Email Address{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[2] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[2] ? 'black' : 'red'}
           placeholder="Email Address"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="email-address"
           autoCapitalize="none"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('email', text)}
         />
-        <Text>Email Address{'\n'}</Text>
+        {/*<Text>Password{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[3] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[3] ? 'black' : 'red'}
           placeholder="Password"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('password', text)}
         />
-        <Text>Password{'\n'}</Text>
+        {/*<Text>Re-enter Password{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[4] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[4] ? 'black' : 'red'}
           placeholder="Re-enter Password"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('passwordVerification', text)}
         />
-        <Text>Re-enter Password{'\n'}</Text>
+        {/*<Text>Street Address{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[5] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[5] ? 'black' : 'red'}
           placeholder="Street Address"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('address', text)}
         />
-        <Text>Street Address{'\n'}</Text>
+        {/*<Text>City{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[6] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[6] ? 'black' : 'red'}
           placeholder="City"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('city', text)}
         />
-        <Text>City{'\n'}</Text>
+        {/*<Text>State{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[7] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[7] ? 'black' : 'red'}
           placeholder="State"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="characters"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('state', text)}
         />
-        <Text>State{'\n'}</Text>
+        {/*<Text>Zip{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[8] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[8] ? 'black' : 'red'}
           placeholder="Zip"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="numeric"
           returnKeyType="done"
           onChangeText={(text) => this.verifyInput('zip', text)}
         />
-        <Text>Zip{'\n'}</Text>
-        <Button title="Submit" onPress={this.submitToServer} disabled={!this.state.allValid}/>
+        <Button 
+          style = {styles.buttonContainer}
+          title="SUBMIT" 
+          onPress={this.submitToServer} 
+          disabled={!this.state.allValid}
+        />
       </KeyboardAwareScrollView>
     )
   }
@@ -178,14 +191,26 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
-    backgroundColor: '#F0F8FF'
+    // backgroundColor: '#F0F8FF',
+    backgroundColor:'rgb(52,152,219)'
   },
   field: {
-    fontSize: 14,
-    textAlign: 'left',
-    borderColor: 'black'
+    // fontSize: 14,
+    // textAlign: 'left',
+    // borderColor: 'black'
+    // color: '#FFF',
+    // marginBottom: 20,
+    height: 40,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    marginTop:22,
+    color: '#FFF',
+    paddingHorizontal: 10
   },
   invalid: {
     borderColor: 'red'
-  }
+  },
+  buttonContainer: {
+    backgroundColor: 'black',
+    paddingVertical: 15
+  },
 });

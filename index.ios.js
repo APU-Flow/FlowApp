@@ -9,13 +9,13 @@ import {
   View
 } from 'react-native';
 
-import Login from './Scenes/Login/Login';
-import Register from './Scenes/register';
+import Login from './scenes/login/login';
+import Register from './scenes/register';
 
 export default class FlowApp extends Component {
   render() {
     return (
-      <Login />
+      <Register />
     );
   }
 }
