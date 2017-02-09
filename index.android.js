@@ -1,8 +1,6 @@
-// /**
-//  * index.android.js
-//  * Flow
-//  */
-//
+// index.android.js
+// Flow
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -11,8 +9,7 @@ import {
   View
 } from 'react-native';
 
-import Splash from './Splash';
-import Login from './Scenes/Login/Login';
+import Login from './scenes/login/login';
 
 export default class FlowApp extends Component {
   render() {

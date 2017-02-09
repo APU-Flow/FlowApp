@@ -10,12 +10,11 @@ import {
 } from 'react-native';
 
 import Login from './scenes/login/login';
-import Register from './scenes/register';
 
 export default class FlowApp extends Component {
   render() {
     return (
-      <Register />
+      <Login />
     );
   }
 }

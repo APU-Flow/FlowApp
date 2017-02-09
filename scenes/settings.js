@@ -8,6 +8,7 @@ export default class Login extends Component{
   render() {
     return (
         <View>
+          Settings scene
         </View>
     );
   }
