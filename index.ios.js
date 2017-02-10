@@ -1,32 +1,37 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+// index.ios.js
+// Flow
 
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
-  View
+  Navigator
 } from 'react-native';
+
+import Splash from './scenes/splash';
+import Login from './scenes/login/login';
 
 export default class FlowApp extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Navigator
+        initialRoute={{ title: 'Flow', index: 0 }}
+        renderScene={(route, navigator) => {
+          if (route.index === 0) { 
+            return (
+              <Splash 
+                title={route.title}
+
+                // Function that's called to load login scene
+                loadNextScene={ () => navigator.push({ title: 'Log In', index: route.index + 1 }) }
+              />
+            );
+          } else {
+            return <Login />
+          }
+          
+        }}
+      />
     );
   }
 }

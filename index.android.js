@@ -1,25 +1,38 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+// index.android.js
+// Flow
 
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
-  View
+  Navigator
 } from 'react-native';
 
+import Splash from './scenes/splash';
+import Login from './scenes/login/login';
+
 import DropDownMenu from "./scenes/dropDownMenu";
-//import Register from "./scenes/register";
-//import Overview from "./scenes/overview";
 export default class FlowApp extends Component {
   render() {
     return (
-        <DropDownMenu />
-        //<Overview />
+      <Navigator
+        initialRoute={{ title: 'Flow', index: 0 }}
+        renderScene={(route, navigator) => {
+          if (route.index === 0) { 
+            return (
+              <Splash 
+                title={route.title}
+
+                // Function that's called to load login scene
+                loadNextScene={ () => navigator.push({ title: 'Log In', index: route.index + 1 }) }
+              />
+            );
+          } else {
+            return <Login />
+          }
+          
+        }}
+      />
     );
   }
 }
