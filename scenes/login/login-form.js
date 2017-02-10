@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput, Button, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Text, TouchableHighlight, Navigator } from 'react-native';
 
 export default class LoginForm extends Component {
   static get defaultProps() {
@@ -21,6 +21,11 @@ export default class LoginForm extends Component {
     this.submitToServer = this.submitToServer.bind(this);
   }
 
+  onButtonPress(){
+    this.props.navigator.push({
+      id:'Register'
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -44,11 +49,17 @@ export default class LoginForm extends Component {
           style={styles.input}
           ref={(input) => this.passwordInput = input}
         />
-        <Button 
-          title="LOGIN" 
-          onPress={this.submitToServer} 
-          style={styles.buttonContainer}
-        />
+        <TouchableHighlight 
+          style={styles.buttonLoginContainer}>
+          <Text style={styles.buttonText}>LOGIN</Text>
+          {/*onPress={this.submitToServer} */}
+        </TouchableHighlight>
+        <TouchableHighlight 
+         onPress={this.onButtonPress.bind(this)}
+         style={styles.buttonSignUpContainer}>
+          <Text style={styles.buttonText}>SIGN UP</Text>
+        </TouchableHighlight>
+
         <Text>{this.state.submitReport}</Text>
       </View>
     );
@@ -73,7 +84,7 @@ export default class LoginForm extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    // padding: 20,
     justifyContent: 'flex-start'
   },
   input: {
@@ -81,15 +92,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)',
     marginBottom: 10,
     color: '#FFF',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    padding: 20,
   },
-  buttonContainer: {
-    backgroundColor: 'rgb(44,62,80)',
-    paddingVertical: 15
+  buttonLoginContainer: {
+    backgroundColor: 'rgb(31, 58, 147)',
+    paddingVertical: 15,
+    marginTop:30,
+    height: 50
+  },
+  buttonSignUpContainer: {
+    backgroundColor: 'rgb(171, 183, 183)',
+    paddingVertical: 15,
+    // marginBottom:5,
+    height: 50
   },
   buttonText: {
     textAlign: 'center',
-    color: '#FFFFFF',
+    color: '#FFF',
     fontWeight: '700'
   }
 });

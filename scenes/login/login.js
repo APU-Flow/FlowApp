@@ -12,7 +12,7 @@ export default class Login extends Component{
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require('../images/flow.jpg')}
+            source={require('../images/flow.png')}
           />
         </View>
         <View>
@@ -30,8 +30,10 @@ const styles = StyleSheet.create({
     backgroundColor:'rgb(52,152,219)'
   },
   logo: {
-    width:200,
-    height:200
+    flex: 1,
+    width: 200,
+    height: 200,
+    resizeMode: 'contain'
   },
   logoContainer: {
     justifyContent:'center',
