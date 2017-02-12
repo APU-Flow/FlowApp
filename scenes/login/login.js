@@ -31,19 +31,14 @@ const styles = StyleSheet.create({
   },
   logo: {
     flex: 1,
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     resizeMode: 'contain'
   },
   logoContainer: {
+    flex:1,
     justifyContent:'center',
     alignItems:'center',
     flexGrow:1
-  }
-  ,
-  formContainer:{
-    flex:1,
-    justifyContent:'space-between',
-    alignItems:'center'
   }
 });

@@ -28,40 +28,19 @@ export default class LoginForm extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          placeholder="username or email"
-          placeholderTextColor="rgba(255,255,255,0.7)"
-          returnKeyType="next"
-          onChangeText={(text) => this.setState({ email: text })}
-          onSubmitEditing={() => this.passwordInput.focus()}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="password"
-          placeholderTextColor="rgba(255,255,255,0.7)"
-          onChangeText={(text) => this.setState({ password: text })}
-          returnKeyType="go"
-          secureTextEntry
-          style={styles.input}
-          ref={(input) => this.passwordInput = input}
-        />
+       // {/*<Text>{this.state.submitReport}</Text>*/}
+      <View>
         <TouchableHighlight 
-          style={styles.buttonLoginContainer}>
-          <Text style={styles.buttonText}>LOGIN</Text>
-          {/*onPress={this.submitToServer} */}
-        </TouchableHighlight>
-        <TouchableHighlight 
-         onPress={this.onButtonPress.bind(this)}
-         style={styles.buttonSignUpContainer}>
-          <Text style={styles.buttonText}>SIGN UP</Text>
-        </TouchableHighlight>
-
-        <Text>{this.state.submitReport}</Text>
-      </View>
+            style={styles.buttonLoginContainer}>
+            <Text style={styles.buttonText}>LOGIN</Text>
+            {/*onPress={this.submitToServer} */}
+          </TouchableHighlight>
+          <TouchableHighlight 
+          onPress={this.onButtonPress.bind(this)}
+          style={styles.buttonSignUpContainer}>
+            <Text style={styles.buttonText}>SIGN UP</Text>
+          </TouchableHighlight>
+        </View>
     );
   }
 
@@ -84,32 +63,33 @@ export default class LoginForm extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    // padding: 20,
     justifyContent: 'flex-start'
   },
-  input: {
-    height: 40,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginBottom: 10,
-    color: '#FFF',
-    paddingHorizontal: 10,
-    padding: 20,
-  },
+  // input: {
+  //   height: 40,
+  //   backgroundColor: 'rgba(255,255,255,0.2)',
+  //   // marginBottom: 10,
+  //   color: '#FFF',
+  //   paddingHorizontal: 10,
+  //   padding: 20,
+  // },
   buttonLoginContainer: {
-    backgroundColor: 'rgb(31, 58, 147)',
+    backgroundColor: 'rgb(31,58,147)',
     paddingVertical: 15,
-    marginTop:30,
-    height: 50
+    // marginTop:10,
+    height: 60,
+    justifyContent:'flex-end'
   },
   buttonSignUpContainer: {
-    backgroundColor: 'rgb(171, 183, 183)',
+    backgroundColor: 'rgb(171,183,183)',
     paddingVertical: 15,
-    // marginBottom:5,
-    height: 50
+    height: 60,
+    justifyContent:'flex-end'
   },
   buttonText: {
     textAlign: 'center',
     color: '#FFF',
-    fontWeight: '700'
+    fontWeight: '700',
+    fontSize:20
   }
 });
