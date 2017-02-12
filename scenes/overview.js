@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Button, Text, Alert, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SideMenu }  from 'react-native-side-menu';
 
 //this file is the overview screen with a main menu, overview,
 //and hopefully presents what the graphs class does.
@@ -14,17 +15,6 @@ export default class Overview extends Component {
     };
   }
 
-  constructor(props) {
-    super(props);
-    //Initialize state variables so the Text fields don't get mad. 
-    this.state = {
-      fieldValidities: [false, false, false, false, false, false, false, false, false],
-      allValid: false
-    }
-
-    this.verifyInput = this.verifyInput.bind(this);
-  }
-
   render() {
     return (
      <KeyboardAwareScrollView style={styles.container}>
@@ -36,16 +26,7 @@ export default class Overview extends Component {
       </KeyboardAwareScrollView>
     )
   }
-
-  verifyInput(name, text) {
-    switch(name) {
-    
-    }
-
-    this.setState({allValid: this.state.fieldValidities.every((value) => value === true)});
-
-    this.setState({[name]: text});
-  }
+  
 }
 
 const styles = StyleSheet.create({

@@ -10,13 +10,14 @@ import {
 
 import Splash from './scenes/splash';
 import Login from './scenes/login/login';
+import Overview from './scenes/overview';
+import Settings from './scenes/settings';
 
-import DropDownMenu from "./scenes/dropDownMenu";
 export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', index: 0 }}
+        initialRoute={{ title: 'Flow', index: 0 }} //changed index to 1
         renderScene={(route, navigator) => {
           if (route.index === 0) { 
             return (
@@ -28,7 +29,7 @@ export default class FlowApp extends Component {
               />
             );
           } else {
-            return <Login />
+            return <Settings />
           }
           
         }}
