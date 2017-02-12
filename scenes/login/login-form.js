@@ -22,7 +22,24 @@ export default class LoginForm extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={styles.container}>
+        <Text style={styles.text}>Log In</Text>
+        <TextInput style={styles.field}
+          placeholder="Email"
+          placeholderTextColor="rgba(255,255,255,0.5)"
+          autoCapitalize="none"
+          returnKeyType="next"
+        />
+        <TextInput style={styles.field}
+          placeholder="Password"
+          placeholderTextColor="rgba(255,255,255,0.5)"
+          autoCapitalize="none"
+          returnKeyType="next"
+          secureTextEntry={true}
+        />
+        <TouchableHighlight style={styles.buttonLoginContainer}>
+          <Text style={styles.buttonText}>LOGIN</Text>
+        </TouchableHighlight>
         {/*onPress={this.submitToServer.bind(this)}*/}
       </View>
     );
@@ -47,14 +64,38 @@ export default class LoginForm extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-start'
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'rgb(52,152,219)',
+    padding: 30
   },
-  input: {
-    height: 40,
+  field: {
     backgroundColor: 'rgba(255,255,255,0.2)',
-    // marginBottom: 10,
-    color: '#FFF',
+    color: 'white',
+    marginTop: 10,
     paddingHorizontal: 10,
-    padding: 20,
+    // padding: 20,
+    height: 40
+  },
+  text: {
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 150,
+    fontSize: 20,
+    fontWeight: '300',
+    marginBottom: 20
+  },
+  buttonLoginContainer: {
+    backgroundColor: 'rgb(31,58,147)',
+    paddingVertical: 15,
+    height: 60,
+    justifyContent: 'flex-end',
+    marginTop:70
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#FFF',
+    fontWeight: '500',
+    fontSize: 20
   }
 });
