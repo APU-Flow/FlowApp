@@ -4,13 +4,13 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default class Splash extends Component{
+export default class Splash extends Component {
   
-  // Define default loadNextScene prop - this should only be used when the <Splash> element
-  // is used improperly in our code elsewhere, but it'll be an easier error to debug this way.
+  // Define default loadNextScene prop - this is only for when this element is used
+  // improperly elsewhere in our code, but it'll be an easier error to debug this way.
   static get defaultProps() {
     return {
-      loadNextScene: () => this.setState({ message: 'Error loading login scene; no loadNextScene method given!' })
+      loadNextScene: () => this.setState({ message: 'Error loading next scene; no loadNextScene method given!' })
     };
   }
 

@@ -14,7 +14,7 @@ export default class Register extends Component {
 
   constructor(props) {
     super(props);
-    //Initialize state variables so the Text fields don't get mad. 
+    // Initialize state variables
     this.state = {
       firstName: '',
       lastName: '',
@@ -29,6 +29,7 @@ export default class Register extends Component {
       allValid: false
     }
 
+    // Bind functions to instance
     this.verifyInput = this.verifyInput.bind(this);
     this.submitToServer = this.submitToServer.bind(this);
   }
@@ -36,7 +37,6 @@ export default class Register extends Component {
   render() {
     return (
       <KeyboardAwareScrollView style={styles.container}>
-        {/*<Text>First Name{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[0] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[0] ? 'black' : 'red'}
           placeholder="First Name"
@@ -45,7 +45,6 @@ export default class Register extends Component {
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('firstName', text)}
         />
-        {/*<Text>Last Name{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[1] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[1] ? 'black' : 'red'}
           placeholder="Last Name"
@@ -54,7 +53,6 @@ export default class Register extends Component {
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('lastName', text)}
         />
-        {/*<Text>Email Address{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[2] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[2] ? 'black' : 'red'}
           placeholder="Email Address"
@@ -64,7 +62,6 @@ export default class Register extends Component {
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('email', text)}
         />
-        {/*<Text>Password{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[3] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[3] ? 'black' : 'red'}
           placeholder="Password"
@@ -73,7 +70,6 @@ export default class Register extends Component {
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('password', text)}
         />
-        {/*<Text>Re-enter Password{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[4] && styles.invalid]}
           placeholder="Re-enter Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
@@ -81,7 +77,6 @@ export default class Register extends Component {
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('passwordVerification', text)}
         />
-        {/*<Text>Street Address{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[5] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[5] ? 'black' : 'red'}
           placeholder="Street Address"
@@ -90,7 +85,6 @@ export default class Register extends Component {
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('address', text)}
         />
-        {/*<Text>City{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[6] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[6] ? 'black' : 'red'}
           placeholder="City"
@@ -99,7 +93,6 @@ export default class Register extends Component {
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('city', text)}
         />
-        {/*<Text>State{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[7] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[7] ? 'black' : 'red'}
           placeholder="State"
@@ -108,7 +101,6 @@ export default class Register extends Component {
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('state', text)}
         />
-        {/*<Text>Zip{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[8] && styles.invalid]}
           underlineColorAndroid={this.state.fieldValidities[8] ? 'black' : 'red'}
           placeholder="Zip"
@@ -140,7 +132,7 @@ export default class Register extends Component {
         break;
       case 'password':
         this.state.fieldValidities[3] = (/^[A-Z0-9`~!@#$%^&*()\-=_+<>,.?]{5,20}$/i.test(text));
-        //Intentional lack of 'break;' to update passsword verification styles when password changes
+        // Intentional lack of 'break;' to update passsword verification styles when password changes
       case 'passwordVerification':
         this.state.fieldValidities[4] = (text == this.state.password);
         break;
@@ -191,15 +183,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
-    // backgroundColor: '#F0F8FF',
     backgroundColor:'rgb(52,152,219)'
   },
   field: {
-    // fontSize: 14,
-    // textAlign: 'left',
-    // borderColor: 'black'
-    // color: '#FFF',
-    // marginBottom: 20,
     height: 40,
     backgroundColor: 'rgba(255,255,255,0.2)',
     marginTop:22,
