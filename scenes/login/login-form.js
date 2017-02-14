@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput, Button, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Text, TouchableHighlight, Navigator } from 'react-native';
 
 export default class LoginForm extends Component {
   static get defaultProps() {
@@ -20,36 +20,26 @@ export default class LoginForm extends Component {
 
     this.submitToServer = this.submitToServer.bind(this);
   }
-
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
-          placeholder="username or email"
-          placeholderTextColor="rgba(255,255,255,0.7)"
-          returnKeyType="next"
-          onChangeText={(text) => this.setState({ email: text })}
-          onSubmitEditing={() => this.passwordInput.focus()}
-          keyboardType="email-address"
+        <Text style={styles.text}>Log In</Text>
+        <TextInput style={styles.field}
+          placeholder="Email"
+          placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
-          autoCorrect={false}
-          style={styles.input}
+          returnKeyType="next"
         />
-        <TextInput
-          placeholder="password"
-          placeholderTextColor="rgba(255,255,255,0.7)"
-          onChangeText={(text) => this.setState({ password: text })}
-          returnKeyType="go"
-          secureTextEntry
-          style={styles.input}
-          ref={(input) => this.passwordInput = input}
+        <TextInput style={styles.field}
+          placeholder="Password"
+          placeholderTextColor="rgba(255,255,255,0.5)"
+          autoCapitalize="none"
+          returnKeyType="next"
+          secureTextEntry={true}
         />
-        <Button 
-          title="LOGIN" 
-          onPress={this.submitToServer} 
-          style={styles.buttonContainer}
-        />
-        <Text>{this.state.submitReport}</Text>
+        <TouchableHighlight style={styles.buttonLoginContainer}>
+          <Text style={styles.buttonText}>LOGIN</Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -80,23 +70,39 @@ export default class LoginForm extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    justifyContent: 'flex-start'
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'rgb(52,152,219)',
+    padding: 30
   },
-  input: {
-    height: 40,
+  field: {
     backgroundColor: 'rgba(255,255,255,0.2)',
-    marginBottom: 10,
-    color: '#FFF',
-    paddingHorizontal: 10
+    color: 'white',
+    marginTop: 10,
+    paddingHorizontal: 10,
+    height: 40,
+    borderColor: 'grey',
+    borderWidth: 1
   },
-  buttonContainer: {
-    backgroundColor: 'rgb(44,62,80)',
-    paddingVertical: 15
+  text: {
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 150,
+    fontSize: 20,
+    fontWeight: '400',
+    marginBottom: 20
+  },
+  buttonLoginContainer: {
+    backgroundColor: 'rgb(31,58,147)',
+    paddingVertical: 15,
+    height: 60,
+    justifyContent: 'flex-end',
+    marginTop:70
   },
   buttonText: {
     textAlign: 'center',
-    color: '#FFFFFF',
-    fontWeight: '700'
+    color: '#FFF',
+    fontWeight: '500',
+    fontSize: 20
   }
 });

@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Button, Text } from 'react-native';
+import { StyleSheet, TextInput, Button, Text, TouchableHighlight } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class Register extends Component {
@@ -37,8 +37,9 @@ export default class Register extends Component {
   render() {
     return (
       <KeyboardAwareScrollView style={styles.container}>
+        <Text style={styles.text}>Register</Text>
         <TextInput style={[styles.field, !this.state.fieldValidities[0] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[0] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[0] ? 'green' : 'grey'}
           placeholder="First Name"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -46,7 +47,7 @@ export default class Register extends Component {
           onChangeText={(text) => this.verifyInput('firstName', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[1] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[1] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[1] ? 'green' : 'grey'}
           placeholder="Last Name"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -54,7 +55,7 @@ export default class Register extends Component {
           onChangeText={(text) => this.verifyInput('lastName', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[2] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[2] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[2] ? 'green' : 'grey'}
           placeholder="Email Address"
           placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="email-address"
@@ -63,7 +64,7 @@ export default class Register extends Component {
           onChangeText={(text) => this.verifyInput('email', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[3] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[3] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[3] ? 'green' : 'grey'}
           placeholder="Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
@@ -71,6 +72,7 @@ export default class Register extends Component {
           onChangeText={(text) => this.verifyInput('password', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[4] && styles.invalid]}
+          borderColor={this.state.fieldValidities[4] ? 'green' : 'grey'}
           placeholder="Re-enter Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
@@ -78,7 +80,7 @@ export default class Register extends Component {
           onChangeText={(text) => this.verifyInput('passwordVerification', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[5] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[5] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[5] ? 'green' : 'grey'}
           placeholder="Street Address"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -86,7 +88,7 @@ export default class Register extends Component {
           onChangeText={(text) => this.verifyInput('address', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[6] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[6] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[6] ? 'green' : 'grey'}
           placeholder="City"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -94,7 +96,7 @@ export default class Register extends Component {
           onChangeText={(text) => this.verifyInput('city', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[7] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[7] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[7] ? 'green' : 'grey'}
           placeholder="State"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="characters"
@@ -102,19 +104,16 @@ export default class Register extends Component {
           onChangeText={(text) => this.verifyInput('state', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[8] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[8] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[8] ? 'green' : 'grey'}
           placeholder="Zip"
           placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="numeric"
           returnKeyType="done"
           onChangeText={(text) => this.verifyInput('zip', text)}
         />
-        <Button 
-          style = {styles.buttonContainer}
-          title="SUBMIT" 
-          onPress={this.submitToServer} 
-          disabled={!this.state.allValid}
-        />
+        <TouchableHighlight style={styles.buttonContainer} onPress={this.submitToServer} disabled={!this.state.allValid}>
+          <Text style={styles.buttonText}>SUBMIT</Text>
+        </TouchableHighlight>
       </KeyboardAwareScrollView>
     )
   }
@@ -181,22 +180,44 @@ export default class Register extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     flex: 1,
-    backgroundColor:'rgb(52,152,219)'
+    flexDirection: 'column',
+    backgroundColor:'rgb(52,152,219)',
+    padding: 30
   },
   field: {
     height: 40,
     backgroundColor: 'rgba(255,255,255,0.2)',
-    marginTop:22,
+    marginTop:15,
     color: '#FFF',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    borderColor:'black',
+    borderWidth: 1
   },
   invalid: {
-    borderColor: 'red'
+    borderColor: 'grey'
   },
   buttonContainer: {
-    backgroundColor: 'black',
-    paddingVertical: 15
+    backgroundColor: 'rgb(31,58,147)',
+    paddingVertical: 15,
+    marginTop:42,
+    justifyContent:'flex-end'
   },
+  buttonText: {
+    textAlign: 'center',
+    color: '#FFF',
+    fontWeight: '700',
+    fontSize: 20
+  },
+  text: {
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 25,
+    fontSize: 20,
+    fontWeight: '400',
+    marginBottom: 15
+  },
+  borderWidth:{
+    borderWidth:1
+  }
 });
