@@ -4,11 +4,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-export default class Settings extends Component{
+export default class Settings extends Component {
   render() {
     return (
         <View>
-          Settings scene
+          <Text>Settings scene</Text>
         </View>
     );
   }
@@ -16,6 +16,6 @@ export default class Settings extends Component{
 
 const styles = StyleSheet.create({
   container: {
-    flex:1
+    flex: 1
   }
 });
