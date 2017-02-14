@@ -7,10 +7,17 @@ import LoginForm from './login-form';
 
 export default class Login extends Component {
 
-  onButtonPress() {
-    this.props.navigator.push({
-      id: 'login-form'
-    });
+  // Define default loadOverviewScene prop - this is only for when this element is used
+  // improperly elsewhere in our code, but it'll be an easier error to debug this way.
+  static get defaultProps() {
+    return {
+      loadOverviewScene: () => this.setState({ message: 'Error loading next scene; no loadOverviewScene method given!' })
+    };
+  }
+
+  constructor(props) {
+    super(props);
+    this.loadUserData = this.loadUserData.bind(this);
   }
 
   render() {
@@ -27,7 +34,7 @@ export default class Login extends Component {
         </View>
         <View>
           <TouchableHighlight style={styles.buttonLoginContainer}>
-            onPress={this.onButtonPress.bind(this)}
+            onPress={loadUserData}
             <Text style={styles.buttonText}>LOGIN</Text>
           </TouchableHighlight>
           <TouchableHighlight style={styles.buttonSignUpContainer}>
@@ -36,6 +43,12 @@ export default class Login extends Component {
         </View>
       </View>
     );
+  }
+
+  loadUserData(userObject) {
+    // Do stuff with user data
+    // Load the next scene
+    this.props.loadOverviewScene();
   }
 }
 

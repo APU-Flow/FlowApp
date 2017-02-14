@@ -10,6 +10,7 @@ import {
 
 import Splash from './scenes/splash';
 import Login from './scenes/login/login';
+import Overview from '/scenes/overview';
 
 export default class FlowApp extends Component {
   render() {
@@ -17,19 +18,24 @@ export default class FlowApp extends Component {
       <Navigator
         initialRoute={{ title: 'Flow', index: 0 }}
         renderScene={(route, navigator) => {
-          if (route.index === 0) { 
-            return (
-              <Splash 
+          switch (route.index) {
+            case 0: 
+              return <Splash
                 title={route.title}
 
                 // Function that's called to load login scene
-                loadNextScene={ () => navigator.push({ title: 'Log In', index: route.index + 1 }) }
-              />
-            );
-          } else {
-            return <Login />
+                loadNextScene={ () => navigator.push({ index: 1 }) }
+              />;
+            case 1:
+              return <Login
+                loadOverviewScene={ () => navigator.push({ index: 3 }) }
+                loadRegisterScene={ () => navigator.push({ index: 2 }) }
+              />;
+            case 2:
+              return <Register loadOverviewScene={ () => navigator.push({ index: 3 }) } />;
+            default:
+              return <Overview />
           }
-          
         }}
       />
     );

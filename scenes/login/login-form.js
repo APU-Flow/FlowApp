@@ -7,7 +7,7 @@ import { View, StyleSheet, TextInput, Text, TouchableHighlight, Navigator } from
 export default class LoginForm extends Component {
   static get defaultProps() {
     return {
-      title: 'LoginForm'
+      onSuccess: (response) => console.log(response)
     };
   }
 
@@ -55,9 +55,16 @@ export default class LoginForm extends Component {
         email: this.state.email,
         password: this.state.password
       })
-    })
-      .then((response) => response.text())
-      .then((responseText) => console.log(responseText));
+    })    
+    .then((response) => response.json())
+    .then((responseObject) => {
+      if (typeof responseObject.user === 'string') {
+        this.setState({ submitReport: '' });
+        this.props.onSuccess(responseObject);
+      }
+      else
+        this.setState({ submitReport: 'Login failed; bad username or password.' });
+    });
   }
 }
 
