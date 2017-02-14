@@ -40,7 +40,6 @@ export default class LoginForm extends Component {
         <TouchableHighlight style={styles.buttonLoginContainer}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableHighlight>
-        {/*onPress={this.submitToServer.bind(this)}*/}
       </View>
     );
   }
@@ -74,15 +73,16 @@ const styles = StyleSheet.create({
     color: 'white',
     marginTop: 10,
     paddingHorizontal: 10,
-    // padding: 20,
-    height: 40
+    height: 40,
+    borderColor: 'grey',
+    borderWidth: 1
   },
   text: {
     textAlign: 'center',
     color: 'white',
     marginTop: 150,
     fontSize: 20,
-    fontWeight: '300',
+    fontWeight: '400',
     marginBottom: 20
   },
   buttonLoginContainer: {
