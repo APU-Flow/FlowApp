@@ -6,11 +6,13 @@ import { View, Text, StyleSheet } from 'react-native';
 
 export default class Splash extends Component {
   
-  // Define default loadNextScene prop - this is only for when this element is used
-  // improperly elsewhere in our code, but it'll be an easier error to debug this way.
   static get defaultProps() {
     return {
-      loadNextScene: () => this.setState({ message: 'Error loading next scene; no loadNextScene method given!' })
+      // This component should always be given a navigator property. When it isn't, log this error.
+      navigator: { push: (name) => {
+        this.setState({ message: `Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!` });
+      }},
+      loadNextScene: (context) => context.props.navigator.push({ name: 'login' })
     };
   }
 
@@ -22,7 +24,7 @@ export default class Splash extends Component {
 
   // TEMP!! Set a timer to leave the splash screen up for 3 seconds (just so we can see it / debug)
   componentDidMount() {
-    this.state.timer = setTimeout(this.props.loadNextScene, 3000);
+    this.state.timer = setTimeout(this.props.loadNextScene, 3000, this);
   }
   // Clear the timer if the component is unmounted before the timer is up, so the timer doesn't leak
   componentWillUnmount() {

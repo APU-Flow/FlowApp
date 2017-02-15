@@ -37,7 +37,8 @@ export default class LoginForm extends Component {
           returnKeyType="next"
           secureTextEntry={true}
         />
-        <TouchableHighlight style={styles.buttonLoginContainer}>
+        <TouchableHighlight style={styles.buttonLoginContainer}
+          onPress={this.submitToServer}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableHighlight>
       </View>

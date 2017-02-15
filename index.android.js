@@ -10,31 +10,29 @@ import {
 
 import Splash from './scenes/splash';
 import Login from './scenes/login/login';
-import Overview from '/scenes/overview';
+import LoginForm from './scenes/login/login-form'
+import Register from './scenes/register';
+import Overview from './scenes/overview';
 
 export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', index: 0 }}
+        initialRoute={{ title: 'Flow', name: 'splash' }}
         renderScene={(route, navigator) => {
-          switch (route.index) {
-            case 0: 
-              return <Splash
-                title={route.title}
-
-                // Function that's called to load login scene
-                loadNextScene={ () => navigator.push({ index: 1 }) }
-              />;
-            case 1:
-              return <Login
-                loadOverviewScene={ () => navigator.push({ index: 3 }) }
-                loadRegisterScene={ () => navigator.push({ index: 2 }) }
-              />;
-            case 2:
-              return <Register loadOverviewScene={ () => navigator.push({ index: 3 }) } />;
+          switch (route.name) {
+            case 'splash':
+              return <Splash navigator={navigator} {...route.passProps} />;
+            case 'login':
+              return <Login navigator={navigator} />;
+            case 'login-form':
+              return <LoginForm {...route.passProps} />;
+            case 'register':
+              return <Register navigator={navigator} />;
+            case 'overview':
+              return <Overview {...route.passProps} />;
             default:
-              return <Overview />
+              return <Text>Bad route name given!</Text>
           }
         }}
       />

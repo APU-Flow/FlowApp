@@ -2,13 +2,13 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Button, Text } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { StyleSheet, View, Text } from 'react-native';
 
 export default class Overview extends Component {
+  
   static get defaultProps() {
     return {
-      title: 'Overview'
+      message: 'Default message'
     };
   }
 
@@ -25,7 +25,7 @@ export default class Overview extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Stuff will go here!</Text>
+        <Text>{this.props.message}</Text>
       </View>
     )
   }

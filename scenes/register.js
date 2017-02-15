@@ -8,7 +8,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 export default class Register extends Component {
   static get defaultProps() {
     return {
-      title: 'Register'
+      // This component should always be given a navigator property. When it isn't, log this error.
+      navigator: { push: (name) => {
+        console.log(`Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!`);
+      }},
+      loadNextScene: () => this.props.navigator.push({ name: 'overview' })
     };
   }
 
@@ -32,6 +36,7 @@ export default class Register extends Component {
     // Bind functions to instance
     this.verifyInput = this.verifyInput.bind(this);
     this.submitToServer = this.submitToServer.bind(this);
+    this.loadUserData = this.loadUserData.bind(this);
   }
 
   render() {
@@ -172,8 +177,14 @@ export default class Register extends Component {
         zip: this.state.zip
       })
     })
-    .then((response) => response.text())
-    .then((responseText) => console.log(responseText));
+    .then((response) => response.json())
+    .then((responseObject) => loadUserData(responseObject));
+  }
+
+  loadUserData(response) {
+    // Do stuff with user data
+    // Load the next scene
+    this.props.loadNextScene();
   }
 
 }

@@ -7,24 +7,24 @@ import LoginForm from './login-form';
 
 export default class Login extends Component {
 
-  // Define default loadOverviewScene prop - this is only for when this element is used
-  // improperly elsewhere in our code, but it'll be an easier error to debug this way.
   static get defaultProps() {
     return {
-      loadOverviewScene: () => this.setState({ message: 'Error loading next scene; no loadOverviewScene method given!' })
+      // This component should always be given a navigator property. When it isn't, log this error.
+      navigator: { push: (name) => {
+        console.log(`Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!`);
+      }}
     };
   }
 
   constructor(props) {
     super(props);
+
     this.loadUserData = this.loadUserData.bind(this);
+    this.loadLoginForm = this.loadLoginForm.bind(this);
+    this.loadRegisterForm = this.loadRegisterForm.bind(this);
   }
 
   render() {
-    const routes = [
-      { title: 'LoginForm', index: 0 },
-      { title: 'Register', index: 1 },
-    ];
     return (
       <View style={styles.container}>
         <View style={styles.logoContainer}>
@@ -33,11 +33,12 @@ export default class Login extends Component {
           />
         </View>
         <View>
-          <TouchableHighlight style={styles.buttonLoginContainer}>
-            onPress={loadUserData}
+          <TouchableHighlight style={styles.buttonLoginContainer}
+            onPress={this.loadLoginForm}>
             <Text style={styles.buttonText}>LOGIN</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.buttonSignUpContainer}>
+          <TouchableHighlight style={styles.buttonSignUpContainer}
+            onPress={this.loadRegisterForm}>
             <Text style={styles.buttonText}>SIGN UP</Text>
           </TouchableHighlight>
         </View>
@@ -48,8 +49,16 @@ export default class Login extends Component {
   loadUserData(userObject) {
     // Do stuff with user data
     // Load the next scene
-    this.props.loadOverviewScene();
+    this.props.navigator.push({ name: 'overview', passProps: { message: JSON.stringify(userObject) } });
   }
+
+  loadLoginForm() {
+    this.props.navigator.push({ name: 'login-form', passProps: { onSuccess: this.loadUserData } })
+  }
+  loadRegisterForm() {
+    this.props.navigator.push({ name: 'register' });
+  }
+
 }
 
 const styles = StyleSheet.create({
