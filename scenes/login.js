@@ -1,4 +1,4 @@
-// login-form.js
+// login.js
 // Flow
 
 import React, { Component } from 'react';
@@ -7,7 +7,7 @@ import { View, StyleSheet, TextInput, Text, TouchableHighlight, Navigator } from
 export default class LoginForm extends Component {
   static get defaultProps() {
     return {
-      onSuccess: (response) => console.log(response)
+      onSuccess: (responseObject) => console.log(responseObject)
     };
   }
 
@@ -15,7 +15,8 @@ export default class LoginForm extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      submitReport: ''
     }
 
     this.submitToServer = this.submitToServer.bind(this);
@@ -29,6 +30,7 @@ export default class LoginForm extends Component {
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
           returnKeyType="next"
+          onChangeText={(text) => this.setState({ email: text })}
         />
         <TextInput style={styles.field}
           placeholder="Password"
@@ -36,11 +38,13 @@ export default class LoginForm extends Component {
           autoCapitalize="none"
           returnKeyType="next"
           secureTextEntry={true}
+          onChangeText={(text) => this.setState({ password: text })}
         />
         <TouchableHighlight style={styles.buttonLoginContainer}
           onPress={this.submitToServer}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableHighlight>
+        <Text>{this.state.submitReport}</Text>
       </View>
     );
   }
@@ -59,7 +63,7 @@ export default class LoginForm extends Component {
     })    
     .then((response) => response.json())
     .then((responseObject) => {
-      if (typeof responseObject.user === 'string') {
+      if (typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
         this.props.onSuccess(responseObject);
       }

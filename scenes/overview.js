@@ -8,6 +8,10 @@ export default class Overview extends Component {
   
   static get defaultProps() {
     return {
+      // This component should always be given a navigator property. When it isn't, log this error.
+      navigator: { push: (name) => {
+        console.log(`Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!`);
+      }},
       message: 'Default message'
     };
   }

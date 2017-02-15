@@ -8,11 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 export default class Register extends Component {
   static get defaultProps() {
     return {
-      // This component should always be given a navigator property. When it isn't, log this error.
-      navigator: { push: (name) => {
-        console.log(`Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!`);
-      }},
-      loadNextScene: () => this.props.navigator.push({ name: 'overview' })
+      onSuccess: (responseObject) => console.log(responseObject)
     };
   }
 
@@ -30,13 +26,14 @@ export default class Register extends Component {
       state: '',
       zip: '',
       fieldValidities: [false, false, false, false, false, false, false, false, false],
-      allValid: false
+      allValid: false,
+      submitReport: ''
     }
 
     // Bind functions to instance
     this.verifyInput = this.verifyInput.bind(this);
-    this.submitToServer = this.submitToServer.bind(this);
-    this.loadUserData = this.loadUserData.bind(this);
+    this.submitRegistration = this.submitRegistration.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
   render() {
@@ -116,7 +113,8 @@ export default class Register extends Component {
           returnKeyType="done"
           onChangeText={(text) => this.verifyInput('zip', text)}
         />
-        <TouchableHighlight style={styles.buttonContainer} onPress={this.submitToServer} disabled={!this.state.allValid}>
+        <Text>{this.state.submitReport}</Text>
+        <TouchableHighlight style={styles.buttonContainer} onPress={this.submitRegistration} disabled={!this.state.allValid}>
           <Text style={styles.buttonText}>SUBMIT</Text>
         </TouchableHighlight>
       </KeyboardAwareScrollView>
@@ -159,7 +157,7 @@ export default class Register extends Component {
     this.setState({[name]: text});
   }
 
-  submitToServer() {
+  submitRegistration() {
     fetch('http://138.68.56.236:3000/api/newUser', {
       method: 'POST',
       headers: {
@@ -178,13 +176,35 @@ export default class Register extends Component {
       })
     })
     .then((response) => response.json())
-    .then((responseObject) => loadUserData(responseObject));
+    .then((responseObject) => {
+      if (responseObject.status === 'OK' || responseObject.status === 'okay')
+        this.submitLogin();
+      else
+        this.setState({submitReport: 'Registration failed!'});
+    });
   }
 
-  loadUserData(response) {
-    // Do stuff with user data
-    // Load the next scene
-    this.props.loadNextScene();
+  submitLogin() {
+    fetch('http://138.68.56.236:3000/api/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
+    })    
+    .then((response) => response.json())
+    .then((responseObject) => {
+      if (typeof responseObject.token === 'string') {
+        this.setState({ submitReport: '' });
+        this.props.onSuccess(responseObject);
+      }
+      else
+        this.setState({ submitReport: 'Login failed; bad username or password.' });
+    });
   }
 
 }

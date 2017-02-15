@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 
 import Splash from './scenes/splash';
-import Login from './scenes/login/login';
-import LoginForm from './scenes/login/login-form'
+import Login from './scenes/login';
 import Register from './scenes/register';
 import Overview from './scenes/overview';
 
@@ -22,15 +21,13 @@ export default class FlowApp extends Component {
         renderScene={(route, navigator) => {
           switch (route.name) {
             case 'splash':
-              return <Splash navigator={navigator} {...route.passProps} />;
+              return <Splash navigator={navigator} />;
             case 'login':
-              return <Login navigator={navigator} />;
-            case 'login-form':
-              return <LoginForm {...route.passProps} />;
+              return <Login {...route.passProps} />;
             case 'register':
-              return <Register navigator={navigator} />;
+              return <Register {...route.passProps} />;
             case 'overview':
-              return <Overview {...route.passProps} />;
+              return <Overview navigator={navigator} {...route.passProps} />;
             default:
               return <Text>Bad route name given!</Text>
           }
