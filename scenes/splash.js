@@ -1,11 +1,10 @@
-// login.js
+// splash.js
 // Flow
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableHighlight, Navigator } from 'react-native';
-import LoginForm from './login-form';
+import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 
-export default class Login extends Component {
+export default class Splash extends Component {
 
   static get defaultProps() {
     return {
@@ -29,7 +28,7 @@ export default class Login extends Component {
       <View style={styles.container}>
         <View style={styles.logoContainer}>
           <Image style={styles.logo}
-            source={require('../images/flow.png')}
+            source={require('./images/flow.png')}
           />
         </View>
         <View>
@@ -53,10 +52,10 @@ export default class Login extends Component {
   }
 
   loadLoginForm() {
-    this.props.navigator.push({ name: 'login-form', passProps: { onSuccess: this.loadUserData } })
+    this.props.navigator.push({ name: 'login', passProps: { onSuccess: this.loadUserData } })
   }
   loadRegisterForm() {
-    this.props.navigator.push({ name: 'register' });
+    this.props.navigator.push({ name: 'register', passProps: { onSuccess: this.loadUserData } });
   }
 
 }
