@@ -10,7 +10,7 @@ import {
 
 import Splash from './scenes/splash';
 import Login from './scenes/login/login';
-import Overview from '/scenes/overview';
+import Overview from './scenes/overview';
 
 export default class FlowApp extends Component {
   render() {
