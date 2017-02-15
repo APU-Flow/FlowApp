@@ -4,16 +4,18 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { SideMenu }  from 'react-native-side-menu';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-//this file is the settings screen with a , overview,
-//and hopefully presents what the graphs class does.
+//this file is the change account screen with a switch to account, account settings,
+//and deleting my account.
+
+//Still need to add registered users to this page, as well as who they are logged in as
 const onButtonPress1 = () => {
   //Alert.alert('Are you sure you want to delete your data history?');
   Alert.alert(
-  'Delete Data History',
-  'Are you sure you want to delete your data history?',
+  'Delete Account',
+  'Are you sure you want to delete your account?',
   [
     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-    {text: 'Yes', onPress: () => console.log('Yes Pressed')},
+    {text: 'Yes, Delete my account', onPress: () => console.log('OK Pressed')},
   ],
   { cancelable: false }
 )
@@ -21,13 +23,13 @@ const onButtonPress1 = () => {
 const onButtonPress2 = () => {
   Alert.alert('Contact Us at www.flow.org');
 };
-const FIRST_DROPDOWN = ['Logout', 'Change Account'];
-const SECOND_DROPDOWN = ['Add', 'Drop'];
+const FIRST_DROPDOWN = ['Jim', 'Bill'];
+const SECOND_DROPDOWN = ['I', 'Am', 'Unsure'];// i Don't know what should be in this dropdown
 
-export default class Settings extends Component {
+export default class ChangeAccount extends Component {
   static get defaultProps() {
     return {
-      title: 'Settings'
+      title: 'Change Account'
     };
   }
 
@@ -35,34 +37,29 @@ export default class Settings extends Component {
     return (
      <KeyboardAwareScrollView style={styles.container}>
         <Text style={styles.title}>
-          Settings
+          Change Account
+        </Text>
+        <Text style={styles.account}>
+          You're currently logged in as...
         </Text>
             <ModalDropdown style={styles.dropdown}
               options={FIRST_DROPDOWN}
               textStyle={styles.dropdown_text}
               dropdownStyle={styles.dropdown_dropdown}
-              defaultValue='Logout or Change Account'
+              defaultValue='Switch to Which Account?'
               renderRow={this.dropdown_renderRow.bind(this)}             
-            /> 
-             <ModalDropdown style={styles.dropdown}
+            />
+            <ModalDropdown style={styles.dropdown}
               options={SECOND_DROPDOWN}
               textStyle={styles.dropdown_text}
               dropdownStyle={styles.dropdown_dropdown}
-              defaultValue='Add/Drop'
+              defaultValue='Account Settings'
               renderRow={this.dropdown_renderRow.bind(this)}             
-            />
-             <TouchableHighlight onPress={onButtonPress1}>
+            /> 
+              <TouchableHighlight onPress={onButtonPress1}>
                 <View style={styles.dropdown}>
                   <Text style={styles.dropdown_text}>
-                    Delete Data History
-                  </Text>
-                </View>
-             </TouchableHighlight>
-
-              <TouchableHighlight onPress={onButtonPress2}>
-                <View style={styles.dropdown}>
-                  <Text style={styles.dropdown_text}>
-                    Contact Us
+                    Delete My Account
                   </Text>
                 </View>
              </TouchableHighlight>
@@ -104,6 +101,11 @@ const styles = StyleSheet.create({
   },
   field: {
     fontSize: 14,
+    textAlign: 'center',
+    borderColor: 'black'
+  },
+  account: {
+    fontSize: 20,
     textAlign: 'center',
     borderColor: 'black'
   },

@@ -140,8 +140,6 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: 'white'
   },
-
-
   dropdown_row: {
     flexDirection: 'row',
     height: 40,
