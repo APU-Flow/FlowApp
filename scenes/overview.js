@@ -20,16 +20,38 @@ export default class Overview extends Component {
     super(props);
     // Initialize state variables 
     this.state = {
-      
+      data: ''
     }
-    
-    // Bind functions to instance
+  }
+
+  componentDidMount() {
+    let now = new Date();
+    let hourAgo = new Date();
+    hourAgo.setHours(hourAgo.getHours()-1);
+    // TODO: Set this URL to the actual API location - 'data' is just a placeholder
+    fetch('http://138.68.56.236:3000/api/data', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        meter: 0,
+        startDate: hourAgo,
+        endDate: now
+      })
+    })
+    .then((response) => response.text())
+    .then((responseText) => {
+      this.setState({ data: responseText });
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>{this.props.message}</Text>
+        <Text>{this.state.data}</Text>
       </View>
     )
   }
