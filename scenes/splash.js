@@ -2,61 +2,98 @@
 // Flow
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 
 export default class Splash extends Component {
-  
-  // Define default loadNextScene prop - this is only for when this element is used
-  // improperly elsewhere in our code, but it'll be an easier error to debug this way.
+
   static get defaultProps() {
     return {
-      loadNextScene: () => this.setState({ message: 'Error loading next scene; no loadNextScene method given!' })
+      // This component should always be given a navigator property. When it isn't, log this error.
+      navigator: { push: (name) => {
+        console.log(`Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!`);
+      }}
     };
   }
 
-  // Initialize message state variable so the Text field doesn't get mad. 
   constructor(props) {
     super(props);
-    this.state = { message: '' }
+
+    this.loadUserData = this.loadUserData.bind(this);
+    this.loadLoginForm = this.loadLoginForm.bind(this);
+    this.loadRegisterForm = this.loadRegisterForm.bind(this);
   }
 
-  // TEMP!! Set a timer to leave the splash screen up for 3 seconds (just so we can see it / debug)
-  componentDidMount() {
-    this.state.timer = setTimeout(this.props.loadNextScene, 3000);
-  }
-  // Clear the timer if the component is unmounted before the timer is up, so the timer doesn't leak
-  componentWillUnmount() {
-    clearTimeout(this.timer);
-  }
-
-  
   render() {
     return (
-      <View style={styles.wrapper}>
-        <Text style={styles.title}>FLOW</Text>
-        <Text style={styles.message}>{this.state.message}</Text>
+      <View style={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image style={styles.logo}
+            source={require('./images/flow.png')}
+          />
+        </View>
+        <View>
+          <TouchableHighlight style={styles.buttonLoginContainer}
+            onPress={this.loadLoginForm}>
+            <Text style={styles.buttonText}>LOGIN</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.buttonSignUpContainer}
+            onPress={this.loadRegisterForm}>
+            <Text style={styles.buttonText}>SIGN UP</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
+
+  loadUserData(userObject) {
+    // Do stuff with user data
+    // Load the next scene
+    this.props.navigator.push({ name: 'overview', passProps: { message: JSON.stringify(userObject) } });
+  }
+
+  loadLoginForm() {
+    this.props.navigator.push({ name: 'login', passProps: { onSuccess: this.loadUserData } })
+  }
+  loadRegisterForm() {
+    this.props.navigator.push({ name: 'register', passProps: { onSuccess: this.loadUserData } });
+  }
+
 }
 
-
 const styles = StyleSheet.create({
-  wrapper: {
-    backgroundColor: 'rgb(52, 152, 219)',
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'rgb(52,152,219)'
+  },
+  logo: {
+    flex: 1,
+    width: 150,
+    height: 150,
+    resizeMode: 'contain'
+  },
+  logoContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexGrow: 1
   },
-  title: {
-    color: 'white',
-    fontSize: 45,
-    fontWeight: 'bold',
-    paddingBottom: 40
+  buttonLoginContainer: {
+    backgroundColor: 'rgb(31,58,147)',
+    paddingVertical: 15,
+    height: 60,
+    justifyContent: 'flex-end'
   },
-  message: {
-    color: 'white',
-    fontSize: 14,
-    paddingTop: 50
+  buttonSignUpContainer: {
+    backgroundColor: 'rgb(171,183,183)',
+    paddingVertical: 15,
+    height: 60,
+    justifyContent: 'flex-end'
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#FFF',
+    fontWeight: '700',
+    fontSize: 20
   }
 });

@@ -1,4 +1,4 @@
-// index.android.js
+// index.ios.js
 // Flow
 
 import React, { Component } from 'react';
@@ -9,32 +9,27 @@ import {
 } from 'react-native';
 
 import Splash from './scenes/splash';
-import Login from './scenes/login/login';
+import Login from './scenes/login';
+import Register from './scenes/register';
 import Overview from './scenes/overview';
 
 export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', index: 0 }}
+        initialRoute={{ title: 'Flow', name: 'splash' }}
         renderScene={(route, navigator) => {
-          switch (route.index) {
-            case 0: 
-              return <Splash
-                title={route.title}
-
-                // Function that's called to load login scene
-                loadNextScene={ () => navigator.push({ index: 1 }) }
-              />;
-            case 1:
-              return <Login
-                loadOverviewScene={ () => navigator.push({ index: 3 }) }
-                loadRegisterScene={ () => navigator.push({ index: 2 }) }
-              />;
-            case 2:
-              return <Register loadOverviewScene={ () => navigator.push({ index: 3 }) } />;
+          switch (route.name) {
+            case 'splash':
+              return <Splash navigator={navigator} />;
+            case 'login':
+              return <Login {...route.passProps} />;
+            case 'register':
+              return <Register {...route.passProps} />;
+            case 'overview':
+              return <Overview navigator={navigator} {...route.passProps} />;
             default:
-              return <Overview />
+              return <Text>Bad route name given!</Text>
           }
         }}
       />

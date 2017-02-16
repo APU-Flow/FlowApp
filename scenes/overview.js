@@ -2,13 +2,17 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Button, Text } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { StyleSheet, View, Text } from 'react-native';
 
 export default class Overview extends Component {
+  
   static get defaultProps() {
     return {
-      title: 'Overview'
+      // This component should always be given a navigator property. When it isn't, log this error.
+      navigator: { push: (name) => {
+        console.log(`Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!`);
+      }},
+      message: 'Default message'
     };
   }
 
@@ -25,7 +29,7 @@ export default class Overview extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Stuff will go here!</Text>
+        <Text>{this.props.message}</Text>
       </View>
     )
   }
