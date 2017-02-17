@@ -50,7 +50,7 @@ export default class LoginForm extends Component {
   }
 
   submitToServer() {
-    fetch('http://138.68.56.236:3000/api/login', {
+    fetch('http://138.68.56.236:3000/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

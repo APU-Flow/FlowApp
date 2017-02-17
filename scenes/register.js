@@ -71,6 +71,7 @@ export default class Register extends Component {
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
           returnKeyType="next"
+          secureTextEntry={true}
           onChangeText={(text) => this.verifyInput('password', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[4] && styles.invalid]}
@@ -79,6 +80,7 @@ export default class Register extends Component {
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
           returnKeyType="next"
+          secureTextEntry={true}
           onChangeText={(text) => this.verifyInput('passwordVerification', text)}
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[5] && styles.invalid]}
@@ -158,7 +160,7 @@ export default class Register extends Component {
   }
 
   submitRegistration() {
-    fetch('http://138.68.56.236:3000/api/newUser', {
+    fetch('http://138.68.56.236:3000/newUser', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -185,7 +187,7 @@ export default class Register extends Component {
   }
 
   submitLogin() {
-    fetch('http://138.68.56.236:3000/api/login', {
+    fetch('http://138.68.56.236:3000/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
