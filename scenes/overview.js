@@ -25,20 +25,21 @@ export default class Overview extends Component {
   }
 
   componentDidMount() {
-    let now = new Date();
-    let hourAgo = new Date();
-    hourAgo.setHours(hourAgo.getHours()-1);
-    // TODO: Set this URL to the actual API location - 'data' is just a placeholder
-    fetch('http://138.68.56.236:3000/api/data', {
+    let email = 'test@apu.edu';// (this.props.email) ? this.props.email : null;
+    // let now = new Date();
+    // let hourAgo = new Date();
+    // hourAgo.setHours(hourAgo.getHours()-1);
+    fetch('http://138.68.56.236:3000/getUsageEvent', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        meter: 0,
-        startDate: hourAgo,
-        endDate: now
+        // meter: 0,
+        // startDate: hourAgo,
+        // endDate: now,
+        email
       })
     })
     .then((response) => response.text())
