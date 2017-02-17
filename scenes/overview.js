@@ -25,22 +25,16 @@ export default class Overview extends Component {
   }
 
   componentDidMount() {
-    let email = 'test@apu.edu';// (this.props.email) ? this.props.email : null;
+    let email = (this.props.email) ? this.props.email : null;
     // let now = new Date();
     // let hourAgo = new Date();
     // hourAgo.setHours(hourAgo.getHours()-1);
-    fetch('http://138.68.56.236:3000/getUsageEvent', {
+    fetch(`http://138.68.56.236:3000/getUsageEvent?email=${encodeURI(email)}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        // meter: 0,
-        // startDate: hourAgo,
-        // endDate: now,
-        email
-      })
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
     })
     .then((response) => response.text())
     .then((responseText) => {
