@@ -48,7 +48,13 @@ export default class Splash extends Component {
   loadUserData(userObject) {
     // Do stuff with user data
     // Load the next scene
-    this.props.navigator.push({ name: 'overview', passProps: { message: JSON.stringify(userObject) } });
+    this.props.navigator.push({
+      name: 'overview',
+      passProps: {
+        message: JSON.stringify(userObject),
+        email: userObject.email
+      }
+    });
   }
 
   loadLoginForm() {

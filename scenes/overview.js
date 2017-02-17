@@ -20,16 +20,33 @@ export default class Overview extends Component {
     super(props);
     // Initialize state variables 
     this.state = {
-      
+      data: ''
     }
-    
-    // Bind functions to instance
+  }
+
+  componentDidMount() {
+    let email = (this.props.email) ? this.props.email : null;
+    // let now = new Date();
+    // let hourAgo = new Date();
+    // hourAgo.setHours(hourAgo.getHours()-1);
+    fetch(`http://138.68.56.236:3000/getUsageEvent?email=${encodeURI(email)}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then((response) => response.text())
+    .then((responseText) => {
+      this.setState({ data: responseText });
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>{this.props.message}</Text>
+        <Text>{this.state.data}</Text>
       </View>
     )
   }
