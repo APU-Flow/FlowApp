@@ -5,7 +5,8 @@ import { SideMenu }  from 'react-native-side-menu';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 //this file is the meters scene which allows one to add or drop a specific meter
-//needs a function to select the different meter pages within the dropdowns
+//needs a function to select the different meter pages within the dropdowns-done
+//needs the default button to remain after an option is pressed.s
 const onButtonPress1 = () => {
   //Alert.alert('Are you sure you want to delete your data history?');
   Alert.alert(
@@ -49,7 +50,8 @@ export default class Meters extends Component {
               textStyle={styles.dropdown_text}
               dropdownStyle={styles.dropdown_dropdown}
               defaultValue='Drop A Meter'
-              renderRow={this.dropdown_renderRow.bind(this)}             
+              renderRow={this.dropdown_renderRow.bind(this)} 
+              onSelect={(idx, value) => this.onSelect(idx, value)}          
             />
       </KeyboardAwareScrollView>
     )
@@ -67,8 +69,26 @@ export default class Meters extends Component {
     );
   }
 
+  onSelect(idx, value) {
+    //alert(`idx=${idx}, value='${value}'`); //this is to let you know index and value for debugging
+    Alert.alert(
+      'Drop Meter',
+      'Are you sure you want to drop this meter?', //put which meter it is here
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Yes', onPress: () => console.log('Yes Pressed')},
+      ],
+      { cancelable: false }
+    )
+    console.debug(`idx=${idx}, value='${value}'`);
+  }
 
 }
+
+
+
+
+
 
 
 
