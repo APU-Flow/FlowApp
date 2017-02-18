@@ -13,6 +13,7 @@ import Login from './scenes/login/login';
 import Overview from './scenes/overview';
 import Settings from './scenes/settings';
 import ChangeAccount from './scenes/change-account';
+import Meters from './scenes/meters';
 
 export default class FlowApp extends Component {
   render() {
@@ -30,7 +31,7 @@ export default class FlowApp extends Component {
               />
             );
           } else {
-            return <ChangeAccount />
+            return <Meters />
           }
           
         }}

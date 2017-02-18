@@ -4,8 +4,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { SideMenu }  from 'react-native-side-menu';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-//this file is the settings screen with a , overview,
-//and hopefully presents what the graphs class does.
+//this file is the meters scene which allows one to add or drop a specific meter
+//needs a function to select the different meter pages within the dropdowns
 const onButtonPress1 = () => {
   //Alert.alert('Are you sure you want to delete your data history?');
   Alert.alert(
@@ -21,13 +21,13 @@ const onButtonPress1 = () => {
 const onButtonPress2 = () => {
   Alert.alert('Contact Us at www.flow.org');
 };
-const FIRST_DROPDOWN = ['Logout', 'Change Account'];
-const SECOND_DROPDOWN = ['Add', 'Drop'];
+const FIRST_DROPDOWN = ['Meter 1', 'Meter 2'];
+const SECOND_DROPDOWN = ['Meter 1', 'Meter 2'];
 
-export default class Settings extends Component {
+export default class Meters extends Component {
   static get defaultProps() {
     return {
-      title: 'Settings'
+      title: 'Meters'
     };
   }
 
@@ -35,37 +35,22 @@ export default class Settings extends Component {
     return (
      <KeyboardAwareScrollView style={styles.container}>
         <Text style={styles.title}>
-          Settings
+          Meters
         </Text>
             <ModalDropdown style={styles.dropdown}
               options={FIRST_DROPDOWN}
               textStyle={styles.dropdown_text}
               dropdownStyle={styles.dropdown_dropdown}
-              defaultValue='Logout or Change Account'
+              defaultValue='Add a Meter'
               renderRow={this.dropdown_renderRow.bind(this)}             
             /> 
              <ModalDropdown style={styles.dropdown}
               options={SECOND_DROPDOWN}
               textStyle={styles.dropdown_text}
               dropdownStyle={styles.dropdown_dropdown}
-              defaultValue='Add/Drop'
+              defaultValue='Drop A Meter'
               renderRow={this.dropdown_renderRow.bind(this)}             
             />
-             <TouchableHighlight onPress={onButtonPress1}>
-                <View style={styles.dropdown}>
-                  <Text style={styles.dropdown_text}>
-                    Delete Data History
-                  </Text>
-                </View>
-             </TouchableHighlight>
-
-              <TouchableHighlight onPress={onButtonPress2}>
-                <View style={styles.dropdown}>
-                  <Text style={styles.dropdown_text}>
-                    Contact Us
-                  </Text>
-                </View>
-             </TouchableHighlight>
       </KeyboardAwareScrollView>
     )
   }

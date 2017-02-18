@@ -24,7 +24,7 @@ const onButtonPress2 = () => {
   Alert.alert('Contact Us at www.flow.org');
 };
 const FIRST_DROPDOWN = ['Jim', 'Bill'];
-const SECOND_DROPDOWN = ['I', 'Am', 'Unsure'];// i Don't know what should be in this dropdown
+const SECOND_DROPDOWN = ['I', 'Am', 'Unsure'];// i Don't know what should be in this dropdown (for account settings)
 
 export default class ChangeAccount extends Component {
   static get defaultProps() {
