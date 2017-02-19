@@ -6,24 +6,9 @@ import ModalDropdown from 'react-native-modal-dropdown';
 
 //this file is the meters scene which allows one to add or drop a specific meter
 //needs a function to select the different meter pages within the dropdowns-done
-//needs the default button to remain after an option is pressed.s
-const onButtonPress1 = () => {
-  //Alert.alert('Are you sure you want to delete your data history?');
-  Alert.alert(
-  'Delete Data History',
-  'Are you sure you want to delete your data history?',
-  [
-    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-    {text: 'Yes', onPress: () => console.log('Yes Pressed')},
-  ],
-  { cancelable: false }
-)
-};
-const onButtonPress2 = () => {
-  Alert.alert('Contact Us at www.flow.org');
-};
-const FIRST_DROPDOWN = ['Meter 1', 'Meter 2'];
-const SECOND_DROPDOWN = ['Meter 1', 'Meter 2'];
+//needs the default button to remain after an option is pressed.
+FIRST_DROPDOWN = ['Meter 1', 'Meter 2'];
+SECOND_DROPDOWN = ['Meter 1', 'Meter 2'];
 
 export default class Meters extends Component {
   static get defaultProps() {
@@ -38,20 +23,21 @@ export default class Meters extends Component {
         <Text style={styles.title}>
           Meters
         </Text>
-            <ModalDropdown style={styles.dropdown}
+       <ModalDropdown style={styles.dropdown}
               options={FIRST_DROPDOWN}
               textStyle={styles.dropdown_text}
               dropdownStyle={styles.dropdown_dropdown}
-              defaultValue='Add a Meter'
-              renderRow={this.dropdown_renderRow.bind(this)}             
-            /> 
+              defaultValue='Add A Meter'
+              renderRow={this.dropdown_renderRow.bind(this)} 
+              onSelect={(idx, value) => this.onSelect1(idx, value)}       
+            />
              <ModalDropdown style={styles.dropdown}
               options={SECOND_DROPDOWN}
               textStyle={styles.dropdown_text}
               dropdownStyle={styles.dropdown_dropdown}
               defaultValue='Drop A Meter'
               renderRow={this.dropdown_renderRow.bind(this)} 
-              onSelect={(idx, value) => this.onSelect(idx, value)}          
+              onSelect={(idx, value) => this.onSelect2(idx, value)}       
             />
       </KeyboardAwareScrollView>
     )
@@ -69,19 +55,38 @@ export default class Meters extends Component {
     );
   }
 
-  onSelect(idx, value) {
+  onSelect2(idx, value) {
     //alert(`idx=${idx}, value='${value}'`); //this is to let you know index and value for debugging
     Alert.alert(
-      'Drop Meter',
-      'Are you sure you want to drop this meter?', //put which meter it is here
+      `${value}`,
+      'Are you sure you want to drop this meter?',
       [
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => console.log('Yes Pressed')},
+        {text: 'Yes', onPress: () => Alert.alert('Drop Meter',`${value} was dropped.`)},
+      ],
+      { cancelable: false }
+    )
+    //re-do arrays at top with a key so you can remove individual indexes.
+    console.debug(`idx=${idx}, value='${value}'`);
+    return false; //this turns the select an option back to the original (drop a meter)
+  }
+
+
+  onSelect1(idx, value) {
+    //alert(`idx=${idx}, value='${value}'`); //this is to let you know index and value for debugging
+    Alert.alert(
+      `${value}`,
+      'Are you sure this is the meter you would like to add?',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Yes', onPress: () => Alert.alert('Drop Meter',`${value} was added.`)},
       ],
       { cancelable: false }
     )
     console.debug(`idx=${idx}, value='${value}'`);
+    return false; //this turns the select an option back to the original (add a meter)
   }
+
 
 }
 
