@@ -4,8 +4,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { SideMenu }  from 'react-native-side-menu';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-//this file is the settings screen with a , overview,
-//and hopefully presents what the graphs class does.
+//this file is the settings screen with options to logout, go to change account page, 
+//delete data history, or view contact info
 const onButtonPress1 = () => {
   //Alert.alert('Are you sure you want to delete your data history?');
   Alert.alert(
@@ -48,7 +48,7 @@ export default class Settings extends Component {
               options={SECOND_DROPDOWN}
               textStyle={styles.dropdown_text}
               dropdownStyle={styles.dropdown_dropdown}
-              defaultValue='Add/Drop'
+              defaultValue='Add/Drop User?' //not sure what this add/drop is supposed to be
               renderRow={this.dropdown_renderRow.bind(this)}             
             />
              <TouchableHighlight onPress={onButtonPress1}>

@@ -5,26 +5,9 @@ import { SideMenu }  from 'react-native-side-menu';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 //this file is the change account screen with a switch to account, account settings,
-//and deleting my account.
-
+//and deleting my account options.
+//I have no idea what account settings is supposed to be.
 //Still need to add registered users to this page, as well as who they are logged in as
-const onButtonPress1 = () => {
-  //Alert.alert('Are you sure you want to delete your data history?');
-  Alert.alert(
-  'Delete Account',
-  'Are you sure you want to delete your account?',
-  [
-    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-    {text: 'Yes, Delete my account', onPress: () => console.log('OK Pressed')},
-  ],
-  { cancelable: false }
-)
-};
-const onButtonPress2 = () => {
-  Alert.alert('Contact Us at www.flow.org');
-};
-const FIRST_DROPDOWN = ['Jim', 'Bill'];
-const SECOND_DROPDOWN = ['I', 'Am', 'Unsure'];// i Don't know what should be in this dropdown (for account settings)
 
 export default class ChangeAccount extends Component {
   static get defaultProps() {
@@ -79,9 +62,28 @@ export default class ChangeAccount extends Component {
     );
   }
 
-
 }
 
+
+const onButtonPress1 = () => {
+  //Alert.alert('Are you sure you want to delete your data history?');
+  Alert.alert(
+  'Delete Account',
+  'Are you sure you want to delete your account?',
+  [
+    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    {text: 'Yes, Delete my account', onPress: () => console.log('OK Pressed')},
+  ],
+  { cancelable: false }
+)
+};
+
+const onButtonPress2 = () => {
+  Alert.alert('Contact Us at www.flow.org');
+};
+const FIRST_DROPDOWN = ['Jim', 'Bill'];
+const SECOND_DROPDOWN = ['I', 'Am', 'Unsure', 'What', 'Should', 'Be', 'Here'];
+// i Don't know what should be in this dropdown (for account settings)
 
 
 

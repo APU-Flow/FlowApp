@@ -4,9 +4,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { SideMenu }  from 'react-native-side-menu';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-//this file is the meters scene which allows one to add or drop a specific meter
-//needs a function to select the different meter pages within the dropdowns-done
-//needs the default button to remain after an option is pressed.
+//this file is the meters scene which allows one to add or drop a specific meter.
+//needs to be connected to the specific meters, and will need more functions when 
+//that happens.
 FIRST_DROPDOWN = ['Meter 1', 'Meter 2'];
 SECOND_DROPDOWN = ['Meter 1', 'Meter 2'];
 
@@ -23,13 +23,21 @@ export default class Meters extends Component {
         <Text style={styles.title}>
           Meters
         </Text>
-       <ModalDropdown style={styles.dropdown}
+            <ModalDropdown style={styles.dropdown}
+              options={FIRST_DROPDOWN}
+              textStyle={styles.dropdown_text}
+              dropdownStyle={styles.dropdown_dropdown}
+              defaultValue='Device Overview'
+              renderRow={this.dropdown_renderRow.bind(this)} 
+              onSelect={(idx, value) => this.onSelect1(idx, value)}       
+            />
+            <ModalDropdown style={styles.dropdown}
               options={FIRST_DROPDOWN}
               textStyle={styles.dropdown_text}
               dropdownStyle={styles.dropdown_dropdown}
               defaultValue='Add A Meter'
               renderRow={this.dropdown_renderRow.bind(this)} 
-              onSelect={(idx, value) => this.onSelect1(idx, value)}       
+              onSelect={(idx, value) => this.onSelect2(idx, value)}       
             />
              <ModalDropdown style={styles.dropdown}
               options={SECOND_DROPDOWN}
@@ -37,7 +45,7 @@ export default class Meters extends Component {
               dropdownStyle={styles.dropdown_dropdown}
               defaultValue='Drop A Meter'
               renderRow={this.dropdown_renderRow.bind(this)} 
-              onSelect={(idx, value) => this.onSelect2(idx, value)}       
+              onSelect={(idx, value) => this.onSelect3(idx, value)}       
             />
       </KeyboardAwareScrollView>
     )
@@ -55,7 +63,7 @@ export default class Meters extends Component {
     );
   }
 
-  onSelect2(idx, value) {
+  onSelect3(idx, value) {
     //alert(`idx=${idx}, value='${value}'`); //this is to let you know index and value for debugging
     Alert.alert(
       `${value}`,
@@ -72,7 +80,7 @@ export default class Meters extends Component {
   }
 
 
-  onSelect1(idx, value) {
+  onSelect2(idx, value) {
     //alert(`idx=${idx}, value='${value}'`); //this is to let you know index and value for debugging
     Alert.alert(
       `${value}`,
@@ -87,13 +95,18 @@ export default class Meters extends Component {
     return false; //this turns the select an option back to the original (add a meter)
   }
 
+  onSelect1(idx, value) {
+    //alert(`idx=${idx}, value='${value}'`); //this is to let you know index and value for debugging
+    Alert.alert(
+      `${value}`,
+      'Taking you to '+`${value}`+ ' overview screen.',
+    )
+    console.debug(`idx=${idx}, value='${value}'`);
+    return false; //this turns the select an option back to the original (add a meter)
+  }
+
 
 }
-
-
-
-
-
 
 
 
