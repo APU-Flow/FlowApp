@@ -2,19 +2,19 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Button, Text } from 'react-native';
+import { StyleSheet, TextInput, Button, Text, TouchableHighlight } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class Register extends Component {
   static get defaultProps() {
     return {
-      title: 'Register'
+      onSuccess: (responseObject) => console.log(responseObject)
     };
   }
 
   constructor(props) {
     super(props);
-    //Initialize state variables so the Text fields don't get mad. 
+    // Initialize state variables
     this.state = {
       firstName: '',
       lastName: '',
@@ -26,37 +26,38 @@ export default class Register extends Component {
       state: '',
       zip: '',
       fieldValidities: [false, false, false, false, false, false, false, false, false],
-      allValid: false
+      allValid: false,
+      submitReport: ''
     }
 
+    // Bind functions to instance
     this.verifyInput = this.verifyInput.bind(this);
-    this.submitToServer = this.submitToServer.bind(this);
+    this.submitRegistration = this.submitRegistration.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
   render() {
     return (
       <KeyboardAwareScrollView style={styles.container}>
-        {/*<Text>First Name{'\n'}</Text>*/}
+        <Text style={styles.text}>Register</Text>
         <TextInput style={[styles.field, !this.state.fieldValidities[0] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[0] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[0] ? 'green' : 'grey'}
           placeholder="First Name"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('firstName', text)}
         />
-        {/*<Text>Last Name{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[1] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[1] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[1] ? 'green' : 'grey'}
           placeholder="Last Name"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('lastName', text)}
         />
-        {/*<Text>Email Address{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[2] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[2] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[2] ? 'green' : 'grey'}
           placeholder="Email Address"
           placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="email-address"
@@ -64,65 +65,60 @@ export default class Register extends Component {
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('email', text)}
         />
-        {/*<Text>Password{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[3] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[3] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[3] ? 'green' : 'grey'}
           placeholder="Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
           returnKeyType="next"
+          secureTextEntry={true}
           onChangeText={(text) => this.verifyInput('password', text)}
         />
-        {/*<Text>Re-enter Password{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[4] && styles.invalid]}
+          borderColor={this.state.fieldValidities[4] ? 'green' : 'grey'}
           placeholder="Re-enter Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
           returnKeyType="next"
+          secureTextEntry={true}
           onChangeText={(text) => this.verifyInput('passwordVerification', text)}
         />
-        {/*<Text>Street Address{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[5] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[5] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[5] ? 'green' : 'grey'}
           placeholder="Street Address"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('address', text)}
         />
-        {/*<Text>City{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[6] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[6] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[6] ? 'green' : 'grey'}
           placeholder="City"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('city', text)}
         />
-        {/*<Text>State{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[7] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[7] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[7] ? 'green' : 'grey'}
           placeholder="State"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="characters"
           returnKeyType="next"
           onChangeText={(text) => this.verifyInput('state', text)}
         />
-        {/*<Text>Zip{'\n'}</Text>*/}
         <TextInput style={[styles.field, !this.state.fieldValidities[8] && styles.invalid]}
-          underlineColorAndroid={this.state.fieldValidities[8] ? 'black' : 'red'}
+          borderColor={this.state.fieldValidities[8] ? 'green' : 'grey'}
           placeholder="Zip"
           placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="numeric"
           returnKeyType="done"
           onChangeText={(text) => this.verifyInput('zip', text)}
         />
-        <Button 
-          style = {styles.buttonContainer}
-          title="SUBMIT" 
-          onPress={this.submitToServer} 
-          disabled={!this.state.allValid}
-        />
+        <Text>{this.state.submitReport}</Text>
+        <TouchableHighlight style={styles.buttonContainer} onPress={this.submitRegistration} disabled={!this.state.allValid}>
+          <Text style={styles.buttonText}>SUBMIT</Text>
+        </TouchableHighlight>
       </KeyboardAwareScrollView>
     )
   }
@@ -140,7 +136,7 @@ export default class Register extends Component {
         break;
       case 'password':
         this.state.fieldValidities[3] = (/^[A-Z0-9`~!@#$%^&*()\-=_+<>,.?]{5,20}$/i.test(text));
-        //Intentional lack of 'break;' to update passsword verification styles when password changes
+        // Intentional lack of 'break;' to update passsword verification styles when password changes
       case 'passwordVerification':
         this.state.fieldValidities[4] = (text == this.state.password);
         break;
@@ -163,8 +159,8 @@ export default class Register extends Component {
     this.setState({[name]: text});
   }
 
-  submitToServer() {
-    fetch('http://138.68.56.236:3000/api/newUser', {
+  submitRegistration() {
+    fetch('http://138.68.56.236:3000/newUser', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -181,36 +177,80 @@ export default class Register extends Component {
         zip: this.state.zip
       })
     })
-    .then((response) => response.text())
-    .then((responseText) => console.log(responseText));
+    .then((response) => response.json())
+    .then((responseObject) => {
+      if (responseObject.status === 'OK' || responseObject.status === 'okay')
+        this.submitLogin();
+      else
+        this.setState({submitReport: 'Registration failed!'});
+    });
+  }
+
+  submitLogin() {
+    fetch('http://138.68.56.236:3000/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
+    })    
+    .then((response) => response.json())
+    .then((responseObject) => {
+      if (typeof responseObject.token === 'string') {
+        this.setState({ submitReport: '' });
+        this.props.onSuccess(responseObject);
+      }
+      else
+        this.setState({ submitReport: 'Login failed; bad username or password.' });
+    });
   }
 
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     flex: 1,
-    // backgroundColor: '#F0F8FF',
-    backgroundColor:'rgb(52,152,219)'
+    flexDirection: 'column',
+    backgroundColor:'rgb(52,152,219)',
+    padding: 30
   },
   field: {
-    // fontSize: 14,
-    // textAlign: 'left',
-    // borderColor: 'black'
-    // color: '#FFF',
-    // marginBottom: 20,
     height: 40,
     backgroundColor: 'rgba(255,255,255,0.2)',
-    marginTop:22,
+    marginTop:15,
     color: '#FFF',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    borderColor:'black',
+    borderWidth: 1
   },
   invalid: {
-    borderColor: 'red'
+    borderColor: 'grey'
   },
   buttonContainer: {
-    backgroundColor: 'black',
-    paddingVertical: 15
+    backgroundColor: 'rgb(31,58,147)',
+    paddingVertical: 15,
+    marginTop:42,
+    justifyContent:'flex-end'
   },
+  buttonText: {
+    textAlign: 'center',
+    color: '#FFF',
+    fontWeight: '700',
+    fontSize: 20
+  },
+  text: {
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 25,
+    fontSize: 20,
+    fontWeight: '400',
+    marginBottom: 15
+  },
+  borderWidth:{
+    borderWidth:1
+  }
 });

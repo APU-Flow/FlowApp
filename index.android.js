@@ -9,31 +9,28 @@ import {
 } from 'react-native';
 
 import Splash from './scenes/splash';
-import Login from './scenes/login/login';
+import Login from './scenes/login';
+import Register from './scenes/register';
 import Overview from './scenes/overview';
-import Settings from './scenes/settings';
-import ChangeAccount from './scenes/change-account';
-import Meters from './scenes/meters';
 
 export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', index: 1 }} //changed index to 1
+        initialRoute={{ title: 'Flow', name: 'splash' }}
         renderScene={(route, navigator) => {
-          if (route.index === 0) { 
-            return (
-              <Splash 
-                title={route.title}
-
-                // Function that's called to load login scene
-                loadNextScene={ () => navigator.push({ title: 'Log In', index: route.index + 1 }) }
-              />
-            );
-          } else {
-            return <Meters />
+          switch (route.name) {
+            case 'splash':
+              return <Splash navigator={navigator} />;
+            case 'login':
+              return <Login {...route.passProps} />;
+            case 'register':
+              return <Register {...route.passProps} />;
+            case 'overview':
+              return <Overview navigator={navigator} {...route.passProps} />;
+            default:
+              return <Text>Bad route name given!</Text>
           }
-          
         }}
       />
     );
