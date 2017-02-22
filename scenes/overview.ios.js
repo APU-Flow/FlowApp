@@ -1,4 +1,4 @@
-// overview.js
+// overview.ios.js
 // Flow
 
 import React, { Component } from 'react';
