@@ -6,23 +6,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 
 //this file is the settings screen with options to logout, go to change account page, 
 //delete data history, or view contact info
-const onButtonPress1 = () => {
-  //Alert.alert('Are you sure you want to delete your data history?');
-  Alert.alert(
-  'Delete Data History',
-  'Are you sure you want to delete your data history?',
-  [
-    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-    {text: 'Yes', onPress: () => console.log('Yes Pressed')},
-  ],
-  { cancelable: false }
-)
-};
-const onButtonPress2 = () => {
-  Alert.alert('Contact Us at www.flow.org');
-};
-const FIRST_DROPDOWN = ['Logout', 'Change Account'];
-const SECOND_DROPDOWN = ['Add', 'Drop'];
+
 
 export default class Settings extends Component {
   static get defaultProps() {
@@ -81,11 +65,25 @@ export default class Settings extends Component {
       </TouchableHighlight>
     );
   }
-
-
 }
 
-
+const onButtonPress1 = () => {
+  //Alert.alert('Are you sure you want to delete your data history?');
+  Alert.alert(
+  'Delete Data History',
+  'Are you sure you want to delete your data history?',
+  [
+    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    {text: 'Yes', onPress: () => console.log('Yes Pressed')},
+  ],
+  { cancelable: false }
+)
+};
+const onButtonPress2 = () => {
+  Alert.alert('Contact Us at www.flow.org');
+};
+const FIRST_DROPDOWN = ['Logout', 'Change Account'];
+const SECOND_DROPDOWN = ['Add', 'Drop'];
 
 
 const styles = StyleSheet.create({

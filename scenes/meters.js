@@ -7,8 +7,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 //this file is the meters scene which allows one to add or drop a specific meter.
 //needs to be connected to the specific meters, and will need more functions when 
 //that happens.
-FIRST_DROPDOWN = ['Meter 1', 'Meter 2'];
-SECOND_DROPDOWN = ['Meter 1', 'Meter 2'];
+
 
 export default class Meters extends Component {
   static get defaultProps() {
@@ -105,10 +104,10 @@ export default class Meters extends Component {
     return false; //this turns the select an option back to the original (add a meter)
   }
 
-
 }
 
-
+FIRST_DROPDOWN = ['Meter 1', 'Meter 2'];
+SECOND_DROPDOWN = ['Meter 1', 'Meter 2'];
 
 
 const styles = StyleSheet.create({
