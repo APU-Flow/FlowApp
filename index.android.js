@@ -17,7 +17,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', name: 'splash' }}
+        initialRoute={{ name: 'splash' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
           switch (route.name) {
