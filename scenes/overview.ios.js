@@ -29,11 +29,12 @@ export default class Overview extends Component {
     // let now = new Date();
     // let hourAgo = new Date();
     // hourAgo.setHours(hourAgo.getHours()-1);
-    fetch(`http://138.68.56.236:3000/getUsageEvent?email=${encodeURI(email)}`, {
+    fetch(`http://138.68.56.236:3000/api/getUsageEvent?email=${encodeURI(email)}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'x-access-token': this.props.token
       }
     })
     .then((response) => response.text())
@@ -43,10 +44,10 @@ export default class Overview extends Component {
   }
 
   render() {
-    return (
+    return (      
       <View style={styles.container}>
-        <Text>{this.props.message}</Text>
-        <Text>{this.state.data}</Text>
+        <Text style={styles.text}>{this.props.message}</Text>
+        <Text style={styles.text}>{this.state.data}</Text>
       </View>
     )
   }
@@ -58,5 +59,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     backgroundColor:'rgb(52,152,219)'
+  },
+  text: {
+    margin: 10,
+    fontSize: 15
+  },
+  leftAlign: {
+    textAlign: 'left'
   }
 });

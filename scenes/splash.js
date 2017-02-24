@@ -45,14 +45,15 @@ export default class Splash extends Component {
     );
   }
 
-  loadUserData(userObject) {
+  loadUserData(serverResponse) {
     // Do stuff with user data
     // Load the next scene
     this.props.navigator.push({
       name: 'overview',
       passProps: {
-        message: JSON.stringify(userObject),
-        email: userObject.email
+        message: JSON.stringify(serverResponse),
+        email: serverResponse.email,
+        token: serverResponse.token
       }
     });
   }
