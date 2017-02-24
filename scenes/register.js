@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(31,58,147)',
     paddingVertical: 15,
     marginTop:42,
-    justifyContent:'flex-end'
+    justifyContent:'center'
   },
   buttonText: {
     textAlign: 'center',

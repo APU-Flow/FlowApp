@@ -96,13 +96,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(31,58,147)',
     paddingVertical: 15,
     height: 60,
-    justifyContent: 'flex-end'
+    justifyContent: 'center'
   },
   buttonSignUpContainer: {
     backgroundColor: 'rgb(171,183,183)',
     paddingVertical: 15,
     height: 60,
-    justifyContent: 'flex-end'
+    justifyContent: 'center'
   },
   buttonText: {
     textAlign: 'center',
