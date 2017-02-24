@@ -63,12 +63,17 @@ export default class LoginForm extends Component {
     })    
     .then((response) => response.json())
     .then((responseObject) => {
-      if (typeof responseObject.token === 'string') {
+      if (responseObject.message === 'ok' && typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
         this.props.onSuccess(responseObject);
       }
-      else
+      else if (responseObject.message === 'lol nice tri n00b') {
+        // Thank you George for that wonderful masterpiece, that piece of art of a server response
         this.setState({ submitReport: 'Login failed; bad username or password.' });
+      }
+      else {
+        this.setState({ submitReport: 'Login failed; server returned invalid response.' });
+      }
     });
   }
 }
