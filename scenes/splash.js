@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight, Navigator } from 'react-native';
 
 export default class Splash extends Component {
 
@@ -58,10 +58,18 @@ export default class Splash extends Component {
   }
 
   loadLoginForm() {
-    this.props.navigator.push({ name: 'login', passProps: { onSuccess: this.loadUserData } })
+    this.props.navigator.push({
+      name: 'login',
+      passProps: { onSuccess: this.loadUserData },
+      sceneConfig: Navigator.SceneConfigs.PushFromRight
+    });
   }
   loadRegisterForm() {
-    this.props.navigator.push({ name: 'register', passProps: { onSuccess: this.loadUserData } });
+    this.props.navigator.push({
+      name: 'register',
+      passProps: { onSuccess: this.loadUserData },
+      sceneConfig: Navigator.SceneConfigs.PushFromRight
+    });
   }
 
 }
