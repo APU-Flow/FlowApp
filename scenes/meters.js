@@ -13,6 +13,17 @@ export default class Meters extends Component {
     };
   }
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dropdown1RenderRow: this.dropdownRenderRow.bind(this),
+      dropdown2RenderRow: this.dropdownRenderRow.bind(this),
+      dropdown3RenderRow: this.dropdownRenderRow.bind(this),
+    };
+  }
+
+
   render() {
     return (
      <KeyboardAwareScrollView style={styles.container}>
@@ -24,7 +35,7 @@ export default class Meters extends Component {
               textStyle={styles.dropdownText}
               dropdownStyle={styles.dropdownDropdown}
               defaultValue='Device Overview'
-              renderRow={this.dropdownRenderRow.bind(this)} 
+              renderRow={this.state.dropdown1RenderRow}
               onSelect={(idx, value) => this.onSelect1(idx, value)}       
             />
             <ModalDropdown style={styles.dropdown}
@@ -32,7 +43,7 @@ export default class Meters extends Component {
               textStyle={styles.dropdownText}
               dropdownStyle={styles.dropdownDropdown}
               defaultValue='Add A Meter'
-              renderRow={this.dropdownRenderRow.bind(this)} 
+              renderRow={this.state.dropdown2RenderRow}
               onSelect={(idx, value) => this.onSelect2(idx, value)}       
             />
              <ModalDropdown style={styles.dropdown}
@@ -40,7 +51,7 @@ export default class Meters extends Component {
               textStyle={styles.dropdownText}
               dropdownStyle={styles.dropdownDropdown}
               defaultValue='Drop A Meter'
-              renderRow={this.dropdownRenderRow.bind(this)} 
+              renderRow={this.state.dropdown3RenderRow}
               onSelect={(idx, value) => this.onSelect3(idx, value)}       
             />
       </KeyboardAwareScrollView>

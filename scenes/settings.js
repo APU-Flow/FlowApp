@@ -14,7 +14,16 @@ export default class Settings extends Component {
       title: 'Settings'
     };
   }
-  
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dropdown1RenderRow: this.dropdownRenderRow.bind(this),
+      dropdown2RenderRow: this.dropdownRenderRow.bind(this),
+    };
+  }
+
 
   render() {
     return (
@@ -27,14 +36,14 @@ export default class Settings extends Component {
               textStyle={styles.dropdownText}
               dropdownStyle={styles.dropdownDropdown}
               defaultValue='Logout or Change Account'
-              renderRow={this.dropdownRenderRow.bind(this)}             
+              renderRow={this.state.dropdown1RenderRow}           
             /> 
              <ModalDropdown style={styles.dropdown}
               options={SECOND_DROPDOWN}
               textStyle={styles.dropdownText}
               dropdownStyle={styles.dropdownDropdown}
               defaultValue='Add/Drop User?' //not sure what this add/drop is supposed to be
-              renderRow={this.dropdownRenderRow.bind(this)}             
+              renderRow={this.state.dropdown2RenderRow}              
             />
              <TouchableHighlight onPress={onButtonPress1}>
                 <View style={styles.dropdown}>

@@ -11,6 +11,15 @@ export default class ChangeAccount extends Component {
       title: 'Change Account'
     };
   }
+  
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dropdown1RenderRow: this.dropdownRenderRow.bind(this),
+      dropdown2RenderRow: this.dropdownRenderRow.bind(this),
+    };
+  }
 
   render() {
     return (
@@ -26,14 +35,14 @@ export default class ChangeAccount extends Component {
               textStyle={styles.dropdownText}
               dropdownStyle={styles.dropdownDropdown}
               defaultValue='Switch to Which Account?'
-              renderRow={this.dropdownRenderRow.bind(this)}             
+              renderRow={this.state.dropdown1RenderRow}            
             />
             <ModalDropdown style={styles.dropdown}
               options={SECOND_DROPDOWN}
               textStyle={styles.dropdownText}
               dropdownStyle={styles.dropdownDropdown}
               defaultValue='Account Settings'
-              renderRow={this.dropdownRenderRow.bind(this)}             
+              renderRow={this.state.dropdown2RenderRow}              
             /> 
               <TouchableHighlight onPress={onButtonPress1}>
                 <View style={styles.dropdown}>
