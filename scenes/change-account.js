@@ -23,7 +23,7 @@ export default class ChangeAccount extends Component {
   render() {
     return (
      <KeyboardAwareScrollView style={styles.container}>
-        <Text style={styles.title}>
+        <Text style={styles.text}>
           Change Account
         </Text>
         <Text style={styles.account}>
@@ -95,7 +95,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
-    backgroundColor: '#F0F8FF'
+    backgroundColor:'rgb(52,152,219)',
+  },
+  text: {
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 25,
+    fontSize: 20,
+    fontWeight: '400',
+    marginBottom: 15
   },
   title: {
     fontSize: 50,
@@ -115,19 +123,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderColor: 'black'
   },
-  invalid: {
-    borderColor: 'red'
-  },
   textButton: {
     color: 'deepskyblue',
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'deepskyblue',
+    borderColor: 'rgb(31,58,147)',
     margin: 2,
   },
   dropdown: {
     margin: 8,
-    borderColor:  'rgb(52, 152, 219)',
-    backgroundColor:  'rgb(52, 152, 219)',
+    borderColor:  'rgb(31,58,147)',
+    backgroundColor: 'rgb(31,58,147)',
     borderWidth: 1,
     borderRadius: 1,
   },
@@ -143,10 +148,10 @@ const styles = StyleSheet.create({
     margin: 8,
     width: 320,
     height: 100,
-    borderColor: 'rgb(52, 152, 219)',
+    borderColor: 'rgb(31,58,147)',
     borderWidth: 2,
     borderRadius: 3,
-    backgroundColor: 'white'
+    backgroundColor: 'rgb(31,58,147)',
   },
 
 
@@ -154,18 +159,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 40,
     alignItems: 'center',
-    backgroundColor: 'rgb(52, 152, 219)'
+    backgroundColor: 'rgb(31,58,147)'
   },
 
   dropdownRowText: {
     marginHorizontal: 4,
     fontSize: 16,
-    color: 'rgb(52, 152, 219)',
+    color: 'rgb(31,58,147)',
     textAlignVertical: 'center',
     textAlign: 'center',
   },
   dropdownSeparator: {
     height: 1,
-    backgroundColor: 'cornflowerblue',
+    backgroundColor: 'rgb(31,58,147)',
   },
 });

@@ -20,7 +20,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', name: 'splash' }}
+        initialRoute={{ title: 'Flow', name: 'changeAccount' }}
         renderScene={(route, navigator) => {
           switch (route.name) {
             case 'splash':
