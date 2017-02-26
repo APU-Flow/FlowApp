@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Navigator, Button, Text, Alert, View, TouchableOpacity, TouchableHighlight, ScrollView, } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { SideMenu }  from 'react-native-side-menu';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 //this file is the settings screen with options to logout, go to change account page, 
