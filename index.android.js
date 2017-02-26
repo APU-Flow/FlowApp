@@ -20,7 +20,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', name: 'splash' }}
+        initialRoute={{ title: 'Flow', name: 'meters' }}
         renderScene={(route, navigator) => {
           switch (route.name) {
             case 'splash':
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0000FF',
+    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,

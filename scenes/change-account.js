@@ -4,10 +4,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { SideMenu }  from 'react-native-side-menu';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-//this file is the change account screen with a switch to account, account settings,
-//and deleting my account options.
-//I have no idea what account settings is supposed to be.
-//Still need to add registered users to this page, as well as who they are logged in as
 
 export default class ChangeAccount extends Component {
   static get defaultProps() {
@@ -27,21 +23,21 @@ export default class ChangeAccount extends Component {
         </Text>
             <ModalDropdown style={styles.dropdown}
               options={FIRST_DROPDOWN}
-              textStyle={styles.dropdown_text}
-              dropdownStyle={styles.dropdown_dropdown}
+              textStyle={styles.dropdownText}
+              dropdownStyle={styles.dropdownDropdown}
               defaultValue='Switch to Which Account?'
-              renderRow={this.dropdown_renderRow.bind(this)}             
+              renderRow={this.dropdownRenderRow.bind(this)}             
             />
             <ModalDropdown style={styles.dropdown}
               options={SECOND_DROPDOWN}
-              textStyle={styles.dropdown_text}
-              dropdownStyle={styles.dropdown_dropdown}
+              textStyle={styles.dropdownText}
+              dropdownStyle={styles.dropdownDropdown}
               defaultValue='Account Settings'
-              renderRow={this.dropdown_renderRow.bind(this)}             
+              renderRow={this.dropdownRenderRow.bind(this)}             
             /> 
               <TouchableHighlight onPress={onButtonPress1}>
                 <View style={styles.dropdown}>
-                  <Text style={styles.dropdown_text}>
+                  <Text style={styles.dropdownText}>
                     Delete My Account
                   </Text>
                 </View>
@@ -49,13 +45,13 @@ export default class ChangeAccount extends Component {
       </KeyboardAwareScrollView>
     )
   }
-   dropdown_renderRow(rowData, rowID, highlighted) {
+   dropdownRenderRow(rowData, rowID, highlighted) {
     let evenRow = rowID % 2;
     return (
       <TouchableHighlight underlayColor='cornflowerblue'>
-        <View style={[styles.dropdown_row, {backgroundColor: evenRow ? 'lemonchiffon' : 'white'}]}>
-          <Text style={[styles.dropdown_row_text, highlighted && {color: 'mediumaquamarine'}]}>
-             {`${rowData}`}
+        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'lemonchiffon' : 'white'}]}>
+          <Text style={[styles.dropdownRowText, highlighted && {color: 'mediumaquamarine'}]}>
+             {rowData}
           </Text>
         </View>
       </TouchableHighlight>
@@ -127,7 +123,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 1,
   },
-  dropdown_text: {
+  dropdownText: {
     marginVertical: 10,
     marginHorizontal: 6,
     fontSize: 18,
@@ -135,7 +131,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-   dropdown_dropdown: {
+   dropdownDropdown: {
     margin: 8,
     width: 320,
     height: 100,
@@ -146,21 +142,21 @@ const styles = StyleSheet.create({
   },
 
 
-  dropdown_row: {
+  dropdownRow: {
     flexDirection: 'row',
     height: 40,
     alignItems: 'center',
     backgroundColor: 'rgb(52, 152, 219)'
   },
 
-  dropdown_row_text: {
+  dropdownRowText: {
     marginHorizontal: 4,
     fontSize: 16,
     color: 'rgb(52, 152, 219)',
     textAlignVertical: 'center',
     textAlign: 'center',
   },
-  dropdown_separator: {
+  dropdownSeparator: {
     height: 1,
     backgroundColor: 'cornflowerblue',
   },

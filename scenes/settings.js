@@ -14,6 +14,7 @@ export default class Settings extends Component {
       title: 'Settings'
     };
   }
+  
 
   render() {
     return (
@@ -23,21 +24,21 @@ export default class Settings extends Component {
         </Text>
             <ModalDropdown style={styles.dropdown}
               options={FIRST_DROPDOWN}
-              textStyle={styles.dropdown_text}
-              dropdownStyle={styles.dropdown_dropdown}
+              textStyle={styles.dropdownText}
+              dropdownStyle={styles.dropdownDropdown}
               defaultValue='Logout or Change Account'
-              renderRow={this.dropdown_renderRow.bind(this)}             
+              renderRow={this.dropdownRenderRow.bind(this)}             
             /> 
              <ModalDropdown style={styles.dropdown}
               options={SECOND_DROPDOWN}
-              textStyle={styles.dropdown_text}
-              dropdownStyle={styles.dropdown_dropdown}
+              textStyle={styles.dropdownText}
+              dropdownStyle={styles.dropdownDropdown}
               defaultValue='Add/Drop User?' //not sure what this add/drop is supposed to be
-              renderRow={this.dropdown_renderRow.bind(this)}             
+              renderRow={this.dropdownRenderRow.bind(this)}             
             />
              <TouchableHighlight onPress={onButtonPress1}>
                 <View style={styles.dropdown}>
-                  <Text style={styles.dropdown_text}>
+                  <Text style={styles.dropdownText}>
                     Delete Data History
                   </Text>
                 </View>
@@ -45,7 +46,7 @@ export default class Settings extends Component {
 
               <TouchableHighlight onPress={onButtonPress2}>
                 <View style={styles.dropdown}>
-                  <Text style={styles.dropdown_text}>
+                  <Text style={styles.dropdownText}>
                     Contact Us
                   </Text>
                 </View>
@@ -53,12 +54,12 @@ export default class Settings extends Component {
       </KeyboardAwareScrollView>
     )
   }
-   dropdown_renderRow(rowData, rowID, highlighted) {
+   dropdownRenderRow(rowData, rowID, highlighted) {
     let evenRow = rowID % 2;
     return (
       <TouchableHighlight underlayColor='cornflowerblue'>
-        <View style={[styles.dropdown_row, {backgroundColor: evenRow ? 'lemonchiffon' : 'white'}]}>
-          <Text style={[styles.dropdown_row_text, highlighted && {color: 'mediumaquamarine'}]}>
+        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'lemonchiffon' : 'white'}]}>
+          <Text style={[styles.dropdownRowText, highlighted && {color: 'mediumaquamarine'}]}>
              {`${rowData}`}
           </Text>
         </View>
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 1,
   },
-  dropdown_text: {
+  dropdownText: {
     marginVertical: 10,
     marginHorizontal: 6,
     fontSize: 18,
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-   dropdown_dropdown: {
+   dropdownDropdown: {
     margin: 8,
     width: 320,
     height: 100,
@@ -140,21 +141,21 @@ const styles = StyleSheet.create({
   },
 
 
-  dropdown_row: {
+  dropdownRow: {
     flexDirection: 'row',
     height: 40,
     alignItems: 'center',
     backgroundColor: 'rgb(52, 152, 219)'
   },
 
-  dropdown_row_text: {
+  dropdownRowText: {
     marginHorizontal: 4,
     fontSize: 16,
     color: 'rgb(52, 152, 219)',
     textAlignVertical: 'center',
     textAlign: 'center',
   },
-  dropdown_separator: {
+  dropdownSeparator: {
     height: 1,
     backgroundColor: 'cornflowerblue',
   },
