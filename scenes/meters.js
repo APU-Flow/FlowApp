@@ -26,7 +26,7 @@ export default class Meters extends Component {
   render() {
     return (
      <KeyboardAwareScrollView style={styles.container}>
-        <Text style={styles.title}>
+        <Text style={styles.text}>
           Meters
         </Text>
             <ModalDropdown style={styles.dropdown}
@@ -60,8 +60,8 @@ export default class Meters extends Component {
     let evenRow = rowID % 2;
     return (
       <TouchableHighlight underlayColor='cornflowerblue'>
-        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'lemonchiffon' : 'white'}]}>
-          <Text style={[styles.dropdownRowText, highlighted && {color: 'mediumaquamarine'}]}>
+       <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
+          <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
              {rowData}
           </Text>
         </View>
@@ -121,34 +121,29 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
-    backgroundColor: '#F0F8FF'
+    backgroundColor:'rgb(52,152,219)',
   },
-  title: {
-    fontSize: 50,
-    flexDirection: 'column',
-    flex: 1,
-     textAlign: 'center',
-    backgroundColor: '#F0F8FF',
-    color: 'rgb(52, 152, 219)'
-  },
-  field: {
-    fontSize: 14,
+  text: {
     textAlign: 'center',
-    borderColor: 'black'
+    color: 'white',
+    marginTop: 25,
+    fontSize: 20,
+    fontWeight: '400',
+    marginBottom: 15
   },
-  invalid: {
-    borderColor: 'red'
+  smallerText: {
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 5,
+    fontSize: 18,
+    fontWeight: '400',
+    marginBottom: 15
   },
-  textButton: {
-    color: 'deepskyblue',
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'deepskyblue',
-    margin: 2,
-  },
+
   dropdown: {
     margin: 8,
-    borderColor:  'rgb(52, 152, 219)',
-    backgroundColor:  'rgb(52, 152, 219)',
+    borderColor:  'rgb(31,58,147)',
+    backgroundColor: 'rgb(31,58,147)',
     borderWidth: 1,
     borderRadius: 1,
   },
@@ -164,27 +159,25 @@ const styles = StyleSheet.create({
     margin: 8,
     width: 320,
     height: 100,
-    borderColor: 'rgb(52, 152, 219)',
+    borderColor: 'rgb(31,58,147)',
     borderWidth: 2,
     borderRadius: 3,
-    backgroundColor: 'white'
+    backgroundColor: 'rgb(31,58,147)',
   },
+
+
   dropdownRow: {
     flexDirection: 'row',
     height: 40,
     alignItems: 'center',
-    backgroundColor: 'rgb(52, 152, 219)'
+    backgroundColor: 'rgb(31,58,147)'
   },
 
   dropdownRowText: {
     marginHorizontal: 4,
     fontSize: 16,
-    color: 'rgb(52, 152, 219)',
+    color: 'white',
     textAlignVertical: 'center',
     textAlign: 'center',
-  },
-  dropdownSeparator: {
-    height: 1,
-    backgroundColor: 'cornflowerblue',
   },
 });

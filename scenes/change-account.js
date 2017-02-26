@@ -26,7 +26,7 @@ export default class ChangeAccount extends Component {
         <Text style={styles.text}>
           Change Account
         </Text>
-        <Text style={styles.account}>
+        <Text style={styles.smallerText}>
           You're currently logged in as...
         </Text>
             <ModalDropdown style={styles.dropdown}
@@ -57,8 +57,8 @@ export default class ChangeAccount extends Component {
     let evenRow = rowID % 2;
     return (
       <TouchableHighlight underlayColor='cornflowerblue'>
-        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'lemonchiffon' : 'white'}]}>
-          <Text style={[styles.dropdownRowText, highlighted && {color: 'mediumaquamarine'}]}>
+        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
+          <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
              {rowData}
           </Text>
         </View>
@@ -75,7 +75,7 @@ const onButtonPress1 = () => {
   'Delete Account',
   'Are you sure you want to delete your account?',
   [
-    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: styles.text},
     {text: 'Yes, Delete my account', onPress: () => console.log('OK Pressed')},
   ],
   { cancelable: false }
@@ -105,30 +105,15 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 15
   },
-  title: {
-    fontSize: 50,
-    flexDirection: 'column',
-    flex: 1,
-     textAlign: 'center',
-    backgroundColor: '#F0F8FF',
-    color: 'rgb(52, 152, 219)'
-  },
-  field: {
-    fontSize: 14,
+  smallerText: {
     textAlign: 'center',
-    borderColor: 'black'
+    color: 'white',
+    marginTop: 5,
+    fontSize: 18,
+    fontWeight: '400',
+    marginBottom: 15
   },
-  account: {
-    fontSize: 20,
-    textAlign: 'center',
-    borderColor: 'black'
-  },
-  textButton: {
-    color: 'deepskyblue',
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgb(31,58,147)',
-    margin: 2,
-  },
+
   dropdown: {
     margin: 8,
     borderColor:  'rgb(31,58,147)',
@@ -165,12 +150,8 @@ const styles = StyleSheet.create({
   dropdownRowText: {
     marginHorizontal: 4,
     fontSize: 16,
-    color: 'rgb(31,58,147)',
+    color: 'white',
     textAlignVertical: 'center',
     textAlign: 'center',
-  },
-  dropdownSeparator: {
-    height: 1,
-    backgroundColor: 'rgb(31,58,147)',
   },
 });
