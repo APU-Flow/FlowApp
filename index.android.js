@@ -14,13 +14,14 @@ import ChangeAccount from './scenes/change-account';
 import Splash from './scenes/splash';
 import Login from './scenes/login';
 import Register from './scenes/register';
-import Overview from './scenes/overview';
+import Overview from './scenes/overview.android';
 
 export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
         initialRoute={{ title: 'Flow', name: 'splash' }}
+        configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
           switch (route.name) {
             case 'splash':

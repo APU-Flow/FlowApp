@@ -58,10 +58,18 @@ export default class Splash extends Component {
   }
 
   loadLoginForm() {
-    this.props.navigator.push({ name: 'login', passProps: { onSuccess: this.loadUserData } })
+    this.props.navigator.push({
+      name: 'login',
+      passProps: { onSuccess: this.loadUserData },
+      sceneConfig: Navigator.SceneConfigs.PushFromRight
+    });
   }
   loadRegisterForm() {
-    this.props.navigator.push({ name: 'register', passProps: { onSuccess: this.loadUserData } });
+    this.props.navigator.push({
+      name: 'register',
+      passProps: { onSuccess: this.loadUserData },
+      sceneConfig: Navigator.SceneConfigs.PushFromRight
+    });
   }
 
 }
