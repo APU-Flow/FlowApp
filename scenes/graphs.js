@@ -1,3 +1,6 @@
+// graphs.js
+// Flow
+
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, Button, Text, Alert, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';

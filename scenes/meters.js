@@ -1,9 +1,10 @@
+// meters.js
+// Flow
+
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Navigator, Button, Text, Alert, View, TouchableOpacity, TouchableHighlight, ScrollView, } from 'react-native';
+import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ModalDropdown from 'react-native-modal-dropdown';
-
-
 
 export default class Meters extends Component {
   static get defaultProps() {
@@ -15,48 +16,50 @@ export default class Meters extends Component {
   constructor(props) {
     super(props);
 
+    // Initialize state variables
     this.state = {
-      dropdown1RenderRow: this.dropdownRenderRow.bind(this),
-      dropdown2RenderRow: this.dropdownRenderRow.bind(this),
-      dropdown3RenderRow: this.dropdownRenderRow.bind(this),
+      meterList: ['Meter 1', 'Meter 2', 'Meter 3']
     };
-  }
 
+    this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
+    this.viewMeter = this.viewMeter.bind(this);
+    this.addMeter = this.addMeter.bind(this);
+    this.dropMeter = this.dropMeter.bind(this);
+  }
 
   render() {
     return (
-     <KeyboardAwareScrollView style={styles.container}>
-        <Text style={styles.text}>
-          Meters
-        </Text>
-            <ModalDropdown style={styles.dropdown}
-              options={FIRST_DROPDOWN}
-              textStyle={styles.dropdownText}
-              dropdownStyle={styles.dropdownDropdown}
-              defaultValue='Device Overview'
-              renderRow={this.state.dropdown1RenderRow}
-              onSelect={(idx, value) => this.onSelect1(idx, value)}       
-            />
-            <ModalDropdown style={styles.dropdown}
-              options={FIRST_DROPDOWN}
-              textStyle={styles.dropdownText}
-              dropdownStyle={styles.dropdownDropdown}
-              defaultValue='Add A Meter'
-              renderRow={this.state.dropdown2RenderRow}
-              onSelect={(idx, value) => this.onSelect2(idx, value)}       
-            />
-             <ModalDropdown style={styles.dropdown}
-              options={SECOND_DROPDOWN}
-              textStyle={styles.dropdownText}
-              dropdownStyle={styles.dropdownDropdown}
-              defaultValue='Drop A Meter'
-              renderRow={this.state.dropdown3RenderRow}
-              onSelect={(idx, value) => this.onSelect3(idx, value)}       
-            />
+      <KeyboardAwareScrollView style={styles.container}>
+        <Text style={styles.title}>{this.props.title}</Text>
+        <ModalDropdown style={styles.dropdown}
+          options={this.state.meterList}
+          textStyle={styles.dropdownText}
+          dropdownStyle={styles.dropdownDropdown}
+          defaultValue='Device Overview'
+          renderRow={this.dropdownRenderRow}
+          onSelect={this.viewMeter}       
+        />
+        <ModalDropdown style={styles.dropdown}
+          options={this.state.meterList}
+          textStyle={styles.dropdownText}
+          dropdownStyle={styles.dropdownDropdown}
+          defaultValue='Add A Meter'
+          renderRow={this.dropdownRenderRow}
+          onSelect={this.addMeter}       
+        />
+        <ModalDropdown style={styles.dropdown}
+          options={this.state.meterList}
+          textStyle={styles.dropdownText}
+          dropdownStyle={styles.dropdownDropdown}
+          defaultValue='Drop A Meter'
+          renderRow={this.dropdownRenderRow}
+          onSelect={this.dropMeter}       
+        />
       </KeyboardAwareScrollView>
-    )
+    );
   }
-   dropdownRenderRow(rowData, rowID, highlighted) {
+
+  dropdownRenderRow(rowData, rowID, highlighted) {
     let evenRow = rowID % 2;
     return (
       <TouchableHighlight underlayColor='cornflowerblue'>
@@ -69,25 +72,15 @@ export default class Meters extends Component {
     );
   }
 
-  onSelect3(idx, value) {
-    //alert(`idx=${idx}, value='${value}'`); //this is to let you know index and value for debugging
+  viewMeter(index, value) {
     Alert.alert(
       `${value}`,
-      'Are you sure you want to drop this meter?',
-      [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => Alert.alert('Drop Meter',`${value} was dropped.`)},
-      ],
-      { cancelable: false }
+      'Taking you to '+`${value}`+ ' overview screen.',
     )
-    //re-do arrays at top with a key so you can remove individual indexes.
-    console.debug(`idx=${idx}, value='${value}'`);
-    return false; //this turns the select an option back to the original (drop a meter)
+    return false; //this turns the selected option back to the original
   }
 
-
-  onSelect2(idx, value) {
-    //alert(`idx=${idx}, value='${value}'`); //this is to let you know index and value for debugging
+  addMeter(index, value) {
     Alert.alert(
       `${value}`,
       'Are you sure this is the meter you would like to add?',
@@ -97,24 +90,23 @@ export default class Meters extends Component {
       ],
       { cancelable: false }
     )
-    console.debug(`idx=${idx}, value='${value}'`);
-    return false; //this turns the select an option back to the original (add a meter)
+    return false; //this turns the selected option back to the original
   }
 
-  onSelect1(idx, value) {
-    //alert(`idx=${idx}, value='${value}'`); //this is to let you know index and value for debugging
+  dropMeter(index, value) {
     Alert.alert(
       `${value}`,
-      'Taking you to '+`${value}`+ ' overview screen.',
+      'Are you sure you want to drop this meter?',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Yes', onPress: () => Alert.alert('Drop Meter',`${value} was dropped.`)},
+      ],
+      { cancelable: false }
     )
-    console.debug(`idx=${idx}, value='${value}'`);
-    return false; //this turns the select an option back to the original (add a meter)
+    return false; //this turns the selected option back to the original
   }
 
 }
-
-FIRST_DROPDOWN = ['Meter 1', 'Meter 2'];
-SECOND_DROPDOWN = ['Meter 1', 'Meter 2'];
 
 
 const styles = StyleSheet.create({
@@ -123,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:'rgb(52,152,219)',
   },
-  text: {
+  title: {
     textAlign: 'center',
     color: 'white',
     marginTop: 25,
@@ -131,15 +123,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 15
   },
-  smallerText: {
-    textAlign: 'center',
-    color: 'white',
-    marginTop: 5,
-    fontSize: 18,
-    fontWeight: '400',
-    marginBottom: 15
-  },
-
+  
   dropdown: {
     margin: 8,
     borderColor:  'rgb(31,58,147)',
@@ -164,20 +148,17 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: 'rgb(31,58,147)',
   },
-
-
   dropdownRow: {
     flexDirection: 'row',
     height: 40,
     alignItems: 'center',
     backgroundColor: 'rgb(31,58,147)'
   },
-
   dropdownRowText: {
     marginHorizontal: 4,
     fontSize: 16,
     color: 'white',
     textAlignVertical: 'center',
     textAlign: 'center',
-  },
+  }
 });
