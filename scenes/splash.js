@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableHighlight, Navigator } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableHighlight } from 'react-native';
 
 export default class Splash extends Component {
 
