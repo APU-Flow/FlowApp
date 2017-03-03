@@ -14,7 +14,7 @@ import ChangeAccount from './scenes/change-account';
 import Splash from './scenes/splash';
 import Login from './scenes/login';
 import Register from './scenes/register';
-import Overview from './scenes/overview.android';
+import Overview from './scenes/overview';
 
 export default class FlowApp extends Component {
   render() {

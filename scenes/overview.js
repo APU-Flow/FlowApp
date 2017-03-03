@@ -1,17 +1,13 @@
-// overview.android.js
+// overview.js
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, DrawerLayoutAndroid } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 export default class Overview extends Component {
   
   static get defaultProps() {
     return {
-      // This component should always be given a navigator property. When it isn't, log this error.
-      navigator: { push: (name) => {
-        console.log(`Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!`);
-      }},
       message: 'Default message'
     };
   }
@@ -44,22 +40,12 @@ export default class Overview extends Component {
   }
 
   render() {
-    let navigationView = (
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <Text style={[styles.text, styles.leftAlign]}>I'm in the Drawer!</Text>
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>{this.props.message}</Text>
+        <Text style={styles.text}>{this.state.data}</Text>
       </View>
     );
-    return (
-      <DrawerLayoutAndroid
-        drawerWidth={300}
-        drawerPosition={DrawerLayoutAndroid.positions.Left}
-        renderNavigationView={() => navigationView}>
-          <View style={styles.container}>
-            <Text style={styles.text}>{this.props.message}</Text>
-            <Text style={styles.text}>{this.state.data}</Text>
-          </View>
-    </DrawerLayoutAndroid>
-    )
   }
 
 }
