@@ -1,4 +1,4 @@
-// settings.js
+// meters.js
 // Flow
 
 import React, { Component } from 'react';
@@ -6,10 +6,10 @@ import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-export default class Settings extends Component {
+export default class Meters extends Component {
   static get defaultProps() {
     return {
-      title: 'Settings'
+      title: 'Meters'
     };
   }
 
@@ -18,38 +18,43 @@ export default class Settings extends Component {
 
     // Initialize state variables
     this.state = {
-      accountOptions: ['Logout', 'Change Account']
+      meterList: ['Meter 1', 'Meter 2', 'Meter 3']
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
-    this.confirmDeleteHistory = this.confirmDeleteHistory.bind(this);
-    this.contactUs = this.contactUs.bind(this);
+    this.viewMeter = this.viewMeter.bind(this);
+    this.addMeter = this.addMeter.bind(this);
+    this.dropMeter = this.dropMeter.bind(this);
   }
-
 
   render() {
     return (
-     <KeyboardAwareScrollView style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container}>
         <Text style={styles.title}>{this.props.title}</Text>
         <ModalDropdown style={styles.dropdown}
-          options={this.state.accountOptions}
+          options={this.state.meterList}
           textStyle={styles.dropdownText}
           dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Logout or Change Account'
-          renderRow={this.state.dropdown1RenderRow}           
+          defaultValue='Device Overview'
+          renderRow={this.dropdownRenderRow}
+          onSelect={this.viewMeter}       
         />
-
-        <TouchableHighlight onPress={this.confirmDeleteHistory}>
-          <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Delete Data History</Text>
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight onPress={this.contactUs}>
-          <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Contact Us</Text>
-          </View>
-        </TouchableHighlight>
+        <ModalDropdown style={styles.dropdown}
+          options={this.state.meterList}
+          textStyle={styles.dropdownText}
+          dropdownStyle={styles.dropdownDropdown}
+          defaultValue='Add A Meter'
+          renderRow={this.dropdownRenderRow}
+          onSelect={this.addMeter}       
+        />
+        <ModalDropdown style={styles.dropdown}
+          options={this.state.meterList}
+          textStyle={styles.dropdownText}
+          dropdownStyle={styles.dropdownDropdown}
+          defaultValue='Drop A Meter'
+          renderRow={this.dropdownRenderRow}
+          onSelect={this.dropMeter}       
+        />
       </KeyboardAwareScrollView>
     );
   }
@@ -58,7 +63,7 @@ export default class Settings extends Component {
     let evenRow = rowID % 2;
     return (
       <TouchableHighlight underlayColor='cornflowerblue'>
-        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
+       <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
           <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
              {rowData}
           </Text>
@@ -67,23 +72,42 @@ export default class Settings extends Component {
     );
   }
 
-  confirmDeleteHistory() {
+  viewMeter(index, value) {
     Alert.alert(
-      'Delete Data History',
-      'Are you sure you want to delete your data history?',
+      `${value}`,
+      'Taking you to '+`${value}`+ ' overview screen.',
+    )
+    return false; //this turns the selected option back to the original
+  }
+
+  addMeter(index, value) {
+    Alert.alert(
+      `${value}`,
+      'Are you sure this is the meter you would like to add?',
       [
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'Yes', onPress: () => console.log('Yes Pressed') }
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Yes', onPress: () => Alert.alert('Drop Meter',`${value} was added.`)},
       ],
       { cancelable: false }
     )
+    return false; //this turns the selected option back to the original
   }
 
-  contactUs() {
-    Alert.alert('Contact Us at www.flow.org');
+  dropMeter(index, value) {
+    Alert.alert(
+      `${value}`,
+      'Are you sure you want to drop this meter?',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Yes', onPress: () => Alert.alert('Drop Meter',`${value} was dropped.`)},
+      ],
+      { cancelable: false }
+    )
+    return false; //this turns the selected option back to the original
   }
 
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -99,15 +123,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 15
   },
-  text: {
-    textAlign: 'center',
-    color: 'white',
-    marginTop: 5,
-    fontSize: 18,
-    fontWeight: '400',
-    marginBottom: 15
-  },
-
+  
   dropdown: {
     margin: 8,
     borderColor:  'rgb(31,58,147)',
