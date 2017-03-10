@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, Alert, View, TouchableHighlight} from 'react-native';
+import { StyleSheet, Text, Alert, ScrollView, View, TouchableHighlight} from 'react-native';
 import Chart from 'react-native-chart';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -12,38 +12,49 @@ export default class WeeklyData extends Component {
       title: 'WeeklyData'
     };
   }
+
+  // constructor(props) {
+  //   super(props);
+
+  //   // Initialize state variables
+  // }
+
+
     render() {
         return (
           <View style={styles.container}>
-             
-                <View>
-                    <Chart
-                      style={styles.chart}
-                      data={data}
-                      verticalGridStep={5}
-                      type="bar"
-                      showDataPoint={true}
-                    />
-                </View>
-                <View>
+                 <View>
+                  <Text style={styles.text}>Weekly</Text>
+                 </View>
                   <Chart
                     style={styles.chart}
+                    XAxisLabel={"Fluid Ounces"}
                     data={data}
                     verticalGridStep={5}
-                    type="pie"
-                    showDataPoint={true}
+                    xAxisHeight={1}
+                    yAxisWidth={11}
+                    type="bar"
+                    tightBounds={false}
+                    showDataPoint={false}
+                    showAxis={true}
+                    showXAxisLabels={true}
+                    hideHorizontalGridLines={true}
+                    hideVerticalGridLines={true}
                  />
-                </View>
           </View>
         );
     }
 }
 
+//graph appears to be wrong at smaller values (shows max of 7 when it is 9)
 const data = [
-    [0, 1],
-    [1, 3],
-    [3, 7],
-    [4, 9],
+    ["S", 1],
+    ["M", 3],
+    ["T", 9],
+    ["W", 22],
+    ["Th", 60],
+    ["F", 3],
+    ["S", 7],
 ];
 
 const styles = StyleSheet.create({
@@ -55,9 +66,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     chart: {
-        //flexDirection: 'row',
-        flex: 1,
-        width: 300,
-        height: 150,
+        marginTop: 60,
+        width: 240,
+        height: 100,
     },
+    title: {
+      textAlign: 'center',
+      color: 'white',
+      marginTop: 25,
+      fontSize: 20,
+      fontWeight: '400',
+      marginBottom: 15
+  },
 });
