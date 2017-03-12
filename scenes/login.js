@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput, Text, TouchableHighlight, Navigator } from 'react-native';
+import { View, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 
 export default class LoginForm extends Component {
   static get defaultProps() {

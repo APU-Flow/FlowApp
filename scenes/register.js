@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Button, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class Register extends Component {
