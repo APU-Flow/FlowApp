@@ -32,7 +32,7 @@ export default class WeeklyData extends Component {
                     data={data}
                     verticalGridStep={5}
                     xAxisHeight={1}
-                    yAxisWidth={11}
+                    yAxisWidth={25}
                     type="bar"
                     tightBounds={false}
                     showDataPoint={false}
@@ -47,6 +47,7 @@ export default class WeeklyData extends Component {
 }
 
 //graph appears to be wrong at smaller values (shows max of 7 when it is 9)
+//change this so it is not a constant, gets it from input from database
 const data = [
     ["S", 1],
     ["M", 3],
@@ -66,9 +67,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     chart: {
-        marginTop: 60,
         width: 240,
         height: 100,
+        margin: 45,
     },
     title: {
       textAlign: 'center',
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
       marginTop: 25,
       fontSize: 20,
       fontWeight: '400',
-      marginBottom: 15
+      // marginBottom: 100,
+
   },
 });
