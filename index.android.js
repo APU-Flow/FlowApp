@@ -5,9 +5,11 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Navigator
+  Navigator,
+  Text
 } from 'react-native';
 
+import NavDrawerAndroid from './nav-drawer.android';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
 import ChangeAccount from './scenes/change-account';
@@ -17,30 +19,56 @@ import Register from './scenes/register';
 import Overview from './scenes/overview';
 
 export default class FlowApp extends Component {
+
+  constructor(props) {
+    super(props);
+    
+    // Initialize state variables
+    this.state = {
+      drawerLockMode: 'locked-closed'
+    };
+  }
+
   render() {
     return (
       <Navigator
         initialRoute={{ name: 'splash' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
+          let scene = <Text>Bad route name given!</Text>;
+          let drawerLock = 'unlocked';
           switch (route.name) {
             case 'splash':
-              return <Splash navigator={navigator} />;
+              drawerLock = 'locked-closed';
+              scene = <Splash navigator={navigator} />;
+              break;
             case 'login':
-              return <Login {...route.passProps} />;
+              drawerLock = 'locked-closed';
+              scene = <Login {...route.passProps} />;
+              break;
             case 'register':
-              return <Register {...route.passProps} />;
+              drawerLock = 'locked-closed';
+              scene = <Register {...route.passProps} />;
+              break;
             case 'settings':
-              return <Settings {...route.passsProps} />;
+              scene = <Settings {...route.passsProps} />;
+              break;
             case 'changeAccount':
-              return <ChangeAccount {...route.passProps} />;
+              scene = <ChangeAccount {...route.passProps} />;
+              break;
             case 'meters':
-              return <Meters {...route.passProps} />;
+              scene = <Meters {...route.passProps} />;
+              break;
             case 'overview':
-              return <Overview navigator={navigator} {...route.passProps} />;
-            default:
-              return <Text>Bad route name given!</Text>
+              scene = <Overview {...route.passProps} />;
+              break;
           }
+
+          return (
+            <NavDrawerAndroid drawerLockMode={drawerLock}>
+              {scene}
+            </NavDrawerAndroid>
+          );
         }}
       />
     );
