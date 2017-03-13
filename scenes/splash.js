@@ -8,10 +8,10 @@ export default class Splash extends Component {
 
   static get defaultProps() {
     return {
-      // This component should always be given a navigator property. When it isn't, log this error.
-      navigator: { push: (name) => {
-        console.log(`Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!`);
-      }}
+      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
+      pushScene(scene) {
+        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushScene method given to Splash scene!`);
+      }
     };
   }
 
@@ -45,30 +45,15 @@ export default class Splash extends Component {
     );
   }
 
-  loadUserData(serverResponse) {
-    // Do stuff with user data
-    // Load the next scene
-    this.props.navigator.push({
-      name: 'overview',
-      passProps: {
-        message: JSON.stringify(serverResponse),
-        email: serverResponse.email,
-        token: serverResponse.token
-      }
-    });
-  }
-
   loadLoginForm() {
-    this.props.navigator.push({
+    this.props.pushScene({
       name: 'login',
-      passProps: { onSuccess: this.loadUserData },
       sceneConfig: Navigator.SceneConfigs.PushFromRight
     });
   }
   loadRegisterForm() {
-    this.props.navigator.push({
+    this.props.pushScene({
       name: 'register',
-      passProps: { onSuccess: this.loadUserData },
       sceneConfig: Navigator.SceneConfigs.PushFromRight
     });
   }

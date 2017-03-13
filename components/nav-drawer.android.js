@@ -8,6 +8,10 @@ export default class NavDrawerAndroid extends Component {
 
   static get defaultProps() {
     return {
+      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
+      pushScene(scene) {
+        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushScene method given to Splash scene!`);
+      },
       drawerLockMode: 'unlocked'
     };
   }

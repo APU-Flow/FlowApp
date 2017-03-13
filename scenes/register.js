@@ -8,7 +8,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 export default class Register extends Component {
   static get defaultProps() {
     return {
-      onSuccess: (responseObject) => console.log(responseObject)
+      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
+      pushScene(scene) {
+        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushScene method given to Splash scene!`);
+      }
     };
   }
 
@@ -202,7 +205,14 @@ export default class Register extends Component {
     .then((responseObject) => {
       if (typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        this.props.onSuccess(responseObject);
+        this.props.pushScene({
+          name: 'overview',
+          passProps: {
+            message: JSON.stringify(responseObject),
+            email: responseObject.email,
+            token: responseObject.token
+          }
+        });
       }
       else
         this.setState({ submitReport: 'Login failed; bad username or password.' });

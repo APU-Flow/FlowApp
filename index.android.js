@@ -9,7 +9,7 @@ import {
   Text
 } from 'react-native';
 
-import NavDrawerAndroid from './nav-drawer.android';
+import NavDrawerAndroid from './components/nav-drawer.android';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
 import ChangeAccount from './scenes/change-account';
@@ -37,18 +37,19 @@ export default class FlowApp extends Component {
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
           let drawerLock = 'unlocked';
+
           switch (route.name) {
             case 'splash':
               drawerLock = 'locked-closed';
-              scene = <Splash navigator={navigator} />;
+              scene = <Splash pushScene={navigator.push} />;
               break;
             case 'login':
               drawerLock = 'locked-closed';
-              scene = <Login {...route.passProps} />;
+              scene = <Login pushScene={navigator.push} {...route.passProps} />;
               break;
             case 'register':
               drawerLock = 'locked-closed';
-              scene = <Register {...route.passProps} />;
+              scene = <Register pushScene={navigator.push} {...route.passProps} />;
               break;
             case 'settings':
               scene = <Settings {...route.passsProps} />;
@@ -65,7 +66,7 @@ export default class FlowApp extends Component {
           }
 
           return (
-            <NavDrawerAndroid drawerLockMode={drawerLock}>
+            <NavDrawerAndroid drawerLockMode={drawerLock} pushScene={navigator.push}>
               {scene}
             </NavDrawerAndroid>
           );

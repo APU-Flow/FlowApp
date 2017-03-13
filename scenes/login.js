@@ -5,9 +5,13 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 
 export default class LoginForm extends Component {
+
   static get defaultProps() {
     return {
-      onSuccess: (responseObject) => console.log(responseObject)
+      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
+      pushScene(scene) {
+        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushScene method given to Splash scene!`);
+      }
     };
   }
 
@@ -65,7 +69,14 @@ export default class LoginForm extends Component {
     .then((responseObject) => {
       if (responseObject.message === 'ok' && typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        this.props.onSuccess(responseObject);
+        this.props.pushScene({
+          name: 'overview',
+          passProps: {
+            message: JSON.stringify(responseObject),
+            email: responseObject.email,
+            token: responseObject.token
+          }
+        });
       }
       else if (responseObject.message === 'lol nice tri n00b') {
         // Thank you George for that wonderful masterpiece, that piece of art of a server response
