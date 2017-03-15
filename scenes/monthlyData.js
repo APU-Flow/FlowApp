@@ -6,10 +6,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 
 
-export default class WeeklyData extends Component {
+export default class MonthlyData extends Component {
   static get defaultProps() {
     return {
-      title: 'WeeklyData'
+      title: 'MonthlyData'
     };
   }
 
@@ -23,16 +23,13 @@ export default class WeeklyData extends Component {
     render() {
         return (
           <View style={styles.container}>
-                  <View>
-                  <Text style={styles.label}>Ml</Text>
-                  </View>
                  <View>
-                  <Text style={styles.title}>Weekly</Text>
+                  <Text style={styles.title}>Monthly</Text>
                  </View>
                   <Chart
                     style={styles.chart}
                     XAxisLabel={"Fluid Ounces"}
-                    YAxisLabel={"Month"}
+                    YAxisLabel={"Day of Week"}
                     data={data}
                     verticalGridStep={5}
                     xAxisHeight={1}
@@ -61,13 +58,18 @@ export default class WeeklyData extends Component {
 //change this so it is not a constant, gets it from input from database
 // const data2 = ["Birds"];
 const data = [
-    ["S", 1],
-    ["M", 3],
-    ["T", 9],
-    ["W", 4],
-    ["Th", 10],
-    ["F", 3],
-    ["S", 7],
+    ["Jan", 1],
+    ["Feb", 3],
+    ["Mar", 9],
+    ["Apr", 4],
+    ["May", 10],
+    ["June", 3],
+    ["July", 7],
+    ["Aug", 9],
+    ["Sept", 4],
+    ["Oct", 10],
+    ["Nov", 3],
+    ["Dec", 7],
 ];
 
 const styles = StyleSheet.create({
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
         backgroundColor:'rgb(52,152,219)',
     },
     chart: {
-        width: 280,
+        width: 300,
         height: 100,
         margin: 15,
         marginTop: 20,
@@ -93,10 +95,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '400',
     marginBottom: 2
-    },
-    label: 
-    {
-    color: 'white',
-    transform: [{ rotate: '90deg'}]
     },
 });

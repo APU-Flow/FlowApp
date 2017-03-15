@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import WeeklyData from './scenes/weeklyData';
+import MonthlyData from './scenes/monthlyData';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
 import ChangeAccount from './scenes/change-account';
@@ -21,7 +22,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', name: 'weeklyData' }}
+        initialRoute={{ title: 'Flow', name: 'monthlyData' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
           switch (route.name) {
@@ -39,6 +40,8 @@ export default class FlowApp extends Component {
               return <Meters {...route.passProps} />;
             case 'weeklyData':
               return <WeeklyData {...route.passProps} />;
+            case 'monthlyData':
+              return <MonthlyData {...route.passProps} />;
             case 'overview':
               return <Overview navigator={navigator} {...route.passProps} />;
             default:
