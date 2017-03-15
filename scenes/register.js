@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
+import { AsyncStorage, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class Register extends Component {
@@ -205,14 +205,14 @@ export default class Register extends Component {
     .then((responseObject) => {
       if (typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        this.props.pushRoute({
-          name: 'overview',
-          passProps: {
-            message: JSON.stringify(responseObject),
-            email: responseObject.email,
-            token: responseObject.token
-          }
-        });
+        
+        try {
+          await AsyncStorage.multiSet([['email', responseObject.email], ['token', responseObject.token]]);
+        } catch(error) {
+          console.error(error);
+        }
+
+        this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
       }
       else
         this.setState({ submitReport: 'Login failed; bad username or password.' });
