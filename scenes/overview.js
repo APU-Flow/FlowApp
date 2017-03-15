@@ -2,42 +2,46 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { AsyncStorage, StyleSheet, View, Text } from 'react-native';
 
 export default class Overview extends Component {
   
   static get defaultProps() {
     return {
-      message: 'Default message',
-      email: '',
-      token: ''
+      message: 'Default message'
     };
   }
 
   constructor(props) {
     super(props);
-    // Initialize state variables 
+    // Initialize state variables
     this.state = {
       data: ''
     }
   }
 
   componentDidMount() {
-    let email = (this.props.email) ? this.props.email : null;
-    // let now = new Date();
-    // let hourAgo = new Date();
-    // hourAgo.setHours(hourAgo.getHours()-1);
-    fetch(`http://138.68.56.236:3000/api/getUsageEvent?email=${encodeURI(email)}`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'x-access-token': this.props.token
+    AsyncStorage.multiGet(['email', 'token'], (errors, results) => {
+      if (errors) {
+        console.error(errors);
       }
-    })
-    .then((response) => response.text())
-    .then((responseText) => {
-      this.setState({ data: responseText });
+      let email = results[0][1];
+      let token = results[1][1];
+      // let now = new Date();
+      // let hourAgo = new Date();
+      // hourAgo.setHours(hourAgo.getHours()-1);
+      fetch(`http://138.68.56.236:3000/api/getUsageEvent?email=${encodeURI(email)}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.text())
+      .then((responseText) => {
+        this.setState({ data: responseText });
+      });
     });
   }
 
