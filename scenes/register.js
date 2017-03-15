@@ -60,6 +60,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[2] && styles.invalid]}
           borderColor={this.state.fieldValidities[2] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Email Address"
           placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="email-address"
@@ -79,6 +80,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[4] && styles.invalid]}
           borderColor={this.state.fieldValidities[4] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Re-enter Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
