@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
+import { AsyncStorage, View, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 
 export default class LoginForm extends Component {
 
@@ -66,17 +66,17 @@ export default class LoginForm extends Component {
       })
     })    
     .then((response) => response.json())
-    .then((responseObject) => {
+    .then(async (responseObject) => {
       if (responseObject.message === 'ok' && typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        this.props.pushRoute({
-          name: 'overview',
-          passProps: {
-            message: JSON.stringify(responseObject),
-            email: responseObject.email,
-            token: responseObject.token
-          }
-        });
+        
+        try {
+          await AsyncStorage.multiSet([['email', responseObject.email], ['token', responseObject.token]]);
+        } catch(error) {
+          console.error(error);
+        }
+
+        this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
       }
       else if (responseObject.message === 'lol nice tri n00b') {
         // Thank you George for that wonderful masterpiece, that piece of art of a server response
