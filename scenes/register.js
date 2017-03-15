@@ -202,7 +202,7 @@ export default class Register extends Component {
       })
     })    
     .then((response) => response.json())
-    .then((responseObject) => {
+    .then(async (responseObject) => {
       if (typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
         
