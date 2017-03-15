@@ -2,23 +2,22 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableHighlight, Navigator } from 'react-native';
 
 export default class Splash extends Component {
 
   static get defaultProps() {
     return {
-      // This component should always be given a navigator property. When it isn't, log this error.
-      navigator: { push: (name) => {
-        console.log(`Error navigating to ${name ? name : 'next'} scene! No navigator given to Login scene!`);
-      }}
+      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
+      pushRoute(scene) {
+        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushRoute method given to Splash scene!`);
+      }
     };
   }
 
   constructor(props) {
     super(props);
 
-    this.loadUserData = this.loadUserData.bind(this);
     this.loadLoginForm = this.loadLoginForm.bind(this);
     this.loadRegisterForm = this.loadRegisterForm.bind(this);
   }
@@ -45,29 +44,15 @@ export default class Splash extends Component {
     );
   }
 
-  loadUserData(userObject) {
-    // Do stuff with user data
-    // Load the next scene
-    this.props.navigator.push({
-      name: 'overview',
-      passProps: {
-        message: JSON.stringify(userObject),
-        email: userObject.email
-      }
-    });
-  }
-
   loadLoginForm() {
-    this.props.navigator.push({
+    this.props.pushRoute({
       name: 'login',
-      passProps: { onSuccess: this.loadUserData },
       sceneConfig: Navigator.SceneConfigs.PushFromRight
     });
   }
   loadRegisterForm() {
-    this.props.navigator.push({
+    this.props.pushRoute({
       name: 'register',
-      passProps: { onSuccess: this.loadUserData },
       sceneConfig: Navigator.SceneConfigs.PushFromRight
     });
   }
@@ -96,13 +81,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(31,58,147)',
     paddingVertical: 15,
     height: 60,
-    justifyContent: 'flex-end'
+    justifyContent: 'center'
   },
   buttonSignUpContainer: {
     backgroundColor: 'rgb(171,183,183)',
     paddingVertical: 15,
     height: 60,
-    justifyContent: 'flex-end'
+    justifyContent: 'center'
   },
   buttonText: {
     textAlign: 'center',
