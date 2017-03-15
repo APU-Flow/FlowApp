@@ -41,15 +41,15 @@ export default class FlowApp extends Component {
           switch (route.name) {
             case 'splash':
               drawerLock = 'locked-closed';
-              scene = <Splash pushScene={navigator.push} />;
+              scene = <Splash pushRoute={navigator.push} />;
               break;
             case 'login':
               drawerLock = 'locked-closed';
-              scene = <Login pushScene={navigator.push} {...route.passProps} />;
+              scene = <Login pushRoute={navigator.push} {...route.passProps} />;
               break;
             case 'register':
               drawerLock = 'locked-closed';
-              scene = <Register pushScene={navigator.push} {...route.passProps} />;
+              scene = <Register pushRoute={navigator.push} {...route.passProps} />;
               break;
             case 'settings':
               scene = <Settings {...route.passsProps} />;
@@ -66,8 +66,13 @@ export default class FlowApp extends Component {
           }
 
           return (
-            <NavDrawerAndroid drawerLockMode={drawerLock} pushScene={navigator.push}>
-              {scene}
+            <NavDrawerAndroid
+              drawerLockMode={drawerLock}
+              pushRoute={navigator.push}
+              currentRouteName={route.name}>
+
+                {scene}
+
             </NavDrawerAndroid>
           );
         }}

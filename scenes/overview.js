@@ -8,7 +8,9 @@ export default class Overview extends Component {
   
   static get defaultProps() {
     return {
-      message: 'Default message'
+      message: 'Default message',
+      email: '',
+      token: ''
     };
   }
 

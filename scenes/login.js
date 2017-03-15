@@ -9,8 +9,8 @@ export default class LoginForm extends Component {
   static get defaultProps() {
     return {
       // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
-      pushScene(scene) {
-        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushScene method given to Splash scene!`);
+      pushRoute(scene) {
+        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushRoute method given to Splash scene!`);
       }
     };
   }
@@ -69,7 +69,7 @@ export default class LoginForm extends Component {
     .then((responseObject) => {
       if (responseObject.message === 'ok' && typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        this.props.pushScene({
+        this.props.pushRoute({
           name: 'overview',
           passProps: {
             message: JSON.stringify(responseObject),
