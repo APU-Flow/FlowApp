@@ -6,10 +6,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 
 
-export default class WeeklyData extends Component {
+export default class MonthlyLineData extends Component {
   static get defaultProps() {
     return {
-      title: 'WeeklyData'
+      title: 'MonthlyLineData'
     };
   }
 
@@ -27,9 +27,10 @@ export default class WeeklyData extends Component {
                   <Text style={styles.label}>Ml</Text>
                   </View>
                  <View>
-                  <Text style={styles.title}>Weekly</Text>
+                  <Text style={styles.title}>Monthly</Text>
                  </View>
                   <Chart
+                    lineWidth={3}
                     cornerRadius={4}
                     style={styles.chart}
                     XAxisLabel={"Fluid Ounces"}
@@ -40,8 +41,8 @@ export default class WeeklyData extends Component {
                     verticalGridStep={5}
                     horizontalGridStep={2}
                     xAxisHeight={40}
-                    yAxisWidth={31}
-                    type="bar"
+                    yAxisWidth={25}
+                    type="line"
                     tightBounds={false}
                     showDataPoint={false}
                     showAxis={true}
@@ -56,7 +57,7 @@ export default class WeeklyData extends Component {
                     axisLineWidth={1}
                     gridColor={'rgb(31,58,147)'}
                     axisLabelColor={'white'}
-                    labelFontSize={22}
+                    labelFontSize={9}
                  />
           </View>
         );
@@ -65,13 +66,18 @@ export default class WeeklyData extends Component {
 
 //change this so it is not a constant, gets input from database
 const data = [
-    ["S", 1],
-    ["M", 3],
-    ["T", 9],
-    ["W", 4],
-    ["Th", 8],
-    ["F", 3],
-    ["S", 7],
+    ["Jan", 1],
+    ["Feb", 3],
+    ["Mar", 5],
+    ["Apr", 10],
+    ["May", 12],
+    ["June", 20],
+    ["July", 40],
+    ["Aug", 65],
+    ["Sept", 65],
+    ["Oct", 68],
+    ["Nov", 90],
+    ["Dec", 120],
 ];
 
 const styles = StyleSheet.create({
