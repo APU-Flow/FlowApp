@@ -30,42 +30,46 @@ export default class WeeklyData extends Component {
                   <Text style={styles.title}>Weekly</Text>
                  </View>
                   <Chart
+                    cornerRadius={4}
                     style={styles.chart}
                     XAxisLabel={"Fluid Ounces"}
+                    yAxisTitle={"Fluid Ounces"}
                     YAxisLabel={"Month"}
                     data={data}
+                    widthPercent={1}
                     verticalGridStep={5}
-                    xAxisHeight={1}
-                    yAxisWidth={25}
+                    horizontalGridStep={2}
+                    xAxisHeight={40}
+                    yAxisWidth={19}
                     type="bar"
                     tightBounds={false}
                     showDataPoint={false}
                     showAxis={true}
                     showXAxisLabels={true}
                     showYAxisLabels={true}
-                    hideHorizontalGridLines={false}
+                    hideHorizontalGridLines={true}
                     hideVerticalGridLines={true}
                     color={['white']}
                     axisColor={['white']}
                     axisLabelColor={['white']}
                     gridLineWidth={1}
-                    axisLineWidth={0}
+                    axisLineWidth={1}
                     gridColor={'rgb(31,58,147)'}
                     axisLabelColor={'white'}
+                    labelFontSize={22}
                  />
           </View>
         );
     }
 }
 
-//change this so it is not a constant, gets it from input from database
-// const data2 = ["Birds"];
+//change this so it is not a constant, gets input from database
 const data = [
     ["S", 1],
     ["M", 3],
     ["T", 9],
     ["W", 4],
-    ["Th", 10],
+    ["Th", 80],
     ["F", 3],
     ["S", 7],
 ];
@@ -81,16 +85,16 @@ const styles = StyleSheet.create({
     chart: {
         width: 280,
         height: 100,
-        margin: 15,
-        marginTop: 20,
-        marginBottom: 85,
+        margin: 1,
+        marginTop: 25,
+        marginBottom: 100,
     },
     title: 
     {
     textAlign: 'center',
     color: 'white',
     marginTop: 45,
-    fontSize: 20,
+    fontSize: 40,
     fontWeight: '400',
     marginBottom: 2
     },
