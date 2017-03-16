@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Navigator
+  Navigator,
+  Text
 } from 'react-native';
 
 import Settings from './scenes/settings';
@@ -14,32 +15,43 @@ import ChangeAccount from './scenes/change-account';
 import Splash from './scenes/splash';
 import Login from './scenes/login';
 import Register from './scenes/register';
-import Overview from './scenes/overview.ios';
+import Overview from './scenes/overview';
 
 export default class FlowApp extends Component {
+
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', name: 'splash' }}
+        initialRoute={{ name: 'splash' }}
+        configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottom}
         renderScene={(route, navigator) => {
+          let scene = <Text>Bad route name given!</Text>;
+
           switch (route.name) {
             case 'splash':
-              return <Splash navigator={navigator} />;
+              scene = <Splash pushRoute={navigator.push} />;
+              break;
             case 'login':
-              return <Login {...route.passProps} />;
+              scene = <Login pushRoute={navigator.push} {...route.passProps} />;
+              break;
             case 'register':
-              return <Register {...route.passProps} />;
+              scene = <Register pushRoute={navigator.push} {...route.passProps} />;
+              break;
             case 'settings':
-              return <Settings {...route.passsProps} />;
+              scene = <Settings {...route.passsProps} />;
+              break;
             case 'changeAccount':
-              return <ChangeAccount {...route.passProps} />;
+              scene = <ChangeAccount {...route.passProps} />;
+              break;
             case 'meters':
-              return <Meters {...route.passProps} />;
+              scene = <Meters {...route.passProps} />;
+              break;
             case 'overview':
-              return <Overview navigator={navigator} {...route.passProps} />;
-            default:
-              return <Text>Bad route name given!</Text>
+              scene = <Overview {...route.passProps} />;
+              break;
           }
+
+          return scene;
         }}
       />
     );
