@@ -6,10 +6,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 
 
-export default class MonthlyLineData extends Component {
+export default class DailyData extends Component {
   static get defaultProps() {
     return {
-      title: 'MonthlyLineData'
+      title: 'DailyData'
     };
   }
 
@@ -20,44 +20,40 @@ export default class MonthlyLineData extends Component {
   // }
 
 
-    render() {
+   render() {
         return (
           <View style={styles.container}>
-                  <View>
-                  <Text style={styles.label}>Ml</Text>
-                  </View>
                  <View>
-                  <Text style={styles.title}>Monthly</Text>
+                  <Text style={styles.title}>Today</Text>
                  </View>
                   <Chart
-                    lineWidth={3}
-                    cornerRadius={4}
-                    style={styles.chart}
-                    XAxisLabel={"Fluid Ounces"}
-                    yAxisTitle={"Fluid Ounces"}
-                    YAxisLabel={"Month"}
-                    data={data}
-                    widthPercent={1}
-                    verticalGridStep={5}
-                    horizontalGridStep={2}
-                    xAxisHeight={40}
-                    yAxisWidth={25}
-                    type="line"
-                    tightBounds={false}
-                    showDataPoint={false}
-                    showAxis={true}
-                    showXAxisLabels={true}
-                    showYAxisLabels={true}
-                    hideHorizontalGridLines={true}
-                    hideVerticalGridLines={true}
                     color={['white']}
                     axisColor={['white']}
                     axisLabelColor={['white']}
-                    gridLineWidth={1}
                     axisLineWidth={1}
-                    gridColor={'rgb(31,58,147)'}
-                    axisLabelColor={'white'}
-                    labelFontSize={9}
+
+                    xAxisHeight={40}
+                    yAxisWidth={19}
+
+                    cornerRadius={4}
+
+                    data={data}
+
+                    hideHorizontalGridLines={true}
+                    hideVerticalGridLines={true}
+
+                    widthPercent={1}
+                    verticalGridStep={5}
+                    horizontalGridStep={2}
+
+                    type="line"
+                    lineWidth={4}
+
+                    showDataPoint={false}
+                    showAxis={true}
+                    
+                    style={styles.chart}
+                    labelFontSize={8}                  
                  />
           </View>
         );
@@ -66,18 +62,19 @@ export default class MonthlyLineData extends Component {
 
 //change this so it is not a constant, gets input from database
 const data = [
-    ["Jan", 1],
-    ["Feb", 3],
-    ["Mar", 5],
-    ["Apr", 10],
-    ["May", 12],
-    ["June", 20],
-    ["July", 40],
-    ["Aug", 65],
-    ["Sept", 65],
-    ["Oct", 68],
-    ["Nov", 90],
-    ["Dec", 120],
+    ["8am", 1],
+    ["9am", 3],
+    ["10am", 9],
+    ["11am", 4],
+    ["12pm", 8],
+    ["1pm", 3],
+    ["2pm", 7],
+    ["3pm", 9],
+    ["4pm", 4],
+    ["5pm", 8],
+    ["6pm", 3],
+    ["7pm", 7],
+    ["8pm", 4],
 ];
 
 const styles = StyleSheet.create({
@@ -103,10 +100,5 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: '400',
     marginBottom: 2
-    },
-    label: 
-    {
-    color: 'white',
-    transform: [{ rotate: '90deg'}]
     },
 });

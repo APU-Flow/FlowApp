@@ -23,40 +23,37 @@ export default class WeeklyData extends Component {
     render() {
         return (
           <View style={styles.container}>
-                  <View>
-                  <Text style={styles.label}>Ml</Text>
-                  </View>
                  <View>
                   <Text style={styles.title}>Weekly</Text>
                  </View>
                   <Chart
-                    cornerRadius={4}
-                    style={styles.chart}
-                    XAxisLabel={"Fluid Ounces"}
-                    yAxisTitle={"Fluid Ounces"}
-                    YAxisLabel={"Month"}
-                    data={data}
-                    widthPercent={1}
-                    verticalGridStep={5}
-                    horizontalGridStep={2}
-                    xAxisHeight={40}
-                    yAxisWidth={31}
-                    type="bar"
-                    tightBounds={false}
-                    showDataPoint={false}
-                    showAxis={true}
-                    showXAxisLabels={true}
-                    showYAxisLabels={true}
-                    hideHorizontalGridLines={true}
-                    hideVerticalGridLines={true}
                     color={['white']}
                     axisColor={['white']}
                     axisLabelColor={['white']}
-                    gridLineWidth={1}
                     axisLineWidth={1}
-                    gridColor={'rgb(31,58,147)'}
-                    axisLabelColor={'white'}
-                    labelFontSize={22}
+
+                    xAxisHeight={40}
+                    yAxisWidth={31}
+
+                    cornerRadius={4}                    
+
+                    data={data}
+
+                    hideHorizontalGridLines={true}
+                    hideVerticalGridLines={true}
+                    
+                    widthPercent={1}
+                    verticalGridStep={5}
+                    horizontalGridStep={2}
+                   
+                    type="bar"
+                    
+                    
+                    showDataPoint={false}
+                    showAxis={true}
+    
+                    style={styles.chart}
+                    labelFontSize={22} 
                  />
           </View>
         );
@@ -97,10 +94,5 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: '400',
     marginBottom: 2
-    },
-    label: 
-    {
-    color: 'white',
-    transform: [{ rotate: '90deg'}]
     },
 });
