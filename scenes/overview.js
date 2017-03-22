@@ -2,7 +2,8 @@
 // Flow
 
 import React, { Component } from 'react';
-import { AsyncStorage, StyleSheet, View, Text } from 'react-native';
+import { Alert, AsyncStorage, StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import Chart from 'react-native-chart';
 
 export default class Overview extends Component {
   
@@ -48,22 +49,72 @@ export default class Overview extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{this.props.message}</Text>
-        <Text style={styles.text}>{this.state.data}</Text>
+        <View>
+          <Text style={styles.text}>{this.props.message}</Text>
+          <Text style={styles.text}>{this.state.data}</Text>
+        </View>
+      <Chart
+        color={['white']}
+        axisColor={['white']}
+        axisLabelColor={['white']}
+        axisLineWidth={1}
+
+        xAxisHeight={40}
+        yAxisWidth={31}
+
+        cornerRadius={4}                    
+
+        data={data}
+
+        hideHorizontalGridLines={true}
+        hideVerticalGridLines={true}
+                    
+        widthPercent={1}
+        verticalGridStep={5}
+        horizontalGridStep={2}
+                   
+        type="bar"
+                    
+                    
+        showDataPoint={false}
+        showAxis={true}
+    
+        style={styles.chart}
+        labelFontSize={22} 
+        />
       </View>
     );
   }
 
 }
 
+const data = [
+    ["S", 1],
+    ["M", 3],
+    ["T", 9],
+    ["W", 4],
+    ["Th", 8],
+    ["F", 3],
+    ["S", 7],
+];
+
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     flex: 1,
-    backgroundColor:'rgb(52,152,219)'
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    backgroundColor:'rgb(52,152,219)',
   },
   text: {
     margin: 10,
     fontSize: 15
-  }
+  },
+  chart: {
+      width: 280,
+      height: 100,
+      margin: 1,
+      marginTop: 25,
+      marginBottom: 100,
+    },
 });
