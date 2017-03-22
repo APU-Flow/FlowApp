@@ -2,13 +2,16 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
+import { AsyncStorage, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class Register extends Component {
   static get defaultProps() {
     return {
-      onSuccess: (responseObject) => console.log(responseObject)
+      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
+      pushRoute(scene) {
+        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushRoute method given to Splash scene!`);
+      }
     };
   }
 
@@ -208,10 +211,17 @@ export default class Register extends Component {
       })
     })    
     .then((response) => response.json())
-    .then((responseObject) => {
+    .then(async (responseObject) => {
       if (typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        this.props.onSuccess(responseObject);
+        
+        try {
+          await AsyncStorage.multiSet([['email', responseObject.email], ['token', responseObject.token]]);
+        } catch(error) {
+          console.error(error);
+        }
+
+        this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
       }
       else
         this.setState({ submitReport: 'Login failed; bad username or password.' });
@@ -243,7 +253,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(31,58,147)',
     paddingVertical: 15,
     marginTop:42,
-    justifyContent:'flex-end'
+    justifyContent:'center'
   },
   buttonText: {
     textAlign: 'center',

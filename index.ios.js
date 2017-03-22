@@ -18,6 +18,7 @@ import Register from './scenes/register';
 import Overview from './scenes/overview';
 
 export default class FlowApp extends Component {
+
   render() {
     return (
       <Overview/>
