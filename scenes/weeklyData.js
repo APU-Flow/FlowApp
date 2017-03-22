@@ -37,7 +37,7 @@ export default class WeeklyData extends Component {
 
                     cornerRadius={4}                    
 
-                    data={data}
+                    data={dataWeek}
 
                     hideHorizontalGridLines={true}
                     hideVerticalGridLines={true}
@@ -61,7 +61,7 @@ export default class WeeklyData extends Component {
 }
 
 //change this so it is not a constant, gets input from database
-const data = [
+dataWeek = [
     ["S", 1],
     ["M", 3],
     ["T", 9],

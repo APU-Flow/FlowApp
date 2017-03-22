@@ -37,7 +37,7 @@ export default class MonthlyData extends Component {
 
                     cornerRadius={4}
 
-                    data={data}
+                    data={dataMonth}
 
                     hideHorizontalGridLines={true}
                     hideVerticalGridLines={true}
@@ -60,7 +60,7 @@ export default class MonthlyData extends Component {
 }
 
 //change this so it is not a constant, gets input from database
-const data = [
+dataMonth = [
     ["Jan", 1],
     ["Feb", 3],
     ["Mar", 9],

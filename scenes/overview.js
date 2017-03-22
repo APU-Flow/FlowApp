@@ -64,7 +64,7 @@ export default class Overview extends Component {
 
         cornerRadius={4}                    
 
-        data={data}
+        data={dataOverview}
 
         hideHorizontalGridLines={true}
         hideVerticalGridLines={true}
@@ -88,7 +88,7 @@ export default class Overview extends Component {
 
 }
 
-const data = [
+dataOverview = [
     ["S", 1],
     ["M", 3],
     ["T", 9],
