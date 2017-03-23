@@ -2,19 +2,10 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Button, Text, Alert, View } from 'react-native';
+import { StyleSheet, Button, Text, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-//plan on being where graphs are made
-const onButtonPress = () => {
-  Alert.alert('Button has been pressed!');
-};
 export default class Graphs extends Component {
-  static get defaultProps() {
-    return {
-      title: 'Graphs'
-    };
-  }
 
   constructor(props) {
     super(props);
@@ -22,9 +13,10 @@ export default class Graphs extends Component {
     this.state = {
       fieldValidities: [false, false, false, false, false, false, false, false, false],
       allValid: false
-    }
+    };
 
     this.verifyInput = this.verifyInput.bind(this);
+    this.onButtonPress = this.onButtonPress.bind(this);
   }
 
   render() {
@@ -33,13 +25,18 @@ export default class Graphs extends Component {
         <Text style={styles.title}>
           Overview
         </Text>
-        <Button title="Main Menu" onPress={onButtonPress} />
+        <Button title="Main Menu" onPress={this.onButtonPress} />
       </KeyboardAwareScrollView>
-    )
+    );
+  }
+
+  //plan on being where graphs are made
+  onButtonPress() {
+    Alert.alert('Button has been pressed!');
   }
 
   verifyInput(name, text) {
-    switch(name) {
+    switch (name) {
     
     }
 
@@ -59,15 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     flexDirection: 'column',
     flex: 1,
-     textAlign: 'center',
-    backgroundColor: '#F0F8FF'
-  },
-  field: {
-    fontSize: 14,
     textAlign: 'center',
-    borderColor: 'black'
-  },
-  invalid: {
-    borderColor: 'red'
+    backgroundColor: '#F0F8FF'
   }
 });

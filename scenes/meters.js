@@ -7,6 +7,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class Meters extends Component {
+
+  static get propTypes() {
+    return {
+      title: React.PropTypes.string
+    };
+  }
+
   static get defaultProps() {
     return {
       title: 'Meters'
@@ -73,23 +80,20 @@ export default class Meters extends Component {
   }
 
   viewMeter(index, value) {
-    Alert.alert(
-      `${value}`,
-      'Taking you to '+`${value}`+ ' overview screen.',
-    )
+    Alert.alert(value, `Taking you to ${value} overview screen.`);
     return false; //this turns the selected option back to the original
   }
 
   addMeter(index, value) {
     Alert.alert(
-      `${value}`,
+      value,
       'Are you sure this is the meter you would like to add?',
       [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => Alert.alert('Drop Meter',`${value} was added.`)},
+        {text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel'},
+        {text: 'Yes', onPress: () => Alert.alert('Drop Meter', `${value} was added.`)},
       ],
       { cancelable: false }
-    )
+    );
     return false; //this turns the selected option back to the original
   }
 
@@ -98,11 +102,11 @@ export default class Meters extends Component {
       `${value}`,
       'Are you sure you want to drop this meter?',
       [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => Alert.alert('Drop Meter',`${value} was dropped.`)},
+        {text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel'},
+        {text: 'Yes', onPress: () => Alert.alert('Drop Meter', `${value} was dropped.`)},
       ],
       { cancelable: false }
-    )
+    );
     return false; //this turns the selected option back to the original
   }
 
@@ -139,7 +143,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-   dropdownDropdown: {
+  dropdownDropdown: {
     margin: 8,
     width: 320,
     height: 100,
