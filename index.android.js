@@ -35,7 +35,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'weeklyData' }}
+        initialRoute={{ name: 'dailyData' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, Alert, ScrollView, View, TouchableHighlight} from 'react-native';
 import Chart from 'react-native-chart';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import ModalDropdown from 'react-native-modal-dropdown';
 
 
 export default class DailyData extends Component {
@@ -25,6 +25,14 @@ export default class DailyData extends Component {
           <View style={styles.container}>
                  <View>
                   <Text style={styles.title}>Today</Text>
+
+                  <ModalDropdown style={styles.dropdown}
+                  options={['Line', 'Pie']}
+                  textStyle={styles.dropdownText}
+                  // dropdownStyle={styles.dropdownDropdown}
+                  defaultValue='Change Graph Type'
+                  // renderRow={this.dropdownRenderRow}       
+                />
                  </View>
                   <Chart
                     color={['white']}
@@ -115,18 +123,33 @@ const styles = StyleSheet.create({
     },
     chart: {
         width: 280,
-        height: 100,
+        height: 70,
         margin: 1,
         marginTop: 25,
-        marginBottom: 100,
+        marginBottom: 130,
     },
     title: 
     {
     textAlign: 'center',
     color: 'white',
-    marginTop: 45,
+    marginTop: 105,
     fontSize: 40,
     fontWeight: '400',
     marginBottom: 2
+    },
+     dropdown: {
+    margin: 8,
+    borderColor:  'rgb(31,58,147)',
+    backgroundColor: 'rgb(31,58,147)',
+    borderWidth: 1,
+    borderRadius: 1,
+      },
+    dropdownText: {
+        marginVertical: 10,
+        marginHorizontal: 6,
+        fontSize: 18,
+        color: 'white',
+        textAlign: 'center',
+        textAlignVertical: 'center',
     },
 });
