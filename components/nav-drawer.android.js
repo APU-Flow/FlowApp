@@ -35,7 +35,7 @@ export default class NavDrawerAndroid extends Component {
     let navigationView = (
       <View style={styles.drawerContainer}>
         {this.state.routeList.map((route) => {
-          let isCurrentRoute = route == this.props.currentRouteName;
+          let isCurrentRoute = route === this.props.currentRouteName;
           return (
             <TouchableHighlight
               key={route}
