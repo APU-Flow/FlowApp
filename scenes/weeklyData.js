@@ -60,15 +60,31 @@ export default class WeeklyData extends Component {
     }
 }
 
-//change this so it is not a constant, gets input from database
+/*Pseudo-code for getting input from database:
+Stringify JSON object
+//do we even need to get from database or can we use what we have from daily?
+//something like
+for(all of day's data)
+{
+    add ml Used into totalMlUsed
+}
+put totalMlUsed into ordered pair with date, send into database
+//this could be done whenever we get daily from database or if George already had it
+//then that would be good too.
+
+//then get from database: similar to daily code.
+
+ */
+dataMlUsageDay=[1,3,9,4,8,3,7];
+//change this so it gets input from database
 dataWeek = [
-    ["S", 1],
-    ["M", 3],
-    ["T", 9],
-    ["W", 4],
-    ["Th", 8],
-    ["F", 3],
-    ["S", 7],
+    ["S", dataMlUsageDay[0]],
+    ["M", dataMlUsageDay[1]],
+    ["T", dataMlUsageDay[2]],
+    ["W", dataMlUsageDay[3]],
+    ["Th", dataMlUsageDay[4]],
+    ["F", dataMlUsageDay[5]],
+    ["S", dataMlUsageDay[6]],
 ];
 
 const styles = StyleSheet.create({

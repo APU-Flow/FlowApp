@@ -59,20 +59,24 @@ export default class MonthlyData extends Component {
     }
 }
 
-//change this so it is not a constant, gets input from database
+/*Pseudo-code for getting input from database:
+//see weeklyData pseudo-code
+ */
+dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
+//change this so it gets input from database
 dataMonth = [
-    ["Jan", 1],
-    ["Feb", 3],
-    ["Mar", 9],
-    ["Apr", 4],
-    ["May", 8],
-    ["June", 3],
-    ["July", 7],
-    ["Aug", 9],
-    ["Sept", 4],
-    ["Oct", 8],
-    ["Nov", 3],
-    ["Dec", 7],
+    ["Jan", dataMlUsageMonth[0]],
+    ["Feb", dataMlUsageMonth[1]],
+    ["Mar", dataMlUsageMonth[2]],
+    ["Apr", dataMlUsageMonth[3]],
+    ["May", dataMlUsageMonth[4]],
+    ["June", dataMlUsageMonth[5]],
+    ["July", dataMlUsageMonth[6]],
+    ["Aug", dataMlUsageMonth[7]],
+    ["Sept", dataMlUsageMonth[8]],
+    ["Oct", dataMlUsageMonth[9]],
+    ["Nov", dataMlUsageMonth[10]],
+    ["Dec", dataMlUsageMonth[11]],
 ];
 
 const styles = StyleSheet.create({
