@@ -86,45 +86,6 @@ export default class DailyData extends Component {
       </TouchableHighlight>
     );
   }
-
-  renderLineGraph()
-  {
-    return (
-          <View style={styles.container}>
-                  <Chart
-                    color={['white']}
-                    axisColor={['white']}
-                    axisLabelColor={['white']}
-                    axisLineWidth={1}
-
-                    xAxisHeight={40}
-                    yAxisWidth={19}
-
-                    cornerRadius={4}
-
-                    data={dataDay}
-
-                    hideHorizontalGridLines={true}
-                    hideVerticalGridLines={true}
-
-                    widthPercent={1}
-                    verticalGridStep={5}
-                    horizontalGridStep={2}
-
-                    type="bar"
-                    lineWidth={4}
-
-                    showDataPoint={false}
-                    showAxis={true}
-                    
-                    style={styles.chart}
-                    labelFontSize={8} 
-
-
-                 />
-          </View>
-        );
-  }
   viewGraph(index, value) {
 
   }
