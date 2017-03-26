@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import DailyData from './scenes/dailyData';
+import DailyBarData from './scenes/dailyBarData';
 import WeeklyData from './scenes/weeklyData';
 import MonthlyData from './scenes/monthlyData';
 import NavDrawerAndroid from './components/nav-drawer.android';
@@ -35,7 +36,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'dailyData' }}
+        initialRoute={{ name: 'dailyBarData' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
@@ -74,6 +75,9 @@ export default class FlowApp extends Component {
               break;
             case 'dailyData':
               scene = <DailyData {...route.passProps} />;
+              break;
+            case 'dailyBarData':
+              scene = <DailyBarData {...route.passProps} />;
               break;
           }
 
