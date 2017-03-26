@@ -13,11 +13,18 @@ export default class DailyData extends Component {
     };
   }
 
-  // constructor(props) {
-  //   super(props);
+  constructor(props) {
+    super(props);
 
-  //   // Initialize state variables
-  // }
+    // Initialize state variables
+    this.state = {
+      graphList: ['line', 'bar', 'pie']
+    //graph state to switch rendering
+    };
+
+    this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
+    this.viewGraph = this.viewGraph.bind(this);
+  }
 
 
    render() {
@@ -25,15 +32,15 @@ export default class DailyData extends Component {
           <View style={styles.container}>
                  <View>
                   <Text style={styles.title}>Today</Text>
-
-                  <ModalDropdown style={styles.dropdown}
-                  options={['Line', 'Pie']}
-                  textStyle={styles.dropdownText}
-                  // dropdownStyle={styles.dropdownDropdown}
-                  defaultValue='Change Graph Type'
-                  // renderRow={this.dropdownRenderRow}       
-                />
                  </View>
+                 <ModalDropdown style={styles.dropdown}
+                  options={this.state.graphList}
+                  textStyle={styles.dropdownText}
+                  dropdownStyle={styles.dropdownDropdown}
+                  defaultValue='Change Graph Type'
+                  renderRow={this.dropdownRenderRow}  
+                  onSelect={this.viewGraph}        
+                />
                   <Chart
                     color={['white']}
                     axisColor={['white']}
@@ -61,11 +68,66 @@ export default class DailyData extends Component {
                     showAxis={true}
                     
                     style={styles.chart}
-                    labelFontSize={8}                  
+                    labelFontSize={8} 
                  />
           </View>
         );
     }
+
+    dropdownRenderRow(rowData, rowID, highlighted) {
+    let evenRow = rowID % 2;
+    return (
+      <TouchableHighlight underlayColor='cornflowerblue'>
+       <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
+          <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
+             {rowData}
+          </Text>
+        </View>
+      </TouchableHighlight>
+    );
+  }
+
+  renderLineGraph()
+  {
+    return (
+          <View style={styles.container}>
+                  <Chart
+                    color={['white']}
+                    axisColor={['white']}
+                    axisLabelColor={['white']}
+                    axisLineWidth={1}
+
+                    xAxisHeight={40}
+                    yAxisWidth={19}
+
+                    cornerRadius={4}
+
+                    data={dataDay}
+
+                    hideHorizontalGridLines={true}
+                    hideVerticalGridLines={true}
+
+                    widthPercent={1}
+                    verticalGridStep={5}
+                    horizontalGridStep={2}
+
+                    type="bar"
+                    lineWidth={4}
+
+                    showDataPoint={false}
+                    showAxis={true}
+                    
+                    style={styles.chart}
+                    labelFontSize={8} 
+
+
+                 />
+          </View>
+        );
+  }
+  viewGraph(index, value) {
+
+  }
 }
 
 
@@ -130,26 +192,50 @@ const styles = StyleSheet.create({
     },
     title: 
     {
-    textAlign: 'center',
-    color: 'white',
-    marginTop: 105,
-    fontSize: 40,
-    fontWeight: '400',
-    marginBottom: 2
-    },
-     dropdown: {
-    margin: 8,
-    borderColor:  'rgb(31,58,147)',
-    backgroundColor: 'rgb(31,58,147)',
-    borderWidth: 1,
-    borderRadius: 1,
-      },
-    dropdownText: {
-        marginVertical: 10,
-        marginHorizontal: 6,
-        fontSize: 18,
-        color: 'white',
         textAlign: 'center',
-        textAlignVertical: 'center',
+        color: 'white',
+        marginTop: 105,
+        fontSize: 40,
+        fontWeight: '400',
+        marginBottom: 2
     },
+   dropdown: {
+      margin: 8,
+      borderColor:  'rgb(31,58,147)',
+      backgroundColor: 'rgb(31,58,147)',
+      borderWidth: 1,
+      borderRadius: 1,
+      width:170,
+      height:45,
+    },
+    dropdownText: {
+      marginVertical: 10,
+      marginHorizontal: 6,
+      fontSize: 18,
+      color: 'white',
+      textAlign: 'center',
+      textAlignVertical: 'center',
+    },
+     dropdownDropdown: {
+      margin: 8,
+      width: 152,
+      height: 100,
+      borderColor: 'rgb(31,58,147)',
+      borderWidth: 2,
+      borderRadius: 3,
+      backgroundColor: 'rgb(31,58,147)',
+    },
+    dropdownRow: {
+      flexDirection: 'row',
+      height: 40,
+      alignItems: 'center',
+      backgroundColor: 'rgb(31,58,147)'
+    },
+    dropdownRowText: {
+      marginHorizontal: 4,
+      fontSize: 16,
+      color: 'white',
+      textAlignVertical: 'center',
+      textAlign: 'center',
+    }
 });
