@@ -7,6 +7,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class Settings extends Component {
+
+  static get propTypes() {
+    return {
+      title: React.PropTypes.string
+    };
+  }
+
   static get defaultProps() {
     return {
       title: 'Settings'
@@ -72,11 +79,11 @@ export default class Settings extends Component {
       'Delete Data History',
       'Are you sure you want to delete your data history?',
       [
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'Yes', onPress: () => console.log('Yes Pressed') }
+        { text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel' },
+        { text: 'Yes', onPress: () => Alert.alert('Yes Pressed') }
       ],
       { cancelable: false }
-    )
+    );
   }
 
   contactUs() {
@@ -99,14 +106,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 15
   },
-  text: {
-    textAlign: 'center',
-    color: 'white',
-    marginTop: 5,
-    fontSize: 18,
-    fontWeight: '400',
-    marginBottom: 15
-  },
 
   dropdown: {
     margin: 8,
@@ -123,7 +122,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-   dropdownDropdown: {
+  dropdownDropdown: {
     margin: 8,
     width: 320,
     height: 100,

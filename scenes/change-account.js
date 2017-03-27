@@ -7,6 +7,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class ChangeAccount extends Component {
+
+  static get propTypes() {
+    return { title: React.PropTypes.string };
+  }
+
   static get defaultProps() {
     return {
       title: 'Change Account'
@@ -21,7 +26,7 @@ export default class ChangeAccount extends Component {
       // TODO: Populate these with real data
       switchableAccounts: ['Jim', 'Bill'],
       settingsOptions: ['I', 'Am', 'Unsure', 'What', 'Should', 'Be', 'Here']
-    }
+    };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
     this.confirmDeleteAccount = this.confirmDeleteAccount.bind(this);
@@ -71,8 +76,8 @@ export default class ChangeAccount extends Component {
       'Delete Account',
       'Are you sure you want to delete your account?',
       [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        {text: 'Yes, Delete my account', onPress: () => console.log('OK Pressed')},
+        {text: 'Cancel', onPress: null, style: 'cancel' },
+        {text: 'Yes, Delete my account', onPress: null},
       ],
       { cancelable: false }
     );
@@ -119,7 +124,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-   dropdownDropdown: {
+  dropdownDropdown: {
     margin: 8,
     width: 320,
     height: 100,

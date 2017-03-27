@@ -2,11 +2,19 @@
 // Flow
 
 import React, { Component } from 'react';
+
 import { Alert, AsyncStorage, StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import Chart from 'react-native-chart';
 
+
 export default class Overview extends Component {
-  
+
+  static get propTypes() {
+    return {
+      message: React.PropTypes.string
+    };
+  }
+
   static get defaultProps() {
     return {
       message: 'Default message'
@@ -18,13 +26,13 @@ export default class Overview extends Component {
     // Initialize state variables
     this.state = {
       data: ''
-    }
+    };
   }
 
   componentDidMount() {
     AsyncStorage.multiGet(['email', 'token'], (errors, results) => {
       if (errors) {
-        console.error(errors);
+        Alert.alert('Error', errors);
       }
       let email = results[0][1];
       let token = results[1][1];
