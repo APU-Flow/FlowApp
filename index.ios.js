@@ -2,12 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Navigator,
-  Text
-} from 'react-native';
+import { AppRegistry, Navigator, Text } from 'react-native';
 
 import NavBarIOS from './components/nav-bar.ios';
 import Settings from './scenes/settings';

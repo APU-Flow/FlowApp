@@ -2,16 +2,13 @@
 // Flow
 
 import React, { Component } from 'react';
-import { AsyncStorage, View, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
+import { Alert, AsyncStorage, View, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 
 export default class LoginForm extends Component {
 
-  static get defaultProps() {
+  static get propTypes() {
     return {
-      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
-      pushRoute(scene) {
-        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushRoute method given to Splash scene!`);
-      }
+      pushRoute: React.PropTypes.func.isRequired
     };
   }
 
@@ -21,7 +18,7 @@ export default class LoginForm extends Component {
       email: '',
       password: '',
       submitReport: ''
-    }
+    };
 
     this.submitToServer = this.submitToServer.bind(this);
   }
@@ -71,9 +68,16 @@ export default class LoginForm extends Component {
         this.setState({ submitReport: '' });
         
         try {
-          await AsyncStorage.multiSet([['email', responseObject.email], ['token', responseObject.token]]);
-        } catch(error) {
-          console.error(error);
+          // TODO: Handle undefined instead of hanging!
+          Alert.alert(`${responseObject.email}, ${responseObject.firstName}, ${responseObject.token}`);
+          await AsyncStorage.multiSet([
+            ['email', responseObject.email],
+            ['firstName', responseObject.firstName],
+            ['token', responseObject.token]
+          ]);
+          Alert.alert('Hit try end!');
+        } catch (error) {
+          Alert.alert('Error', error);
         }
 
         this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });

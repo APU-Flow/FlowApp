@@ -1,5 +1,5 @@
 {
-  "name": "FlowApp",
+  "name": "flowapp",
   "version": "0.0.1",
   "description": "React Native application for Flow, a smart home device used for tracking water usage",
   "private": true,
@@ -14,13 +14,18 @@
   "dependencies": {
     "react": "~15.4.0-rc.4",
     "react-native": "0.40.0",
+    "react-native-chart": "^1.0.8-beta",
     "react-native-keyboard-aware-scroll-view": "^0.2.6",
     "react-native-modal-dropdown": "^0.4.1",
     "react-native-vector-icons": "^4.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "^6.1.2",
     "babel-jest": "18.0.0",
     "babel-preset-react-native": "1.9.1",
+    "eslint": "^3.18.0",
+    "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-react-native": "^2.3.1",
     "jest": "18.1.0",
     "react-test-renderer": "~15.4.0-rc.4"
   },

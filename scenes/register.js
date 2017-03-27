@@ -2,16 +2,14 @@
 // Flow
 
 import React, { Component } from 'react';
-import { AsyncStorage, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
+import { AsyncStorage, StyleSheet, TextInput, Text, TouchableHighlight, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class Register extends Component {
-  static get defaultProps() {
+
+  static get propTypes() {
     return {
-      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
-      pushRoute(scene) {
-        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushRoute method given to Splash scene!`);
-      }
+      pushRoute: React.PropTypes.func.isRequired
     };
   }
 
@@ -31,7 +29,7 @@ export default class Register extends Component {
       fieldValidities: [false, false, false, false, false, false, false, false, false],
       allValid: false,
       submitReport: ''
-    }
+    };
 
     // Bind functions to instance
     this.verifyInput = this.verifyInput.bind(this);
@@ -132,37 +130,73 @@ export default class Register extends Component {
           <Text style={styles.buttonText}>SUBMIT</Text>
         </TouchableHighlight>
       </KeyboardAwareScrollView>
-    )
+    );
   }
 
   verifyInput(name, text) {
-    switch(name) {
+    switch (name) {
       case 'firstName':
-        this.state.fieldValidities[0] = /^[A-Z' \-]{1,20}$/i.test(text);
+        this.setState((prevState) => {
+          let newValidities = prevState.fieldValidities;
+          newValidities[0] = /^[A-Z' \-]{1,20}$/i.test(text);
+          return {fieldValidities: newValidities};
+        });
         break;
       case 'lastName':
-        this.state.fieldValidities[1] = (/^[A-Z'\-]{1,20}$/i.test(text));
+        this.setState((prevState) => {
+          let newValidities = prevState.fieldValidities;
+          newValidities[1] = (/^[A-Z'\-]{1,20}$/i.test(text));
+          return {fieldValidities: newValidities};
+        });
         break;
       case 'email':
-        this.state.fieldValidities[2] = (/^[A-Z0-9._\-%+]{1,20}@[A-Z0-9\-.]{1,20}\.[A-Z]{2,4}$/i.test(text));
+        this.setState((prevState) => {
+          let newValidities = prevState.fieldValidities;
+          newValidities[2] = (/^[A-Z0-9._\-%+]{1,20}@[A-Z0-9\-.]{1,20}\.[A-Z]{2,4}$/i.test(text));
+          return {fieldValidities: newValidities};
+        });
         break;
       case 'password':
-        this.state.fieldValidities[3] = (/^[A-Z0-9`~!@#$%^&*()\-=_+<>,.?]{5,20}$/i.test(text));
-        // Intentional lack of 'break;' to update passsword verification styles when password changes
+        this.setState((prevState) => {
+          let newValidities = prevState.fieldValidities;
+          newValidities[3] = (/^[A-Z0-9`~!@#$%^&*()\-=_+<>,.?]{5,20}$/i.test(text));
+          return {fieldValidities: newValidities};
+        });
+        // Falls through to update passsword verification styles when password changes
       case 'passwordVerification':
-        this.state.fieldValidities[4] = (text == this.state.password);
+        this.setState((prevState) => {
+          let newValidities = prevState.fieldValidities;
+          newValidities[4] = (text == this.state.password);
+          return {fieldValidities: newValidities};
+        });
         break;
       case 'address':
-        this.state.fieldValidities[5] = (/^[0-9]{1,8} [A-Z'#.& \-]{2,30}$/i.test(text));
+        this.setState((prevState) => {
+          let newValidities = prevState.fieldValidities;
+          newValidities[5] = (/^[0-9]{1,8} [A-Z'#.& \-]{2,30}$/i.test(text));
+          return {fieldValidities: newValidities};
+        });
         break;
       case 'city':
-        this.state.fieldValidities[6] = (/^[A-Z' \-]{2,25}$/i.test(text));
+        this.setState((prevState) => {
+          let newValidities = prevState.fieldValidities;
+          newValidities[6] = (/^[A-Z' \-]{2,25}$/i.test(text));
+          return {fieldValidities: newValidities};
+        });
         break;
       case 'state':
-        this.state.fieldValidities[7] = (/^[A-Z]{2}$/.test(text));
+        this.setState((prevState) => {
+          let newValidities = prevState.fieldValidities;
+          newValidities[7] = (/^[A-Z]{2}$/.test(text));
+          return {fieldValidities: newValidities};
+        });
         break;
       case 'zip':
-        this.state.fieldValidities[8] = (/^\d{5}(-\d{4})?$/.test(text));
+        this.setState((prevState) => {
+          let newValidities = prevState.fieldValidities;
+          newValidities[8] = (/^\d{5}(-\d{4})?$/.test(text));
+          return {fieldValidities: newValidities};
+        });
         break;
     }
 
@@ -191,7 +225,7 @@ export default class Register extends Component {
     })
     .then((response) => response.json())
     .then((responseObject) => {
-      if (responseObject.status === 'OK' || responseObject.status === 'okay')
+      if (responseObject.status === 'ok')
         this.submitLogin();
       else
         this.setState({submitReport: 'Registration failed!'});
@@ -216,9 +250,14 @@ export default class Register extends Component {
         this.setState({ submitReport: '' });
         
         try {
-          await AsyncStorage.multiSet([['email', responseObject.email], ['token', responseObject.token]]);
-        } catch(error) {
-          console.error(error);
+          // TODO: Handle undefined instead of hanging!
+          await AsyncStorage.multiSet([
+            ['email', responseObject.email],
+            ['firstName', responseObject.firstName],
+            ['token', responseObject.token]
+          ]);
+        } catch (error) {
+          Alert.alert('Error', error);
         }
 
         this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
@@ -235,7 +274,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor:'rgb(52,152,219)',
-    padding: 30
+    paddingHorizontal: 30
   },
   field: {
     height: 40,
@@ -268,8 +307,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '400',
     marginBottom: 15
-  },
-  borderWidth:{
-    borderWidth:1
   }
 });
