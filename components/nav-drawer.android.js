@@ -6,12 +6,17 @@ import { StyleSheet, DrawerLayoutAndroid, View, Text, TouchableHighlight } from 
 
 export default class NavDrawerAndroid extends Component {
 
+  static get propTypes() {
+    return {
+      pushRoute: React.PropTypes.func.isRequired,
+      currentRouteName: React.PropTypes.string,
+      drawerLockMode: React.PropTypes.string,
+      children: React.PropTypes.element.isRequired
+    };
+  }
+  
   static get defaultProps() {
     return {
-      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
-      pushRoute(scene) {
-        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushRoute method given to Splash scene!`);
-      },
       drawerLockMode: 'unlocked',
       currentRouteName: ''
     };
@@ -23,14 +28,14 @@ export default class NavDrawerAndroid extends Component {
     // Initialize state variables
     this.state = {
       routeList: ['overview', 'meters', 'settings']
-    }
+    };
   }
 
   render() {
     let navigationView = (
       <View style={styles.drawerContainer}>
         {this.state.routeList.map((route) => {
-          let isCurrentRoute = route == this.props.currentRouteName;
+          let isCurrentRoute = route === this.props.currentRouteName;
           return (
             <TouchableHighlight
               key={route}

@@ -6,12 +6,9 @@ import { StyleSheet, View, Text, Image, TouchableHighlight, Navigator } from 're
 
 export default class Splash extends Component {
 
-  static get defaultProps() {
+  static get propTypes() {
     return {
-      // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
-      pushRoute(scene) {
-        console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushRoute method given to Splash scene!`);
-      }
+      pushRoute: React.PropTypes.func.isRequired
     };
   }
 
