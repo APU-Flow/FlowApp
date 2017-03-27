@@ -1,6 +1,8 @@
 // settings.js
 // Flow
 
+'use strict';
+
 import React, { Component } from 'react';
 import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -146,3 +148,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
+
+module.exports = Settings;

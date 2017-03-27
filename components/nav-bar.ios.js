@@ -4,9 +4,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, TabBarIOS, View, Text, TouchableHighlight } from 'react-native';
 
-var Overview = require('./overview');
-var Meters = require('./meters');
-var Settings = require('./settings');
+import Icon from 'react-native-vector-icons/Ionicons';
+
+var Overview = require('../scenes/overview');
+var Meters = require('../scenes/meters');
+var Graphs = require('../scenes/graphs');
+var Settings = require('../scenes/settings');
+
 
 export default class NavBarIOS extends Component {
 
@@ -20,99 +24,76 @@ export default class NavBarIOS extends Component {
         };
     }
 
-
     constructor(props) {
         super(props);
-
-        // Initialize state variables
         this.state = {
-            routeList: ['overview', 'meters', 'settings']
-        }
+            selectedTab: 'overview'
+        };
     }
 
     render() {
-        let navigationView = (
-            <NavBarIOS style={styles.barContainer}>
-                {this.state.routeList.map((route) => {
-                    let isCurrentRoute = route == this.props.currentRouteName;
-                    return (
-                        <TabBarIOS selectedTab={this.state.selectedTab}>
-                            <TabBarIOS.Item
-                                selected={this.state.selectedTab === 'overview'}
-                                icon={{ uri: 'featured' }}
-                                onPress={() => {
-                                    this.setState({
-                                        selectedTab: 'overview',
-                                    });
-                                }}>
-                                <Overview />
-                            </TabBarIOS.Item>
-                            <TabBarIOS.Item
-                                selected={this.state.selectedTab === 'meters'}
-                                icon={{ uri: 'contacts' }}
-                                onPress={() => {
-                                    this.setState({
-                                        selectedTab: 'meters',
-                                    });
-                                }}>
-                                <Meters />
-                            </TabBarIOS.Item>
-                            <TabBarIOS.Item
-                                selected={this.state.selectedTab === 'settings'}
-                                icon={{ uri: 'contacts' }}
-                                onPress={() => {
-                                    this.setState({
-                                        selectedTab: 'settings',
-                                    });
-                                }}>
-                                <Settings />
-                            </TabBarIOS.Item>
-                        </TabBarIOS>
-                    );
-                })}
-      </NavBarIOS>
+        return (
+            <TabBarIOS selectedTab={this.state.selectedTab}>
+                <Icon.TabBarItem
+                    title="Home"
+                    iconName="ios-home-outline"
+                    selectedIconName="ios-home"
+                    ios-stats-outline
+                    selected={this.state.selectedTab === 'overview'}
+                    onPress={() => {
+                        this.setState({
+                            selectedTab: 'overview',
+                        });
+                    }}>
+                    <Overview />
+                </Icon.TabBarItem>
+                <Icon.TabBarItem
+                    title="Graphs"
+                    iconName="ios-stats-outline"
+                    selectedIconName="ios-stats"
+                    selected={this.state.selectedTab === 'graphs'}
+                    onPress={() => {
+                        this.setState({
+                            selectedTab: 'graphs',
+                        });
+                    }}>
+                    <Graphs />
+                </Icon.TabBarItem>
+                <Icon.TabBarItem
+                    title="Meters"
+                    iconName="ios-water-outline"
+                    selectedIconName="ios-water"
+                    selected={this.state.selectedTab === 'meters'}
+                    onPress={() => {
+                        this.setState({
+                            selectedTab: 'meters',
+                        });
+                    }}>
+                    <Meters />
+                </Icon.TabBarItem>
+                <Icon.TabBarItem
+                    title="Settings"
+                    iconName="ios-settings-outline"
+                    selectedIconName="ios-settings"
+                    selected={this.state.selectedTab === 'settings'}
+                    onPress={() => {
+                        this.setState({
+                            selectedTab: 'settings',
+                        });
+                    }}>
+                    <Settings />
+                </Icon.TabBarItem>
+            </TabBarIOS>
         );
-        /*return (
-          <NavBarIOS
-            drawerWidth={300}
-            drawerPosition={DrawerLayoutAndroid.positions.Left}
-            renderNavigationView={() => navigationView}
-            drawerLockMode={this.props.drawerLockMode}>
-    
-              {this.props.children}
-    
-          </NavBarIOS>
-        );*/
     }
 }
 
 const styles = StyleSheet.create({
     barContainer: {
         flex: 1,
-        flexDirection: 'column',
-        backgroundColor: '#fff'
-    },
-
-    drawerItem: {
-        backgroundColor: '#fff',
-        height: 60,
-        justifyContent: 'center',
-        borderBottomColor: '#e3f5ff',
-        borderBottomWidth: 0.5,
-        paddingLeft: 16
+        flexDirection: 'column'
     },
     selectedItem: {
         backgroundColor: '#b3c5ff'
     },
-
-    drawerItemText: {
-        textAlign: 'left',
-        color: '#000',
-        fontWeight: 'normal',
-        fontSize: 14
-    },
-    selectedItemText: {
-        color: '#1f3a93'
-    }
-
 });

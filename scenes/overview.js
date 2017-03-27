@@ -1,5 +1,6 @@
 // overview.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { AsyncStorage, StyleSheet, View, Text } from 'react-native';
@@ -67,3 +68,5 @@ const styles = StyleSheet.create({
     fontSize: 15
   }
 });
+
+module.exports = Overview;

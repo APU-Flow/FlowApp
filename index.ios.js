@@ -6,10 +6,10 @@ import {
   AppRegistry,
   StyleSheet,
   Navigator,
-  Text,
-  TabBarIOS
+  Text
 } from 'react-native';
 
+import NavBarIOS from './components/nav-bar.ios';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
 import ChangeAccount from './scenes/change-account';
@@ -23,7 +23,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'splash' }}
+        initialRoute={{ name: 'meters' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottom}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
@@ -37,23 +37,23 @@ export default class FlowApp extends Component {
               return <Register pushRoute={navigator.push} {...route.passProps} />;
             case 'settings':
               return (
-                <TabBarIOS>
+                <NavBarIOS>
                   <Settings {...route.passsProps} />
-                </TabBarIOS>
+                </NavBarIOS>
               ) 
             case 'changeAccount':
               return <ChangeAccount {...route.passProps} />;
             case 'meters':
               return (
-                <TabBarIOS>
+                <NavBarIOS>
                   <Meters {...route.passProps} />
-                </TabBarIOS>
+                </NavBarIOS>
                 )
             case 'overview':
               return (
-                <TabBarIOS>
+                <NavBarIOS>
                   <Overview {...route.passProps} />
-                </TabBarIOS>
+                </NavBarIOS>
                 )
             default:
               return <Text>Bad route name given!</Text>
