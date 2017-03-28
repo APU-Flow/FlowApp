@@ -5,11 +5,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Navigator, Text } from 'react-native';
 
 import DailyData from './scenes/dailyData';
-import DailyBarData from './scenes/dailyBarData';
-import WeeklyData from './scenes/weeklyData';
-import MonthlyData from './scenes/monthlyData';
 import NavDrawerAndroid from './components/nav-drawer.android';
-import NavGraphTypeDropdown from './components/nav-graph-type-dropdown';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
 import ChangeAccount from './scenes/change-account';
@@ -63,17 +59,8 @@ export default class FlowApp extends Component {
             case 'overview':
               scene = <Overview {...route.passProps} />;
               break;
-            case 'weeklyData':
-              scene = <WeeklyData {...route.passProps} />;
-              break;
-            case 'monthlyData':
-              scene = <MonthlyData {...route.passProps} />;
-              break;
             case 'dailyData':
               scene = <DailyData {...route.passProps} />;
-              break;
-            case 'dailyBarData':
-              scene = <DailyBarData {...route.passProps} />;
               break;
           }
 

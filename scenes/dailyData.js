@@ -15,52 +15,7 @@ export default class DailyData extends Component {
 
   constructor(props) {
     super(props);
-    var dataMlUsageHr= [1,3,9,4,8,3,7,9,4,8,3,7,4]
-    var dataDay = [
-      ["8am", dataMlUsageHr[0]],
-      ["9am", dataMlUsageHr[1]],
-      ["10am", dataMlUsageHr[2]],
-      ["11am", dataMlUsageHr[3]],
-      ["12pm", dataMlUsageHr[4]],
-      ["1pm", dataMlUsageHr[5]],
-      ["2pm", dataMlUsageHr[6]],
-      ["3pm", dataMlUsageHr[7]],
-      ["4pm", dataMlUsageHr[8]],
-      ["5pm", dataMlUsageHr[9]],
-      ["6pm", dataMlUsageHr[10]],
-      ["7pm", dataMlUsageHr[11]],
-      ["8pm", dataMlUsageHr[12]],
-      ]
-
-  //weekly
-      var dataMlUsageDay= [1,3,9,4,8,3,7]
-  //change this so it gets input from database
-      var dataWeek = [
-      ["S", dataMlUsageDay[0]],
-      ["M", dataMlUsageDay[1]],
-      ["T", dataMlUsageDay[2]],
-      ["W", dataMlUsageDay[3]],
-      ["Th", dataMlUsageDay[4]],
-      ["F", dataMlUsageDay[5]],
-      ["S", dataMlUsageDay[6]],
-      ]
-  //monthly
-    var dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7]
-  //change this so it gets input from database
-    var dataMonth = [
-      ["Jan", dataMlUsageMonth[0]],
-      ["Feb", dataMlUsageMonth[1]],
-      ["Mar", dataMlUsageMonth[2]],
-      ["Apr", dataMlUsageMonth[3]],
-      ["May", dataMlUsageMonth[4]],
-      ["June", dataMlUsageMonth[5]],
-      ["July", dataMlUsageMonth[6]],
-      ["Aug", dataMlUsageMonth[7]],
-      ["Sept", dataMlUsageMonth[8]],
-      ["Oct", dataMlUsageMonth[9]],
-      ["Nov", dataMlUsageMonth[10]],
-      ["Dec", dataMlUsageMonth[11]],
-    ]
+   
     // Initialize state variables
     this.state = {
       graphList: ['line', 'bar', 'pie'],
@@ -211,6 +166,52 @@ if (charAt(1)==8 && charAt(5)==a && charAt(9)==8 && charAt(13)==a)
 //
  */
 colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver", ];
+ var dataMlUsageHr= [1,3,9,4,8,3,7,9,4,8,3,7,4];
+    var dataDay = [
+      ["8am", dataMlUsageHr[0]],
+      ["9am", dataMlUsageHr[1]],
+      ["10am", dataMlUsageHr[2]],
+      ["11am", dataMlUsageHr[3]],
+      ["12pm", dataMlUsageHr[4]],
+      ["1pm", dataMlUsageHr[5]],
+      ["2pm", dataMlUsageHr[6]],
+      ["3pm", dataMlUsageHr[7]],
+      ["4pm", dataMlUsageHr[8]],
+      ["5pm", dataMlUsageHr[9]],
+      ["6pm", dataMlUsageHr[10]],
+      ["7pm", dataMlUsageHr[11]],
+      ["8pm", dataMlUsageHr[12]],
+      ];
+
+  //weekly
+      var dataMlUsageDay= [1,3,9,4,8,3,7];
+  //change this so it gets input from database
+      var dataWeek = [
+      ["S", dataMlUsageDay[0]],
+      ["M", dataMlUsageDay[1]],
+      ["T", dataMlUsageDay[2]],
+      ["W", dataMlUsageDay[3]],
+      ["Th", dataMlUsageDay[4]],
+      ["F", dataMlUsageDay[5]],
+      ["S", dataMlUsageDay[6]],
+      ];
+  //monthly
+    var dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
+  //change this so it gets input from database
+    var dataMonth = [
+      ["Jan", dataMlUsageMonth[0]],
+      ["Feb", dataMlUsageMonth[1]],
+      ["Mar", dataMlUsageMonth[2]],
+      ["Apr", dataMlUsageMonth[3]],
+      ["May", dataMlUsageMonth[4]],
+      ["June", dataMlUsageMonth[5]],
+      ["July", dataMlUsageMonth[6]],
+      ["Aug", dataMlUsageMonth[7]],
+      ["Sept", dataMlUsageMonth[8]],
+      ["Oct", dataMlUsageMonth[9]],
+      ["Nov", dataMlUsageMonth[10]],
+      ["Dec", dataMlUsageMonth[11]],
+    ];
 
 const styles = StyleSheet.create({
     container: {
