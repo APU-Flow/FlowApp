@@ -9,6 +9,7 @@ import DailyBarData from './scenes/dailyBarData';
 import WeeklyData from './scenes/weeklyData';
 import MonthlyData from './scenes/monthlyData';
 import NavDrawerAndroid from './components/nav-drawer.android';
+import NavGraphTypeDropdown from './components/nav-graph-type-dropdown';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
 import ChangeAccount from './scenes/change-account';
@@ -31,7 +32,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'splash' }}
+        initialRoute={{ name: 'dailyData' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
