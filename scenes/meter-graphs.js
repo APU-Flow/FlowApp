@@ -22,8 +22,8 @@ export default class MeterGraphs extends Component {
     //graph state to switch rendering
       graphType: "bar",
       graphshowAxes: true,
-      graphTimeList: ['daily','weekly','monthly'],
-      dataArray: dataDay,
+      graphTimeList: ['daily(8am>7pm)','daily(8pm>7am)','weekly','monthly'],
+      dataArray: dataDayAmPm,
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -82,7 +82,7 @@ export default class MeterGraphs extends Component {
                     showAxis={this.state.graphshowAxes}
                     
                     style={styles.chart}
-                    labelFontSize={8}
+                    labelFontSize={14}
 
                     sliceColors={colorSlices}
                  />
@@ -127,9 +127,13 @@ export default class MeterGraphs extends Component {
       
       this.setState({dataArray: dataWeek})
     }
-    if (value=='daily')
+    if (value=='daily(8am>7pm)')
     {
-       this.setState({dataArray: dataDay })
+       this.setState({dataArray: dataDayAmPm })
+    }
+    if (value=='daily(8pm>7am)')
+    {
+       this.setState({dataArray: dataDayPmAm })
     }
     if (value=='monthly')
     {
@@ -166,21 +170,36 @@ if (charAt(1)==8 && charAt(5)==a && charAt(9)==8 && charAt(13)==a)
 //
  */
 colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver", ];
- var dataMlUsageHr= [1,3,9,4,8,3,7,9,4,8,3,7,4];
-    var dataDay = [
-      ["8am", dataMlUsageHr[0]],
-      ["9am", dataMlUsageHr[1]],
-      ["10am", dataMlUsageHr[2]],
-      ["11am", dataMlUsageHr[3]],
-      ["12pm", dataMlUsageHr[4]],
-      ["1pm", dataMlUsageHr[5]],
-      ["2pm", dataMlUsageHr[6]],
-      ["3pm", dataMlUsageHr[7]],
-      ["4pm", dataMlUsageHr[8]],
-      ["5pm", dataMlUsageHr[9]],
-      ["6pm", dataMlUsageHr[10]],
-      ["7pm", dataMlUsageHr[11]],
-      ["8pm", dataMlUsageHr[12]],
+ var dataMlUsageHrAmPm= [1,3,9,4,8,3,7,9,4,8,3,7];
+    var dataDayAmPm = [
+      ["8a", dataMlUsageHrAmPm[0]],
+      ["9a", dataMlUsageHrAmPm[1]],
+      ["10a", dataMlUsageHrAmPm[2]],
+      ["11a", dataMlUsageHrAmPm[3]],
+      ["12p", dataMlUsageHrAmPm[4]],
+      ["1p", dataMlUsageHrAmPm[5]],
+      ["2p", dataMlUsageHrAmPm[6]],
+      ["3p", dataMlUsageHrAmPm[7]],
+      ["4p", dataMlUsageHrAmPm[8]],
+      ["5p", dataMlUsageHrAmPm[9]],
+      ["6p", dataMlUsageHrAmPm[10]],
+      ["7p", dataMlUsageHrAmPm[11]],
+      ];
+  //pm to am
+  var dataMlUsageHrPmAm= [1,3,9,4,8,3,7,18,4,8,3,7];
+    var dataDayPmAm = [
+      ["8a", dataMlUsageHrPmAm[0]],
+      ["9a", dataMlUsageHrPmAm[1]],
+      ["10a", dataMlUsageHrPmAm[2]],
+      ["11a", dataMlUsageHrPmAm[3]],
+      ["12p", dataMlUsageHrPmAm[4]],
+      ["1p", dataMlUsageHrPmAm[5]],
+      ["2p", dataMlUsageHrPmAm[6]],
+      ["3p", dataMlUsageHrPmAm[7]],
+      ["4p", dataMlUsageHrPmAm[8]],
+      ["5p", dataMlUsageHrPmAm[9]],
+      ["6p", dataMlUsageHrPmAm[10]],
+      ["7p", dataMlUsageHrPmAm[11]],
       ];
 
   //weekly
@@ -204,10 +223,10 @@ colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver",
       ["Mar", dataMlUsageMonth[2]],
       ["Apr", dataMlUsageMonth[3]],
       ["May", dataMlUsageMonth[4]],
-      ["June", dataMlUsageMonth[5]],
-      ["July", dataMlUsageMonth[6]],
+      ["Jun", dataMlUsageMonth[5]],
+      ["Jul", dataMlUsageMonth[6]],
       ["Aug", dataMlUsageMonth[7]],
-      ["Sept", dataMlUsageMonth[8]],
+      ["Sep", dataMlUsageMonth[8]],
       ["Oct", dataMlUsageMonth[9]],
       ["Nov", dataMlUsageMonth[10]],
       ["Dec", dataMlUsageMonth[11]],
@@ -232,7 +251,7 @@ const styles = StyleSheet.create({
     {
         textAlign: 'center',
         color: 'white',
-        marginTop: 185,
+        marginTop: 150,
         fontSize: 40,
         fontWeight: '400',
         marginBottom: 2
@@ -244,7 +263,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 1,
       width:170,
-      height:45,
+      height:40,
     },
     dropdownText: {
       marginVertical: 10,
