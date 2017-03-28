@@ -20,8 +20,57 @@ export default class DailyData extends Component {
     this.state = {
       graphList: ['line', 'bar', 'pie'],
     //graph state to switch rendering
-      graphType: "pie",
+      graphType: "line",
       graphshowAxes: true,
+      graphTimeList: ['weekly','monthly','daily'],
+      
+  //graphing data
+  //daily
+      dataMlUsageHr: [1,3,9,4,8,3,7,9,4,8,3,7,4],
+      data : [
+      ["8am", dataMlUsageHr[0]],
+      ["9am", dataMlUsageHr[1]],
+      ["10am", dataMlUsageHr[2]],
+      ["11am", dataMlUsageHr[3]],
+      ["12pm", dataMlUsageHr[4]],
+      ["1pm", dataMlUsageHr[5]],
+      ["2pm", dataMlUsageHr[6]],
+      ["3pm", dataMlUsageHr[7]],
+      ["4pm", dataMlUsageHr[8]],
+      ["5pm", dataMlUsageHr[9]],
+      ["6pm", dataMlUsageHr[10]],
+      ["7pm", dataMlUsageHr[11]],
+      ["8pm", dataMlUsageHr[12]],
+      ],
+  //weekly
+      dataMlUsageDay: [1,3,9,4,8,3,7],
+  //change this so it gets input from database
+      dataWeek : [
+      ["S", dataMlUsageDay[0]],
+      ["M", dataMlUsageDay[1]],
+      ["T", dataMlUsageDay[2]],
+      ["W", dataMlUsageDay[3]],
+      ["Th", dataMlUsageDay[4]],
+      ["F", dataMlUsageDay[5]],
+      ["S", dataMlUsageDay[6]],
+      ],
+  //monthly
+    dataMlUsageMonth:[1,3,9,4,8,3,7,9,4,8,3,7],
+  //change this so it gets input from database
+    dataMonth : [
+      ["Jan", dataMlUsageMonth[0]],
+      ["Feb", dataMlUsageMonth[1]],
+      ["Mar", dataMlUsageMonth[2]],
+      ["Apr", dataMlUsageMonth[3]],
+      ["May", dataMlUsageMonth[4]],
+      ["June", dataMlUsageMonth[5]],
+      ["July", dataMlUsageMonth[6]],
+      ["Aug", dataMlUsageMonth[7]],
+      ["Sept", dataMlUsageMonth[8]],
+      ["Oct", dataMlUsageMonth[9]],
+      ["Nov", dataMlUsageMonth[10]],
+      ["Dec", dataMlUsageMonth[11]],
+    ],
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -44,6 +93,14 @@ export default class DailyData extends Component {
                   renderRow={this.dropdownRenderRow}  
                   onSelect={this.viewGraph}        
                 />
+                <ModalDropdown style={styles.dropdown}
+                  options={this.state.graphTimeList}
+                  textStyle={styles.dropdownText}
+                  dropdownStyle={styles.dropdownDropdown}
+                  defaultValue='Change Graph Time'
+                  renderRow={this.dropdownRenderRow}  
+                  onSelect={this.viewTimeGraph}        
+                />
                   <Chart
                     color={"white"}
                     axisColor={"white"}
@@ -55,7 +112,7 @@ export default class DailyData extends Component {
 
                     cornerRadius={4}
 
-                    data={dataDay}
+                    data={this.state.data}
 
                     hideHorizontalGridLines={true}
                     hideVerticalGridLines={true}
@@ -109,6 +166,22 @@ export default class DailyData extends Component {
     }
    
   }
+
+  // viewTimeGraph(index, value) {
+  //   if (value=='weekly')
+  //   {
+  //     this.setState({data: this.state.dataWeek})
+  //   }
+  //   if (value=='daily')
+  //   {
+  //     this.setState({data: this.state.data })
+  //   }
+  //   if (value=='monthly')
+  //   {
+  //     this.setState({data: this.state.dataMonth})
+  //   }
+   
+  // }
 }
 
 
@@ -138,23 +211,6 @@ if (charAt(1)==8 && charAt(5)==a && charAt(9)==8 && charAt(13)==a)
 //
  */
 colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver", ];
-dataMlUsageHr=[1,3,9,4,8,3,7,9,4,8,3,7,4];
-//change this so it gets input from database
-dataDay = [
-    ["8am", dataMlUsageHr[0]],
-    ["9am", dataMlUsageHr[1]],
-    ["10am", dataMlUsageHr[2]],
-    ["11am", dataMlUsageHr[3]],
-    ["12pm", dataMlUsageHr[4]],
-    ["1pm", dataMlUsageHr[5]],
-    ["2pm", dataMlUsageHr[6]],
-    ["3pm", dataMlUsageHr[7]],
-    ["4pm", dataMlUsageHr[8]],
-    ["5pm", dataMlUsageHr[9]],
-    ["6pm", dataMlUsageHr[10]],
-    ["7pm", dataMlUsageHr[11]],
-    ["8pm", dataMlUsageHr[12]],
-];
 
 const styles = StyleSheet.create({
     container: {
@@ -168,20 +224,20 @@ const styles = StyleSheet.create({
         width: 345,
         height: 70,
         margin: 1,
-        marginTop: 95,
-        marginBottom: 130,
+        marginTop: 5,
+        marginBottom: 190,
     },
     title: 
     {
         textAlign: 'center',
         color: 'white',
-        marginTop: 105,
+        marginTop: 185,
         fontSize: 40,
         fontWeight: '400',
         marginBottom: 2
     },
    dropdown: {
-      margin: 8,
+      margin: 2,
       borderColor:  'rgb(31,58,147)',
       backgroundColor: 'rgb(31,58,147)',
       borderWidth: 1,
