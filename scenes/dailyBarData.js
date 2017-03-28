@@ -1,4 +1,5 @@
-
+//this file is just for reference as to what it looks like, refer to daily for most
+//recent changes
 import React, { Component } from 'react';
 import { StyleSheet, Text, Alert, ScrollView, View, Navigator, TouchableHighlight} from 'react-native';
 import Chart from 'react-native-chart';
@@ -61,7 +62,7 @@ export default class DailyBarData extends Component {
                     verticalGridStep={5}
                     horizontalGridStep={2}
 
-                    type="bar"
+                    type="pie"
                     lineWidth={4}
 
                     showDataPoint={false}

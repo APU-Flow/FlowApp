@@ -20,7 +20,8 @@ export default class DailyData extends Component {
     this.state = {
       graphList: ['line', 'bar', 'pie'],
     //graph state to switch rendering
-      graphType: "line"
+      graphType: "pie",
+      graphshowAxes: true,
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -67,10 +68,12 @@ export default class DailyData extends Component {
                     lineWidth={4}
 
                     showDataPoint={false}
-                    showAxis={true}
+                    showAxis={this.state.graphshowAxes}
                     
                     style={styles.chart}
-                    labelFontSize={8} 
+                    labelFontSize={8}
+
+                    sliceColors={colorSlices}
                  />
           </View>
         );
@@ -91,11 +94,18 @@ export default class DailyData extends Component {
   viewGraph(index, value) {
     if (value=='bar')
     {
-       this.setState({graphType: "bar"});
+      this.setState({graphType: "bar"})
+      this.setState({graphshowAxes: true})
     }
     if (value=='line')
     {
-       this.setState({graphType: "line"});
+      this.setState({graphType: "line"})
+      this.setState({graphshowAxes: true})
+    }
+    if (value=='pie')
+    {
+      this.setState({graphType: "pie"})
+      this.setState({graphshowAxes: false})
     }
    
   }
@@ -127,7 +137,7 @@ if (charAt(1)==8 && charAt(5)==a && charAt(9)==8 && charAt(13)==a)
 //add up multiple events within same hour, make one piece of data
 //
  */
-
+colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver", ];
 dataMlUsageHr=[1,3,9,4,8,3,7,9,4,8,3,7,4];
 //change this so it gets input from database
 dataDay = [
@@ -155,10 +165,10 @@ const styles = StyleSheet.create({
         backgroundColor:'rgb(52,152,219)',
     },
     chart: {
-        width: 280,
+        width: 345,
         height: 70,
         margin: 1,
-        marginTop: 25,
+        marginTop: 95,
         marginBottom: 130,
     },
     title: 
