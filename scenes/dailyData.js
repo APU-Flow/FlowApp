@@ -20,8 +20,7 @@ export default class DailyData extends Component {
     this.state = {
       graphList: ['line', 'bar', 'pie'],
     //graph state to switch rendering
-      graphType: "line",
-      color: "white"
+      graphType: "line"
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -93,6 +92,10 @@ export default class DailyData extends Component {
     if (value=='bar')
     {
        this.setState({graphType: "bar"});
+    }
+    if (value=='line')
+    {
+       this.setState({graphType: "line"});
     }
    
   }
