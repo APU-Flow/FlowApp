@@ -15,19 +15,8 @@ export default class DailyData extends Component {
 
   constructor(props) {
     super(props);
-
-    // Initialize state variables
-    this.state = {
-      graphList: ['line', 'bar', 'pie'],
-    //graph state to switch rendering
-      graphType: "line",
-      graphshowAxes: true,
-      graphTimeList: ['weekly','monthly','daily'],
-      
-  //graphing data
-  //daily
-      dataMlUsageHr: [1,3,9,4,8,3,7,9,4,8,3,7,4],
-      data : [
+    var dataMlUsageHr= [1,3,9,4,8,3,7,9,4,8,3,7,4]
+    var dataDay = [
       ["8am", dataMlUsageHr[0]],
       ["9am", dataMlUsageHr[1]],
       ["10am", dataMlUsageHr[2]],
@@ -41,11 +30,12 @@ export default class DailyData extends Component {
       ["6pm", dataMlUsageHr[10]],
       ["7pm", dataMlUsageHr[11]],
       ["8pm", dataMlUsageHr[12]],
-      ],
+      ]
+
   //weekly
-      dataMlUsageDay: [1,3,9,4,8,3,7],
+      var dataMlUsageDay= [1,3,9,4,8,3,7]
   //change this so it gets input from database
-      dataWeek : [
+      var dataWeek = [
       ["S", dataMlUsageDay[0]],
       ["M", dataMlUsageDay[1]],
       ["T", dataMlUsageDay[2]],
@@ -53,11 +43,11 @@ export default class DailyData extends Component {
       ["Th", dataMlUsageDay[4]],
       ["F", dataMlUsageDay[5]],
       ["S", dataMlUsageDay[6]],
-      ],
+      ]
   //monthly
-    dataMlUsageMonth:[1,3,9,4,8,3,7,9,4,8,3,7],
+    var dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7]
   //change this so it gets input from database
-    dataMonth : [
+    var dataMonth = [
       ["Jan", dataMlUsageMonth[0]],
       ["Feb", dataMlUsageMonth[1]],
       ["Mar", dataMlUsageMonth[2]],
@@ -70,7 +60,15 @@ export default class DailyData extends Component {
       ["Oct", dataMlUsageMonth[9]],
       ["Nov", dataMlUsageMonth[10]],
       ["Dec", dataMlUsageMonth[11]],
-    ],
+    ]
+    // Initialize state variables
+    this.state = {
+      graphList: ['line', 'bar', 'pie'],
+    //graph state to switch rendering
+      graphType: "line",
+      graphshowAxes: true,
+      graphTimeList: ['daily','weekly','monthly'],
+      dataArray: dataWeek,
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -111,8 +109,8 @@ export default class DailyData extends Component {
                     yAxisWidth={19}
 
                     cornerRadius={4}
-
-                    data={this.state.data}
+                    
+                    data={this.state.dataArray}
 
                     hideHorizontalGridLines={true}
                     hideVerticalGridLines={true}
@@ -167,21 +165,21 @@ export default class DailyData extends Component {
    
   }
 
-  // viewTimeGraph(index, value) {
-  //   if (value=='weekly')
-  //   {
-  //     this.setState({data: this.state.dataWeek})
-  //   }
-  //   if (value=='daily')
-  //   {
-  //     this.setState({data: this.state.data })
-  //   }
-  //   if (value=='monthly')
-  //   {
-  //     this.setState({data: this.state.dataMonth})
-  //   }
+  viewTimeGraph(index, value) {
+    if (value=='weekly')
+    {
+      this.setState({dataArray: dataWeek})
+    }
+    if (value=='daily')
+    {
+      this.setState({dataArray: dataDay })
+    }
+    if (value=='monthly')
+    {
+      this.setState({dataArray: dataMonth})
+    }
    
-  // }
+  }
 }
 
 
