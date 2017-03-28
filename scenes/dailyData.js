@@ -73,6 +73,7 @@ export default class DailyData extends Component {
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
     this.viewGraph = this.viewGraph.bind(this);
+    this.viewTimeGraph = this.viewTimeGraph.bind(this);
     this.color = 'white';
   }
 
@@ -109,7 +110,7 @@ export default class DailyData extends Component {
                     yAxisWidth={19}
 
                     cornerRadius={4}
-                    
+
                     data={this.state.dataArray}
 
                     hideHorizontalGridLines={true}
@@ -168,15 +169,16 @@ export default class DailyData extends Component {
   viewTimeGraph(index, value) {
     if (value=='weekly')
     {
+      
       this.setState({dataArray: dataWeek})
     }
     if (value=='daily')
     {
-      this.setState({dataArray: dataDay })
+       this.setState({dataArray: dataDay })
     }
     if (value=='monthly')
     {
-      this.setState({dataArray: dataMonth})
+       this.setState({dataArray: dataMonth})
     }
    
   }
