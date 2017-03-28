@@ -6,10 +6,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ModalDropdown from 'react-native-modal-dropdown';
 
 
-export default class DailyData extends Component {
+export default class MeterGraphs extends Component {
   static get defaultProps() {
     return {
-      title: 'DailyData'
+      title: 'MeterGraphs'
     };
   }
 
@@ -20,10 +20,10 @@ export default class DailyData extends Component {
     this.state = {
       graphList: ['line', 'bar', 'pie'],
     //graph state to switch rendering
-      graphType: "line",
+      graphType: "bar",
       graphshowAxes: true,
       graphTimeList: ['daily','weekly','monthly'],
-      dataArray: dataWeek,
+      dataArray: dataDay,
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);

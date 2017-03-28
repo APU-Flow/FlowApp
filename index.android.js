@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, Navigator, Text } from 'react-native';
 
-import DailyData from './scenes/dailyData';
+import MeterGraphs from './scenes/meter-graphs';
 import NavDrawerAndroid from './components/nav-drawer.android';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
@@ -28,7 +28,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'dailyData' }}
+        initialRoute={{ name: 'meterGraphs' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
@@ -59,8 +59,8 @@ export default class FlowApp extends Component {
             case 'overview':
               scene = <Overview {...route.passProps} />;
               break;
-            case 'dailyData':
-              scene = <DailyData {...route.passProps} />;
+            case 'meterGraphs':
+              scene = <MeterGraphs {...route.passProps} />;
               break;
           }
 
