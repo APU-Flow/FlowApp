@@ -20,12 +20,13 @@ export default class DailyData extends Component {
     this.state = {
       graphList: ['line', 'bar', 'pie'],
     //graph state to switch rendering
-      graphType: "line"
+      graphType: "line",
+      color: "white"
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
     this.viewGraph = this.viewGraph.bind(this);
-    this.color = ['white'];
+    this.color = 'white';
   }
 
 
@@ -44,9 +45,9 @@ export default class DailyData extends Component {
                   onSelect={this.viewGraph}        
                 />
                   <Chart
-                    color={this.props.color}
-                    axisColor={this.props.color}
-                    axisLabelColor={this.props.color}
+                    color={"white"}
+                    axisColor={"white"}
+                    axisLabelColor={"white"}
                     axisLineWidth={1}
 
                     xAxisHeight={40}
@@ -89,7 +90,11 @@ export default class DailyData extends Component {
     );
   }
   viewGraph(index, value) {
-    this.setState({graphType: "bar"});
+    if (value=='bar')
+    {
+       this.setState({graphType: "bar"});
+    }
+   
   }
 }
 
