@@ -37,7 +37,7 @@ export default class MeterGraphs extends Component {
         return (
           <View style={styles.container}>
                  <View>
-                  <Text style={styles.title}>Today</Text>
+                  <Text style={styles.title}>Device Overview</Text>
                  </View>
                  <ModalDropdown style={styles.dropdown}
                   options={this.state.graphList}
@@ -168,7 +168,7 @@ if (charAt(1)==8 && charAt(5)==a && charAt(9)==8 && charAt(13)==a)
 //usageEvents when it goes on for more than a day?
 //add up multiple events within same hour, make one piece of data
 //
- */
+*/
 colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver", ];
  var dataMlUsageHrAmPm= [1,3,9,4,8,3,7,9,4,8,3,7];
     var dataDayAmPm = [
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         marginTop: 150,
-        fontSize: 40,
+        fontSize: 20,
         fontWeight: '400',
         marginBottom: 2
     },
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     dropdownText: {
       marginVertical: 10,
       marginHorizontal: 6,
-      fontSize: 18,
+      fontSize: 14,
       color: 'white',
       textAlign: 'center',
       textAlignVertical: 'center',
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     },
     dropdownRowText: {
       marginHorizontal: 4,
-      fontSize: 16,
+      fontSize: 12,
       color: 'white',
       textAlignVertical: 'center',
       textAlign: 'center',
