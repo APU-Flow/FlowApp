@@ -6,24 +6,30 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ModalDropdown from 'react-native-modal-dropdown';
 
 
-export default class DailyData extends Component {
+export default class MeterGraphs extends Component {
   static get defaultProps() {
     return {
-      title: 'DailyData'
+      title: 'MeterGraphs'
     };
   }
 
   constructor(props) {
     super(props);
-
+   
     // Initialize state variables
     this.state = {
-      graphList: ['line', 'bar', 'pie']
+      graphList: ['line', 'bar', 'pie'],
     //graph state to switch rendering
+      graphType: "bar",
+      graphshowAxes: true,
+      graphTimeList: ['daily(8am>7pm)','daily(8pm>7am)','weekly','monthly'],
+      dataArray: dataDayAmPm,
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
     this.viewGraph = this.viewGraph.bind(this);
+    this.viewTimeGraph = this.viewTimeGraph.bind(this);
+    this.color = 'white';
   }
 
 
@@ -31,7 +37,7 @@ export default class DailyData extends Component {
         return (
           <View style={styles.container}>
                  <View>
-                  <Text style={styles.title}>Today</Text>
+                  <Text style={styles.title}>Device Overview</Text>
                  </View>
                  <ModalDropdown style={styles.dropdown}
                   options={this.state.graphList}
@@ -41,10 +47,18 @@ export default class DailyData extends Component {
                   renderRow={this.dropdownRenderRow}  
                   onSelect={this.viewGraph}        
                 />
+                <ModalDropdown style={styles.dropdown}
+                  options={this.state.graphTimeList}
+                  textStyle={styles.dropdownText}
+                  dropdownStyle={styles.dropdownDropdown}
+                  defaultValue='Change Graph Time'
+                  renderRow={this.dropdownRenderRow}  
+                  onSelect={this.viewTimeGraph}        
+                />
                   <Chart
-                    color={['white']}
-                    axisColor={['white']}
-                    axisLabelColor={['white']}
+                    color={"white"}
+                    axisColor={"white"}
+                    axisLabelColor={"white"}
                     axisLineWidth={1}
 
                     xAxisHeight={40}
@@ -52,7 +66,7 @@ export default class DailyData extends Component {
 
                     cornerRadius={4}
 
-                    data={dataDay}
+                    data={this.state.dataArray}
 
                     hideHorizontalGridLines={true}
                     hideVerticalGridLines={true}
@@ -61,14 +75,16 @@ export default class DailyData extends Component {
                     verticalGridStep={5}
                     horizontalGridStep={2}
 
-                    type="line"
+                    type={this.state.graphType}
                     lineWidth={4}
 
                     showDataPoint={false}
-                    showAxis={true}
+                    showAxis={this.state.graphshowAxes}
                     
                     style={styles.chart}
-                    labelFontSize={8} 
+                    labelFontSize={14}
+
+                    sliceColors={colorSlices}
                  />
           </View>
         );
@@ -87,7 +103,43 @@ export default class DailyData extends Component {
     );
   }
   viewGraph(index, value) {
+    if (value=='bar')
+    {
+      this.setState({graphType: "bar"})
+      this.setState({graphshowAxes: true})
+    }
+    if (value=='line')
+    {
+      this.setState({graphType: "line"})
+      this.setState({graphshowAxes: true})
+    }
+    if (value=='pie')
+    {
+      this.setState({graphType: "pie"})
+      this.setState({graphshowAxes: false})
+    }
+   
+  }
 
+  viewTimeGraph(index, value) {
+    if (value=='weekly')
+    {
+      
+      this.setState({dataArray: dataWeek})
+    }
+    if (value=='daily(8am>7pm)')
+    {
+       this.setState({dataArray: dataDayAmPm })
+    }
+    if (value=='daily(8pm>7am)')
+    {
+       this.setState({dataArray: dataDayPmAm })
+    }
+    if (value=='monthly')
+    {
+       this.setState({dataArray: dataMonth})
+    }
+   
   }
 }
 
@@ -116,25 +168,69 @@ if (charAt(1)==8 && charAt(5)==a && charAt(9)==8 && charAt(13)==a)
 //usageEvents when it goes on for more than a day?
 //add up multiple events within same hour, make one piece of data
 //
- */
+*/
+colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver", ];
+ var dataMlUsageHrAmPm= [1,3,9,4,8,3,7,9,4,8,3,7];
+    var dataDayAmPm = [
+      ["8a", dataMlUsageHrAmPm[0]],
+      ["9a", dataMlUsageHrAmPm[1]],
+      ["10a", dataMlUsageHrAmPm[2]],
+      ["11a", dataMlUsageHrAmPm[3]],
+      ["12p", dataMlUsageHrAmPm[4]],
+      ["1p", dataMlUsageHrAmPm[5]],
+      ["2p", dataMlUsageHrAmPm[6]],
+      ["3p", dataMlUsageHrAmPm[7]],
+      ["4p", dataMlUsageHrAmPm[8]],
+      ["5p", dataMlUsageHrAmPm[9]],
+      ["6p", dataMlUsageHrAmPm[10]],
+      ["7p", dataMlUsageHrAmPm[11]],
+      ];
+  //pm to am
+  var dataMlUsageHrPmAm= [1,3,9,4,8,3,7,18,4,8,3,7];
+    var dataDayPmAm = [
+      ["8a", dataMlUsageHrPmAm[0]],
+      ["9a", dataMlUsageHrPmAm[1]],
+      ["10a", dataMlUsageHrPmAm[2]],
+      ["11a", dataMlUsageHrPmAm[3]],
+      ["12p", dataMlUsageHrPmAm[4]],
+      ["1p", dataMlUsageHrPmAm[5]],
+      ["2p", dataMlUsageHrPmAm[6]],
+      ["3p", dataMlUsageHrPmAm[7]],
+      ["4p", dataMlUsageHrPmAm[8]],
+      ["5p", dataMlUsageHrPmAm[9]],
+      ["6p", dataMlUsageHrPmAm[10]],
+      ["7p", dataMlUsageHrPmAm[11]],
+      ];
 
-dataMlUsageHr=[1,3,9,4,8,3,7,9,4,8,3,7,4];
-//change this so it gets input from database
-dataDay = [
-    ["8am", dataMlUsageHr[0]],
-    ["9am", dataMlUsageHr[1]],
-    ["10am", dataMlUsageHr[2]],
-    ["11am", dataMlUsageHr[3]],
-    ["12pm", dataMlUsageHr[4]],
-    ["1pm", dataMlUsageHr[5]],
-    ["2pm", dataMlUsageHr[6]],
-    ["3pm", dataMlUsageHr[7]],
-    ["4pm", dataMlUsageHr[8]],
-    ["5pm", dataMlUsageHr[9]],
-    ["6pm", dataMlUsageHr[10]],
-    ["7pm", dataMlUsageHr[11]],
-    ["8pm", dataMlUsageHr[12]],
-];
+  //weekly
+      var dataMlUsageDay= [1,3,9,4,8,3,7];
+  //change this so it gets input from database
+      var dataWeek = [
+      ["S", dataMlUsageDay[0]],
+      ["M", dataMlUsageDay[1]],
+      ["T", dataMlUsageDay[2]],
+      ["W", dataMlUsageDay[3]],
+      ["Th", dataMlUsageDay[4]],
+      ["F", dataMlUsageDay[5]],
+      ["S", dataMlUsageDay[6]],
+      ];
+  //monthly
+    var dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
+  //change this so it gets input from database
+    var dataMonth = [
+      ["Jan", dataMlUsageMonth[0]],
+      ["Feb", dataMlUsageMonth[1]],
+      ["Mar", dataMlUsageMonth[2]],
+      ["Apr", dataMlUsageMonth[3]],
+      ["May", dataMlUsageMonth[4]],
+      ["Jun", dataMlUsageMonth[5]],
+      ["Jul", dataMlUsageMonth[6]],
+      ["Aug", dataMlUsageMonth[7]],
+      ["Sep", dataMlUsageMonth[8]],
+      ["Oct", dataMlUsageMonth[9]],
+      ["Nov", dataMlUsageMonth[10]],
+      ["Dec", dataMlUsageMonth[11]],
+    ];
 
 const styles = StyleSheet.create({
     container: {
@@ -145,34 +241,34 @@ const styles = StyleSheet.create({
         backgroundColor:'rgb(52,152,219)',
     },
     chart: {
-        width: 280,
+        width: 345,
         height: 70,
         margin: 1,
-        marginTop: 25,
-        marginBottom: 130,
+        marginTop: 5,
+        marginBottom: 190,
     },
     title: 
     {
         textAlign: 'center',
         color: 'white',
-        marginTop: 105,
-        fontSize: 40,
+        marginTop: 150,
+        fontSize: 20,
         fontWeight: '400',
         marginBottom: 2
     },
    dropdown: {
-      margin: 8,
+      margin: 2,
       borderColor:  'rgb(31,58,147)',
       backgroundColor: 'rgb(31,58,147)',
       borderWidth: 1,
       borderRadius: 1,
       width:170,
-      height:45,
+      height:40,
     },
     dropdownText: {
       marginVertical: 10,
       marginHorizontal: 6,
-      fontSize: 18,
+      fontSize: 14,
       color: 'white',
       textAlign: 'center',
       textAlignVertical: 'center',
@@ -194,7 +290,7 @@ const styles = StyleSheet.create({
     },
     dropdownRowText: {
       marginHorizontal: 4,
-      fontSize: 16,
+      fontSize: 12,
       color: 'white',
       textAlignVertical: 'center',
       textAlign: 'center',
