@@ -43,7 +43,7 @@ export default class Overview extends Component {
     this.state = {
       data: '',
       dataFinalArray: dataOverview,
-      dataArray: [0,0,800,1,1,0,0,0,0,0,300,7]
+      dataArray: [0,0,0,0,0,0,0,0,0,0,0,0]
     };
     this.color = 'white';
   }
@@ -71,6 +71,13 @@ export default class Overview extends Component {
         this.setState({ data: responseObject.data });
       });
     });
+    //might need to turn string into array first...
+      //new empty state array,
+      //copy it here to dataFromBackEndAsArray
+      //put each number in one at a time here.
+      //{(dataFromBackEndAsArray[0]=this.state.data.parseInt().charAt(0))}
+    
+    //duplicate state array (this.state.dataFromBackEndAsArray.slice())
     {var dataReplace= this.state.dataArray.slice()}
     {var dataDayReplace=[
       ["8a", dataReplace[0]],
