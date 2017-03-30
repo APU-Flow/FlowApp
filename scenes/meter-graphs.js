@@ -6,6 +6,70 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ModalDropdown from 'react-native-modal-dropdown';
 
 
+colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver", ];
+  var dataMlUsageHrAmPm= [1,3,9,4,8,3,7,9,4,8,3,7];
+ //var dataMlUsageHrAmPm= {this.state.dataAmPm.slice()};
+    var dataDayAmPm = [
+      ["8a", dataMlUsageHrAmPm[0]],
+      ["9a", dataMlUsageHrAmPm[1]],
+      ["10a", dataMlUsageHrAmPm[2]],
+      ["11a", dataMlUsageHrAmPm[3]],
+      ["12p", dataMlUsageHrAmPm[4]],
+      ["1p", dataMlUsageHrAmPm[5]],
+      ["2p", dataMlUsageHrAmPm[6]],
+      ["3p", dataMlUsageHrAmPm[7]],
+      ["4p", dataMlUsageHrAmPm[8]],
+      ["5p", dataMlUsageHrAmPm[9]],
+      ["6p", dataMlUsageHrAmPm[10]],
+      ["7p", dataMlUsageHrAmPm[11]],
+      ];
+  //pm to am
+  var dataMlUsageHrPmAm= [1,3,9,4,8,3,7,18,4,8,3,7];
+    var dataDayPmAm = [
+      ["8a", dataMlUsageHrPmAm[0]],
+      ["9a", dataMlUsageHrPmAm[1]],
+      ["10a", dataMlUsageHrPmAm[2]],
+      ["11a", dataMlUsageHrPmAm[3]],
+      ["12p", dataMlUsageHrPmAm[4]],
+      ["1p", dataMlUsageHrPmAm[5]],
+      ["2p", dataMlUsageHrPmAm[6]],
+      ["3p", dataMlUsageHrPmAm[7]],
+      ["4p", dataMlUsageHrPmAm[8]],
+      ["5p", dataMlUsageHrPmAm[9]],
+      ["6p", dataMlUsageHrPmAm[10]],
+      ["7p", dataMlUsageHrPmAm[11]],
+      ];
+
+  //weekly
+      var dataMlUsageDay= [1,3,9,4,8,3,7];
+  //change this so it gets input from database
+      var dataWeek = [
+      ["S", dataMlUsageDay[0]],
+      ["M", dataMlUsageDay[1]],
+      ["T", dataMlUsageDay[2]],
+      ["W", dataMlUsageDay[3]],
+      ["Th", dataMlUsageDay[4]],
+      ["F", dataMlUsageDay[5]],
+      ["S", dataMlUsageDay[6]],
+      ];
+  //monthly
+    var dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
+  //change this so it gets input from database
+    var dataMonth = [
+      ["Jan", dataMlUsageMonth[0]],
+      ["Feb", dataMlUsageMonth[1]],
+      ["Mar", dataMlUsageMonth[2]],
+      ["Apr", dataMlUsageMonth[3]],
+      ["May", dataMlUsageMonth[4]],
+      ["Jun", dataMlUsageMonth[5]],
+      ["Jul", dataMlUsageMonth[6]],
+      ["Aug", dataMlUsageMonth[7]],
+      ["Sep", dataMlUsageMonth[8]],
+      ["Oct", dataMlUsageMonth[9]],
+      ["Nov", dataMlUsageMonth[10]],
+      ["Dec", dataMlUsageMonth[11]],
+    ];
+
 export default class MeterGraphs extends Component {
   static get defaultProps() {
     return {
@@ -24,6 +88,7 @@ export default class MeterGraphs extends Component {
       graphshowAxes: true,
       graphTimeList: ['daily(8am>7pm)','daily(8pm>7am)','weekly','monthly'],
       dataArray: dataDayAmPm,
+      dataAmPm: [100,300,900,400,800,300,700,900,400,800,300,700]
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -55,6 +120,8 @@ export default class MeterGraphs extends Component {
                   renderRow={this.dropdownRenderRow}  
                   onSelect={this.viewTimeGraph}        
                 />
+    
+    <Text>{this.state.dataAmPm[0]}</Text>
                   <Chart
                     color={"white"}
                     axisColor={"white"}
@@ -122,10 +189,25 @@ export default class MeterGraphs extends Component {
   }
 
   viewTimeGraph(index, value) {
+    {var dataMlReplace= this.state.dataAmPm.slice()}
+    {var dataDayReplace=[
+      ["8a", dataMlReplace[0]],
+      ["9a", dataMlReplace[1]],
+      ["10a", dataMlReplace[2]],
+      ["11a", dataMlReplace[3]],
+      ["12p", dataMlReplace[4]],
+      ["1p", dataMlReplace[5]],
+      ["2p", dataMlReplace[6]],
+      ["3p", dataMlReplace[7]],
+      ["4p", dataMlReplace[8]],
+      ["5p", dataMlReplace[9]],
+      ["6p", dataMlReplace[10]],
+      ["7p", dataMlReplace[11]],
+      ];}
     if (value=='weekly')
     {
       
-      this.setState({dataArray: dataWeek})
+      this.setState({dataArray: dataDayReplace})
     }
     if (value=='daily(8am>7pm)')
     {
@@ -169,68 +251,7 @@ if (charAt(1)==8 && charAt(5)==a && charAt(9)==8 && charAt(13)==a)
 //add up multiple events within same hour, make one piece of data
 //
 */
-colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver", ];
- var dataMlUsageHrAmPm= [1,3,9,4,8,3,7,9,4,8,3,7];
-    var dataDayAmPm = [
-      ["8a", dataMlUsageHrAmPm[0]],
-      ["9a", dataMlUsageHrAmPm[1]],
-      ["10a", dataMlUsageHrAmPm[2]],
-      ["11a", dataMlUsageHrAmPm[3]],
-      ["12p", dataMlUsageHrAmPm[4]],
-      ["1p", dataMlUsageHrAmPm[5]],
-      ["2p", dataMlUsageHrAmPm[6]],
-      ["3p", dataMlUsageHrAmPm[7]],
-      ["4p", dataMlUsageHrAmPm[8]],
-      ["5p", dataMlUsageHrAmPm[9]],
-      ["6p", dataMlUsageHrAmPm[10]],
-      ["7p", dataMlUsageHrAmPm[11]],
-      ];
-  //pm to am
-  var dataMlUsageHrPmAm= [1,3,9,4,8,3,7,18,4,8,3,7];
-    var dataDayPmAm = [
-      ["8a", dataMlUsageHrPmAm[0]],
-      ["9a", dataMlUsageHrPmAm[1]],
-      ["10a", dataMlUsageHrPmAm[2]],
-      ["11a", dataMlUsageHrPmAm[3]],
-      ["12p", dataMlUsageHrPmAm[4]],
-      ["1p", dataMlUsageHrPmAm[5]],
-      ["2p", dataMlUsageHrPmAm[6]],
-      ["3p", dataMlUsageHrPmAm[7]],
-      ["4p", dataMlUsageHrPmAm[8]],
-      ["5p", dataMlUsageHrPmAm[9]],
-      ["6p", dataMlUsageHrPmAm[10]],
-      ["7p", dataMlUsageHrPmAm[11]],
-      ];
 
-  //weekly
-      var dataMlUsageDay= [1,3,9,4,8,3,7];
-  //change this so it gets input from database
-      var dataWeek = [
-      ["S", dataMlUsageDay[0]],
-      ["M", dataMlUsageDay[1]],
-      ["T", dataMlUsageDay[2]],
-      ["W", dataMlUsageDay[3]],
-      ["Th", dataMlUsageDay[4]],
-      ["F", dataMlUsageDay[5]],
-      ["S", dataMlUsageDay[6]],
-      ];
-  //monthly
-    var dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
-  //change this so it gets input from database
-    var dataMonth = [
-      ["Jan", dataMlUsageMonth[0]],
-      ["Feb", dataMlUsageMonth[1]],
-      ["Mar", dataMlUsageMonth[2]],
-      ["Apr", dataMlUsageMonth[3]],
-      ["May", dataMlUsageMonth[4]],
-      ["Jun", dataMlUsageMonth[5]],
-      ["Jul", dataMlUsageMonth[6]],
-      ["Aug", dataMlUsageMonth[7]],
-      ["Sep", dataMlUsageMonth[8]],
-      ["Oct", dataMlUsageMonth[9]],
-      ["Nov", dataMlUsageMonth[10]],
-      ["Dec", dataMlUsageMonth[11]],
-    ];
 
 const styles = StyleSheet.create({
     container: {
