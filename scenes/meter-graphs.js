@@ -120,8 +120,6 @@ export default class MeterGraphs extends Component {
                   renderRow={this.dropdownRenderRow}  
                   onSelect={this.viewTimeGraph}        
                 />
-    
-    <Text>{this.state.dataAmPm[0]}</Text>
                   <Chart
                     color={"white"}
                     axisColor={"white"}

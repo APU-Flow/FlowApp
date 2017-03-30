@@ -6,6 +6,22 @@ import React, { Component } from 'react';
 import { Alert, AsyncStorage, StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import Chart from 'react-native-chart';
 
+dataMlUsageHr=[0,0,0,0,0,0,0,0,0,0,0,0];
+//change this so it gets input from database
+dataOverview = [
+    ["8a", dataMlUsageHr[0]],
+    ["9a", dataMlUsageHr[1]],
+    ["10a", dataMlUsageHr[2]],
+    ["11a", dataMlUsageHr[3]],
+    ["12p", dataMlUsageHr[4]],
+    ["1p", dataMlUsageHr[5]],
+    ["2p", dataMlUsageHr[6]],
+    ["3p", dataMlUsageHr[7]],
+    ["4p", dataMlUsageHr[8]],
+    ["5p", dataMlUsageHr[9]],
+    ["6p", dataMlUsageHr[10]],
+    ["7p", dataMlUsageHr[11]],
+];
 
 export default class Overview extends Component {
 
@@ -25,7 +41,9 @@ export default class Overview extends Component {
     super(props);
     // Initialize state variables
     this.state = {
-      data: ''
+      data: '',
+      dataFinalArray: dataOverview,
+      dataArray: [0,0,800,1,1,0,0,0,0,0,300,7]
     };
     this.color = 'white';
   }
@@ -53,6 +71,22 @@ export default class Overview extends Component {
         this.setState({ data: responseObject.data });
       });
     });
+    {var dataReplace= this.state.dataArray.slice()}
+    {var dataDayReplace=[
+      ["8a", dataReplace[0]],
+      ["9a", dataReplace[1]],
+      ["10a", dataReplace[2]],
+      ["11a", dataReplace[3]],
+      ["12p", dataReplace[4]],
+      ["1p", dataReplace[5]],
+      ["2p", dataReplace[6]],
+      ["3p", dataReplace[7]],
+      ["4p", dataReplace[8]],
+      ["5p", dataReplace[9]],
+      ["6p", dataReplace[10]],
+      ["7p", dataReplace[11]],
+      ];}
+    this.setState({dataFinalArray: dataDayReplace})
   }
 
   render() {
@@ -74,7 +108,7 @@ export default class Overview extends Component {
 
           cornerRadius={4}
 
-          data={dataOverview}
+          data={this.state.dataFinalArray}
 
           hideHorizontalGridLines={true}
           hideVerticalGridLines={true}
@@ -95,25 +129,12 @@ export default class Overview extends Component {
       </View>
     );
   }
+  // showDataFromDatabase()
+  // {
 
+  // }
 }
 
-dataMlUsageHr=[0,0,0,400,8000,3543,7000,9000,4000,8000,3000,7000];
-//change this so it gets input from database
-dataOverview = [
-    ["8a", dataMlUsageHr[0]],
-    ["9a", dataMlUsageHr[1]],
-    ["10a", dataMlUsageHr[2]],
-    ["11a", dataMlUsageHr[3]],
-    ["12p", dataMlUsageHr[4]],
-    ["1p", dataMlUsageHr[5]],
-    ["2p", dataMlUsageHr[6]],
-    ["3p", dataMlUsageHr[7]],
-    ["4p", dataMlUsageHr[8]],
-    ["5p", dataMlUsageHr[9]],
-    ["6p", dataMlUsageHr[10]],
-    ["7p", dataMlUsageHr[11]],
-];
 
 const styles = StyleSheet.create({
   container: {
