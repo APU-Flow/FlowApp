@@ -197,7 +197,7 @@ export default class Register extends Component {
   }
 
   submitRegistration() {
-    fetch('http://138.68.56.236:3001/newUser', {
+    fetch('http://138.68.56.236:3000/newUser', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -224,7 +224,7 @@ export default class Register extends Component {
   }
 
   submitLogin() {
-    fetch('http://138.68.56.236:3001/login', {
+    fetch('http://138.68.56.236:3000/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

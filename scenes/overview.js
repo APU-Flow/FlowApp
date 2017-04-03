@@ -24,7 +24,7 @@ export default class Overview extends Component {
     super(props);
     // Initialize state variables
     this.state = {
-      data: [[null, null]]
+      data: [['', 0]]
     };
   }
 
@@ -38,7 +38,7 @@ export default class Overview extends Component {
       // let now = new Date();
       // let hourAgo = new Date();
       // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
-      fetch(`http://138.68.56.236:3001/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(new Date())}&meterID=1&token=${encodeURI(token)}`, {
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(new Date())}&meterID=1&token=${encodeURI(token)}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -66,7 +66,7 @@ export default class Overview extends Component {
           ];
           this.setState({ data });
         } else {
-          this.setState({ data: [] });
+          this.setState({ data: [['', 0]] });
         }
       });
     });
