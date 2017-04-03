@@ -315,3 +315,5 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     }
 });
+
+module.exports = MeterGraphs;
