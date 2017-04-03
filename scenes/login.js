@@ -2,12 +2,13 @@
 // Flow
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput, Text, TouchableHighlight, Navigator } from 'react-native';
+import { Alert, AsyncStorage, View, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 
 export default class LoginForm extends Component {
-  static get defaultProps() {
+
+  static get propTypes() {
     return {
-      onSuccess: (responseObject) => console.log(responseObject)
+      pushRoute: React.PropTypes.func.isRequired
     };
   }
 
@@ -17,7 +18,7 @@ export default class LoginForm extends Component {
       email: '',
       password: '',
       submitReport: ''
-    }
+    };
 
     this.submitToServer = this.submitToServer.bind(this);
   }
@@ -62,13 +63,32 @@ export default class LoginForm extends Component {
       })
     })    
     .then((response) => response.json())
-    .then((responseObject) => {
-      if (typeof responseObject.token === 'string') {
+    .then(async (responseObject) => {
+      if (responseObject.message === 'ok' && typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        this.props.onSuccess(responseObject);
+        
+        try {
+          // TODO: Handle undefined instead of hanging!
+          //Alert.alert(`${responseObject.email}, ${responseObject.firstName}, ${responseObject.token}`);
+          await AsyncStorage.multiSet([
+            ['email', responseObject.email],
+            ['firstName', responseObject.firstName],
+            ['token', responseObject.token]
+          ]);
+          //Alert.alert('Hit try end!');
+        } catch (error) {
+          Alert.alert('Error', error);
+        }
+
+        this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
       }
-      else
+      else if (responseObject.message === 'lol nice tri n00b') {
+        // Thank you George for that wonderful masterpiece, that piece of art of a server response
         this.setState({ submitReport: 'Login failed; bad username or password.' });
+      }
+      else {
+        this.setState({ submitReport: 'Login failed; server returned invalid response.' });
+      }
     });
   }
 }
@@ -101,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(31,58,147)',
     paddingVertical: 15,
     height: 60,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     marginTop:70
   },
   buttonText: {

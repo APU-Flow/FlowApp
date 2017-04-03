@@ -2,58 +2,82 @@
 // Flow
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Navigator
-} from 'react-native';
+import { AppRegistry, Navigator, Text } from 'react-native';
 
+import MeterGraphs from './scenes/meter-graphs';
+import NavDrawerAndroid from './components/nav-drawer.android';
+import Settings from './scenes/settings';
+import Meters from './scenes/meters';
+import ChangeAccount from './scenes/change-account';
 import Splash from './scenes/splash';
 import Login from './scenes/login';
 import Register from './scenes/register';
 import Overview from './scenes/overview';
 
 export default class FlowApp extends Component {
+
+  constructor(props) {
+    super(props);
+    
+    // Initialize state variables
+    this.state = {
+      drawerLockMode: 'locked-closed'
+    };
+  }
+
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'Flow', name: 'splash' }}
+        initialRoute={{ name: 'splash' }}
+        configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
+          let scene = <Text>Bad route name given!</Text>;
+          let drawerLock = 'unlocked';
+
           switch (route.name) {
             case 'splash':
-              return <Splash navigator={navigator} />;
+              drawerLock = 'locked-closed';
+              scene = <Splash pushRoute={navigator.push} />;
+              break;
             case 'login':
-              return <Login {...route.passProps} />;
+              drawerLock = 'locked-closed';
+              scene = <Login pushRoute={navigator.push} {...route.passProps} />;
+              break;
             case 'register':
-              return <Register {...route.passProps} />;
+              drawerLock = 'locked-closed';
+              scene = <Register pushRoute={navigator.push} {...route.passProps} />;
+              break;
+            case 'settings':
+              scene = <Settings {...route.passsProps} />;
+              break;
+            case 'changeAccount':
+              scene = <ChangeAccount {...route.passProps} />;
+              break;
+            case 'meters':
+              scene = <Meters {...route.passProps} />;
+              break;
             case 'overview':
-              return <Overview navigator={navigator} {...route.passProps} />;
-            default:
-              return <Text>Bad route name given!</Text>
+              scene = <Overview {...route.passProps} />;
+              break;
+            case 'meterGraphs':
+              scene = <MeterGraphs {...route.passProps} />;
+              break;
           }
+
+          return (
+            <NavDrawerAndroid
+              drawerLockMode={drawerLock}
+              pushRoute={navigator.push}
+              currentRouteName={route.name}>
+
+                {scene}
+
+            </NavDrawerAndroid>
+          );
         }}
       />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('FlowApp', () => FlowApp);

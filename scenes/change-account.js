@@ -1,4 +1,4 @@
-// settings.js
+// change-account.js
 // Flow
 
 import React, { Component } from 'react';
@@ -6,17 +6,15 @@ import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-export default class Settings extends Component {
+export default class ChangeAccount extends Component {
 
   static get propTypes() {
-    return {
-      title: React.PropTypes.string
-    };
+    return { title: React.PropTypes.string };
   }
 
   static get defaultProps() {
     return {
-      title: 'Settings'
+      title: 'Change Account'
     };
   }
 
@@ -25,36 +23,37 @@ export default class Settings extends Component {
 
     // Initialize state variables
     this.state = {
-      accountOptions: ['Logout', 'Change Account']
+      // TODO: Populate these with real data
+      switchableAccounts: ['Jim', 'Bill'],
+      settingsOptions: ['I', 'Am', 'Unsure', 'What', 'Should', 'Be', 'Here']
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
-    this.confirmDeleteHistory = this.confirmDeleteHistory.bind(this);
-    this.contactUs = this.contactUs.bind(this);
+    this.confirmDeleteAccount = this.confirmDeleteAccount.bind(this);
   }
-
 
   render() {
     return (
      <KeyboardAwareScrollView style={styles.container}>
         <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={styles.text}>You're currently logged in as...</Text>
         <ModalDropdown style={styles.dropdown}
-          options={this.state.accountOptions}
+          options={this.state.switchableAccounts}
           textStyle={styles.dropdownText}
           dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Logout or Change Account'
-          renderRow={this.dropdownRenderRow}       
+          defaultValue='Switch to Which Account?'
+          renderRow={this.dropdownRenderRow}            
         />
-
-        <TouchableHighlight onPress={this.confirmDeleteHistory}>
+        <ModalDropdown style={styles.dropdown}
+          options={this.state.settingsOptions}
+          textStyle={styles.dropdownText}
+          dropdownStyle={styles.dropdownDropdown}
+          defaultValue='Account Settings'
+          renderRow={this.dropdownRenderRow}              
+        />
+        <TouchableHighlight onPress={this.confirmDeleteAccount}>
           <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Delete Data History</Text>
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight onPress={this.contactUs}>
-          <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Contact Us</Text>
+            <Text style={styles.dropdownText}>Delete My Account</Text>
           </View>
         </TouchableHighlight>
       </KeyboardAwareScrollView>
@@ -64,33 +63,28 @@ export default class Settings extends Component {
   dropdownRenderRow(rowData, rowID, highlighted) {
     let evenRow = rowID % 2;
     return (
-      <TouchableHighlight underlayColor='cornflowerblue'>
-        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
-          <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
-             {rowData}
-          </Text>
+      <TouchableHighlight underlayColor='#6495ED'>
+        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? '#87CEEB' : '#87CEFA'}]}>
+          <Text style={styles.dropdownRowText}>{rowData}</Text>
         </View>
       </TouchableHighlight>
     );
   }
 
-  confirmDeleteHistory() {
+  confirmDeleteAccount() {
     Alert.alert(
-      'Delete Data History',
-      'Are you sure you want to delete your data history?',
+      'Delete Account',
+      'Are you sure you want to delete your account?',
       [
-        { text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel' },
-        { text: 'Yes', onPress: () => Alert.alert('Yes Pressed') }
+        {text: 'Cancel', onPress: null, style: 'cancel' },
+        {text: 'Yes, Delete my account', onPress: null},
       ],
       { cancelable: false }
     );
   }
 
-  contactUs() {
-    Alert.alert('Contact Us at www.flow.org');
-  }
-
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -103,6 +97,14 @@ const styles = StyleSheet.create({
     color: 'white',
     marginTop: 25,
     fontSize: 20,
+    fontWeight: '400',
+    marginBottom: 15
+  },
+  text: {
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 5,
+    fontSize: 18,
     fontWeight: '400',
     marginBottom: 15
   },
