@@ -44,7 +44,7 @@ export default class Meters extends Component {
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Device Overview'
           renderRow={this.dropdownRenderRow}
-          onSelect={this.viewMeter}       
+          onSelect={this.viewMeter}
         />
         <ModalDropdown style={styles.dropdown}
           options={this.state.meterList}
@@ -52,7 +52,7 @@ export default class Meters extends Component {
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Add A Meter'
           renderRow={this.dropdownRenderRow}
-          onSelect={this.addMeter}       
+          onSelect={this.addMeter}
         />
         <ModalDropdown style={styles.dropdown}
           options={this.state.meterList}
@@ -60,7 +60,7 @@ export default class Meters extends Component {
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Drop A Meter'
           renderRow={this.dropdownRenderRow}
-          onSelect={this.dropMeter}       
+          onSelect={this.dropMeter}
         />
       </KeyboardAwareScrollView>
     );
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 15
   },
-  
+
   dropdown: {
     margin: 8,
     borderColor:  'rgb(31,58,147)',

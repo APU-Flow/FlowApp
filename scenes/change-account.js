@@ -42,14 +42,14 @@ export default class ChangeAccount extends Component {
           textStyle={styles.dropdownText}
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Switch to Which Account?'
-          renderRow={this.dropdownRenderRow}            
+          renderRow={this.dropdownRenderRow}
         />
         <ModalDropdown style={styles.dropdown}
           options={this.state.settingsOptions}
           textStyle={styles.dropdownText}
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Account Settings'
-          renderRow={this.dropdownRenderRow}              
+          renderRow={this.dropdownRenderRow}
         />
         <TouchableHighlight onPress={this.confirmDeleteAccount}>
           <View style={styles.dropdown}>
