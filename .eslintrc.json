@@ -42,6 +42,7 @@
             { "before": true, "after": true }
         ],
         "keyword-spacing": 2,
+        "no-trailing-spaces": 1,
         "space-before-blocks": 2,
         "space-before-function-paren": [
             "error",

@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, Navigator, Text } from 'react-native';
 
+import MeterGraphs from './scenes/meter-graphs';
 import NavDrawerAndroid from './components/nav-drawer.android';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
@@ -57,6 +58,9 @@ export default class FlowApp extends Component {
               break;
             case 'overview':
               scene = <Overview {...route.passProps} />;
+              break;
+            case 'meterGraphs':
+              scene = <MeterGraphs {...route.passProps} />;
               break;
           }
 

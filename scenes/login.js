@@ -69,13 +69,13 @@ export default class LoginForm extends Component {
         
         try {
           // TODO: Handle undefined instead of hanging!
-          Alert.alert(`${responseObject.email}, ${responseObject.firstName}, ${responseObject.token}`);
+          //Alert.alert(`${responseObject.email}, ${responseObject.firstName}, ${responseObject.token}`);
           await AsyncStorage.multiSet([
             ['email', responseObject.email],
             ['firstName', responseObject.firstName],
             ['token', responseObject.token]
           ]);
-          Alert.alert('Hit try end!');
+          //Alert.alert('Hit try end!');
         } catch (error) {
           Alert.alert('Error', error);
         }
