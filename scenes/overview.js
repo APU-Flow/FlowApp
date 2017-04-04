@@ -96,7 +96,7 @@ export default class Overview extends Component {
         verticalGridStep={5}
         horizontalGridStep={2}
 
-        type='line'
+        type='bar'
         lineWidth={4}
 
         showDataPoint={false}
