@@ -61,12 +61,12 @@ export default class LoginForm extends Component {
         email: this.state.email,
         password: this.state.password
       })
-    })    
+    })
     .then((response) => response.json())
     .then(async (responseObject) => {
       if (responseObject.message === 'ok' && typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        
+
         try {
           // TODO: Handle undefined instead of hanging!
           //Alert.alert(`${responseObject.email}, ${responseObject.firstName}, ${responseObject.token}`);

@@ -18,7 +18,7 @@ export default class FlowApp extends Component {
 
   constructor(props) {
     super(props);
-    
+
     // Initialize state variables
     this.state = {
       drawerLockMode: 'locked-closed'

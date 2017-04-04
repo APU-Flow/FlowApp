@@ -9,7 +9,7 @@ export default class Graphs extends Component {
 
   constructor(props) {
     super(props);
-    //Initialize state variables so the Text fields don't get mad. 
+    //Initialize state variables so the Text fields don't get mad.
     this.state = {
       fieldValidities: [false, false, false, false, false, false, false, false, false],
       allValid: false
@@ -37,7 +37,7 @@ export default class Graphs extends Component {
 
   verifyInput(name, text) {
     switch (name) {
-    
+      // TODO: Stuff here
     }
 
     this.setState({allValid: this.state.fieldValidities.every((value) => value === true)});

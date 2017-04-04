@@ -43,7 +43,7 @@ export default class Settings extends Component {
           textStyle={styles.dropdownText}
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Logout or Change Account'
-          renderRow={this.dropdownRenderRow}       
+          renderRow={this.dropdownRenderRow}
         />
 
         <TouchableHighlight onPress={this.confirmDeleteHistory}>
