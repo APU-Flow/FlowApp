@@ -101,9 +101,9 @@ export default class Overview extends Component {
 
         showDataPoint={false}
         showAxis={true}
-                  
+
         style={styles.chart}
-        labelFontSize={11}                  
+        labelFontSize={11}
         />
       </View>
     );
@@ -119,10 +119,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor:'rgb(52,152,219)',
-  },
-  text: {
-    margin: 10,
-    fontSize: 15
   },
   chart: {
     width: 300,
