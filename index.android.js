@@ -18,7 +18,7 @@ export default class FlowApp extends Component {
 
   constructor(props) {
     super(props);
-    
+
     // Initialize state variables
     this.state = {
       drawerLockMode: 'locked-closed'
@@ -28,7 +28,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'meterGraphs' }}
+        initialRoute={{ name: 'splash' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;

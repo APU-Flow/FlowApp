@@ -234,12 +234,12 @@ export default class Register extends Component {
         email: this.state.email,
         password: this.state.password
       })
-    })    
+    })
     .then((response) => response.json())
     .then(async (responseObject) => {
       if (typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        
+
         try {
           // TODO: Handle undefined instead of hanging!
           await AsyncStorage.multiSet([

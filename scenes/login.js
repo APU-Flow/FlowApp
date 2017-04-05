@@ -61,21 +61,21 @@ export default class LoginForm extends Component {
         email: this.state.email,
         password: this.state.password
       })
-    })    
+    })
     .then((response) => response.json())
     .then(async (responseObject) => {
       if (responseObject.message === 'ok' && typeof responseObject.token === 'string') {
         this.setState({ submitReport: '' });
-        
+
         try {
           // TODO: Handle undefined instead of hanging!
-          Alert.alert(`${responseObject.email}, ${responseObject.firstName}, ${responseObject.token}`);
+          //Alert.alert(`${responseObject.email}, ${responseObject.firstName}, ${responseObject.token}`);
           await AsyncStorage.multiSet([
             ['email', responseObject.email],
             ['firstName', responseObject.firstName],
             ['token', responseObject.token]
           ]);
-          Alert.alert('Hit try end!');
+          //Alert.alert('Hit try end!');
         } catch (error) {
           Alert.alert('Error', error);
         }
