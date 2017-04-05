@@ -81,7 +81,7 @@ export default class MeterGraphs extends Component {
 
     // Initialize state letiables
     this.state = {
-      graphList: ['line', 'bar', 'pie'],
+      graphList: ['line', 'bar'],
     //graph state to switch rendering
       graphType: 'bar',
       graphshowAxes: true,
@@ -177,12 +177,6 @@ export default class MeterGraphs extends Component {
       this.setState({graphType: 'line'});
       this.setState({graphshowAxes: true});
     }
-    if (value=='pie')
-    {
-      this.setState({graphType: 'pie'});
-      this.setState({graphshowAxes: false});
-    }
-
   }
 
   viewTimeGraph(index, value) {
