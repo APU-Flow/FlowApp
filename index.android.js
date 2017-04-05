@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { AppRegistry, Navigator, Text } from 'react-native';
 
 import MeterGraphs from './scenes/meter-graphs';
-import PieChart from './scenes/pie-chart';
 import NavDrawerAndroid from './components/nav-drawer.android';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
@@ -62,9 +61,6 @@ export default class FlowApp extends Component {
               break;
             case 'meterGraphs':
               scene = <MeterGraphs {...route.passProps} />;
-              break;
-            case 'pieChart':
-              scene = <PieChart {...route.passProps} />;
               break;
           }
 

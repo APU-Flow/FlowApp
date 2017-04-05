@@ -106,7 +106,7 @@ export default class MeterGraphs extends Component {
         <ModalDropdown style={styles.dropdown}
         options={this.state.graphList}
         textStyle={styles.dropdownText}
-        dropdownStyle={styles.dropdownDropdown}
+        dropdownStyle={styles.dropdownDropdown1}
         defaultValue='Change Graph Type'
         renderRow={this.dropdownRenderRow}
         onSelect={this.viewGraph}
@@ -114,7 +114,7 @@ export default class MeterGraphs extends Component {
         <ModalDropdown style={styles.dropdown}
           options={this.state.graphTimeList}
           textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
+          dropdownStyle={styles.dropdownDropdown2}
           defaultValue='Change Graph Time'
           renderRow={this.dropdownRenderRow}
           onSelect={this.viewTimeGraph}
@@ -279,7 +279,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-  dropdownDropdown: {
+  dropdownDropdown1: {
+    margin: 8,
+    width: 152,
+    height: 80,
+    borderColor: 'rgb(31,58,147)',
+    borderWidth: 2,
+    borderRadius: 3,
+    backgroundColor: 'rgb(31,58,147)',
+  },
+  dropdownDropdown2: {
     margin: 8,
     width: 152,
     height: 100,
