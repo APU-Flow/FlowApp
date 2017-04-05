@@ -33,7 +33,7 @@ export default class FlowApp extends Component {
             case 'settings':
               return (
                 <NavBarIOS>
-                  <Settings {...route.passsProps} />
+                  <Settings navReset={navigator.resetTo} {...route.passsProps} />
                 </NavBarIOS>
               ) 
             case 'changeAccount':

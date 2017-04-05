@@ -48,22 +48,6 @@ export default class Meters extends Component {
           renderRow={this.dropdownRenderRow}
           onSelect={this.viewMeter}       
         />
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.meterList}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Add A Meter'
-          renderRow={this.dropdownRenderRow}
-          onSelect={this.addMeter}       
-        />
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.meterList}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Drop A Meter'
-          renderRow={this.dropdownRenderRow}
-          onSelect={this.dropMeter}       
-        />
       </KeyboardAwareScrollView>
     );
   }

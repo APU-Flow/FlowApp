@@ -8,8 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 var Overview = require('../scenes/overview');
 var Meters = require('../scenes/meters');
-// var Graphs = require('../scenes/graphs');
-var Graphs = require('../scenes/meter-graphs');
+var Graphs = require('../scenes/graphs');
 var Settings = require('../scenes/settings');
 
 'use strict';
@@ -53,10 +52,10 @@ export default class NavBarIOS extends Component {
                     title="Graphs"
                     iconName="ios-stats-outline"
                     selectedIconName="ios-stats"
-                    selected={this.state.selectedTab === 'meter-graphs'}
+                    selected={this.state.selectedTab === 'graphs'}
                     onPress={() => {
                         this.setState({
-                            selectedTab: 'meter-graphs',
+                            selectedTab: 'graphs',
                         });
                     }}>
                     <Graphs />
@@ -83,7 +82,7 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'settings',
                         });
                     }}>
-                    <Settings />
+                    <Settings navReset={navigator.resetTo} />
                 </Icon.TabBarItem>
             </TabBarIOS>
         );

@@ -8,11 +8,15 @@ import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ModalDropdown from 'react-native-modal-dropdown';
 
+var Login = require('../scenes/login');
+var Splash = require('../scenes/splash');
+
 export default class Settings extends Component {
 
   static get propTypes() {
     return {
-      title: React.PropTypes.string
+      title: React.PropTypes.string,
+      navReset: React.PropTypes.func.isRequired
     };
   }
 
@@ -24,64 +28,43 @@ export default class Settings extends Component {
 
   constructor(props) {
     super(props);
-
-    // Initialize state variables
-    this.state = {
-      accountOptions: ['Logout', 'Change Account']
-    };
-
-    this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
-    this.confirmDeleteHistory = this.confirmDeleteHistory.bind(this);
-    this.contactUs = this.contactUs.bind(this);
   }
 
 
   render() {
     return (
-     <KeyboardAwareScrollView style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container}>
         <Text style={styles.title}>{this.props.title}</Text>
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.accountOptions}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Logout or Change Account'
-          renderRow={this.dropdownRenderRow}       
-        />
-
-        <TouchableHighlight onPress={this.confirmDeleteHistory}>
-          <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Delete Data History</Text>
-          </View>
+        <TouchableHighlight style={styles.button} onPress={this.handleLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
         </TouchableHighlight>
-
-        <TouchableHighlight onPress={this.contactUs}>
-          <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Contact Us</Text>
-          </View>
+        <TouchableHighlight style={styles.button}>
+          <Text style={styles.buttonText}>Add Meter</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.button}>
+          <Text style={styles.buttonText}>Drop Meter</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.button} onPress={this.confirmDeleteHistory}>
+          <Text style={styles.buttonText}>Delete Data History</Text>
         </TouchableHighlight>
       </KeyboardAwareScrollView>
     );
   }
 
-  dropdownRenderRow(rowData, rowID, highlighted) {
-    let evenRow = rowID % 2;
-    return (
-      <TouchableHighlight underlayColor='cornflowerblue'>
-        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
-          <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
-             {rowData}
-          </Text>
-        </View>
-      </TouchableHighlight>
-    );
+  handleLogout() {
+    this.props.navReset({
+      name: 'login',
+    });
   }
+
+  
 
   confirmDeleteHistory() {
     Alert.alert(
       'Delete Data History',
       'Are you sure you want to delete your data history?',
       [
-        { text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel' },
+        { text: 'Cancel', onPress: () => Alert.alert('Data deleted'), style: 'cancel' },
         { text: 'Yes', onPress: () => Alert.alert('Yes Pressed') }
       ],
       { cancelable: false }
@@ -96,9 +79,9 @@ export default class Settings extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     flex: 1,
-    backgroundColor:'rgb(52,152,219)',
+    flexDirection: 'column',
+    backgroundColor: 'rgb(52,152,219)',
   },
   title: {
     textAlign: 'center',
@@ -108,43 +91,19 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 15
   },
-
-  dropdown: {
+  button: {
     margin: 8,
-    borderColor:  'rgb(31,58,147)',
     backgroundColor: 'rgb(31,58,147)',
-    borderWidth: 1,
-    borderRadius: 1,
+    paddingVertical: 10,
+    height: 50,
+    justifyContent: 'center',
+    marginTop:15
   },
-  dropdownText: {
-    marginVertical: 10,
-    marginHorizontal: 6,
-    fontSize: 18,
-    color: 'white',
+  buttonText: {
     textAlign: 'center',
-    textAlignVertical: 'center',
-  },
-  dropdownDropdown: {
-    margin: 8,
-    width: 320,
-    height: 100,
-    borderColor: 'rgb(31,58,147)',
-    borderWidth: 2,
-    borderRadius: 3,
-    backgroundColor: 'rgb(31,58,147)',
-  },
-  dropdownRow: {
-    flexDirection: 'row',
-    height: 40,
-    alignItems: 'center',
-    backgroundColor: 'rgb(31,58,147)'
-  },
-  dropdownRowText: {
-    marginHorizontal: 4,
-    fontSize: 16,
-    color: 'white',
-    textAlignVertical: 'center',
-    textAlign: 'center',
+    color: '#FFF',
+    fontWeight: '500',
+    fontSize: 20
   }
 });
 

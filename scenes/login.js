@@ -1,14 +1,23 @@
 // login.js
 // Flow
 
+'use strict';
+
 import React, { Component } from 'react';
 import { Alert, AsyncStorage, View, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 
-export default class LoginForm extends Component {
+export default class Login extends Component {
 
   static get propTypes() {
     return {
+      title: React.PropTypes.string,
       pushRoute: React.PropTypes.func.isRequired
+    };
+  }
+
+  static get defaultProps() {
+    return {
+      title: 'Login'
     };
   }
 
@@ -131,3 +140,5 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
+
+module.exports = Login;
