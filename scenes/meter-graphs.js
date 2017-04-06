@@ -1,71 +1,24 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import { StyleSheet, Text, AsyncStorage, View, TouchableHighlight} from 'react-native';
 import Chart from 'react-native-chart';
 import ModalDropdown from 'react-native-modal-dropdown';
 
+//am to pm
+// let dataMlUsageHrAmPm= [0];
+let dataDayAmPm = [['', 0]];
 
-let dataMlUsageHrAmPm= [1,3,9,4,8,3,7,9,4,8,3,7];
-let dataDayAmPm = [
-  ['8a', dataMlUsageHrAmPm[0]],
-  ['9a', dataMlUsageHrAmPm[1]],
-  ['10a', dataMlUsageHrAmPm[2]],
-  ['11a', dataMlUsageHrAmPm[3]],
-  ['12p', dataMlUsageHrAmPm[4]],
-  ['1p', dataMlUsageHrAmPm[5]],
-  ['2p', dataMlUsageHrAmPm[6]],
-  ['3p', dataMlUsageHrAmPm[7]],
-  ['4p', dataMlUsageHrAmPm[8]],
-  ['5p', dataMlUsageHrAmPm[9]],
-  ['6p', dataMlUsageHrAmPm[10]],
-  ['7p', dataMlUsageHrAmPm[11]],
-];
 //pm to am
-let dataMlUsageHrPmAm= [1,3,9,4,8,3,7,18,4,8,3,7];
-let dataDayPmAm = [
-  ['8a', dataMlUsageHrPmAm[0]],
-  ['9a', dataMlUsageHrPmAm[1]],
-  ['10a', dataMlUsageHrPmAm[2]],
-  ['11a', dataMlUsageHrPmAm[3]],
-  ['12p', dataMlUsageHrPmAm[4]],
-  ['1p', dataMlUsageHrPmAm[5]],
-  ['2p', dataMlUsageHrPmAm[6]],
-  ['3p', dataMlUsageHrPmAm[7]],
-  ['4p', dataMlUsageHrPmAm[8]],
-  ['5p', dataMlUsageHrPmAm[9]],
-  ['6p', dataMlUsageHrPmAm[10]],
-  ['7p', dataMlUsageHrPmAm[11]],
-];
+//let dataMlUsageHrPmAm= [1,3,9,4,8,3,7,18,4,8,3,7];
+let dataDayPmAm = [['', 0]];
 
 //weekly
-let dataMlUsageDay= [1,3,9,4,8,3,7];
+//let dataMlUsageDay= [1,3,9,4,8,3,7];
+let dataWeek = [['', 0]];
 
-let dataWeek = [
-  ['S', dataMlUsageDay[0]],
-  ['M', dataMlUsageDay[1]],
-  ['T', dataMlUsageDay[2]],
-  ['W', dataMlUsageDay[3]],
-  ['Th', dataMlUsageDay[4]],
-  ['F', dataMlUsageDay[5]],
-  ['S', dataMlUsageDay[6]],
-];
 //monthly
-let dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
-
-let dataMonth = [
-  ['Jan', dataMlUsageMonth[0]],
-  ['Feb', dataMlUsageMonth[1]],
-  ['Mar', dataMlUsageMonth[2]],
-  ['Apr', dataMlUsageMonth[3]],
-  ['May', dataMlUsageMonth[4]],
-  ['Jun', dataMlUsageMonth[5]],
-  ['Jul', dataMlUsageMonth[6]],
-  ['Aug', dataMlUsageMonth[7]],
-  ['Sep', dataMlUsageMonth[8]],
-  ['Oct', dataMlUsageMonth[9]],
-  ['Nov', dataMlUsageMonth[10]],
-  ['Dec', dataMlUsageMonth[11]],
-];
+//let dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
+let dataMonth = [['', 0]];
 
 export default class MeterGraphs extends Component {
   static get defaultProps() {
@@ -80,11 +33,10 @@ export default class MeterGraphs extends Component {
     // Initialize state letiables
     this.state = {
       graphList: ['line', 'bar'],
-    //graph state to switch rendering
       graphType: 'bar',
       graphshowAxes: true,
       graphTimeList: ['daily(8am>7pm)','daily(8pm>7am)','weekly','monthly'],
-      dataArray: dataDayAmPm,
+      mainDataArray: [['', 0]],
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -94,7 +46,135 @@ export default class MeterGraphs extends Component {
   }
 
 
+  componentDidMount() {
+    AsyncStorage.multiGet(['email', 'token'], (errors, results) => {
+      if (errors) {
+        Alert.alert('Error', errors);
+      }
+      let email = results[0][1];
+      let token = results[1][1];
+      // let now = new Date();
+      // let hourAgo = new Date();
+      // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
+    //dailyAmPm from back-end
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.json())
+      .then((responseObject) => {
+        let dataMlUsageHrAmPm = responseObject.data;
+        if (Array.isArray(dataMlUsageHrAmPm)) {
+          let dataDayAmPm = [
+            ['8a', dataMlUsageHrAmPm[0]],
+            ['9a', dataMlUsageHrAmPm[1]],
+            ['10a', dataMlUsageHrAmPm[2]],
+            ['11a', dataMlUsageHrAmPm[3]],
+            ['12p', dataMlUsageHrAmPm[4]],
+            ['1p', dataMlUsageHrAmPm[5]],
+            ['2p', dataMlUsageHrAmPm[6]],
+            ['3p', dataMlUsageHrAmPm[7]],
+            ['4p', dataMlUsageHrAmPm[8]],
+            ['5p', dataMlUsageHrAmPm[9]],
+            ['6p', dataMlUsageHrAmPm[10]],
+            ['7p', dataMlUsageHrAmPm[11]]
+          ];
+        } else {
+          let dataDayAmPm = [['', 0]];
+        }
+      });
 
+  //dailyPmAm
+    fetch(`http://138.68.56.236:3000/api/getDailyUsagePmAm?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.json())
+      .then((responseObject) => {
+        let dataMlUsageHrPmAm = responseObject.data;
+        if (Array.isArray(dataMlUsageHrPmAm)) {
+          let dataDayPmAm = [
+            ['8a', dataMlUsageHrPmAm[0]],
+            ['9a', dataMlUsageHrPmAm[1]],
+            ['10a', dataMlUsageHrPmAm[2]],
+            ['11a', dataMlUsageHrPmAm[3]],
+            ['12p', dataMlUsageHrPmAm[4]],
+            ['1p', dataMlUsageHrPmAm[5]],
+            ['2p', dataMlUsageHrPmAm[6]],
+            ['3p', dataMlUsageHrPmAm[7]],
+            ['4p', dataMlUsageHrPmAm[8]],
+            ['5p', dataMlUsageHrPmAm[9]],
+            ['6p', dataMlUsageHrPmAm[10]],
+            ['7p', dataMlUsageHrPmAm[11]]
+          ];
+        } else {
+          let dataDayPmAm = [['', 0]];
+        }
+      });
+
+  //weekly
+    fetch(`http://138.68.56.236:3000/api/getWeeklyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.json())
+      .then((responseObject) => {
+        let dataMlUsageDay = responseObject.data;
+        if (Array.isArray(dataMlUsageDay)) {
+          let dataWeek = [
+            ['S', dataMlUsageDay[0]],
+            ['M', dataMlUsageDay[1]],
+            ['T', dataMlUsageDay[2]],
+            ['W', dataMlUsageDay[3]],
+            ['Th', dataMlUsageDay[4]],
+            ['F', dataMlUsageDay[5]],
+            ['S', dataMlUsageDay[6]],
+          ];
+        } else {
+          let dataWeek = [['', 0]];
+        }
+      });
+
+  //monthly
+    fetch(`http://138.68.56.236:3000/api/getMonthlyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.json())
+      .then((responseObject) => {
+        let dataMlUsageMonth = responseObject.data;
+        if (Array.isArray(dataMlUsageMonth)) {
+          let dataMonth = [
+            ['S', dataMlUsageMonth[0]],
+            ['M', dataMlUsageMonth[1]],
+            ['T', dataMlUsageMonth[2]],
+            ['W', dataMlUsageMonth[3]],
+            ['Th', dataMlUsageMonth[4]],
+            ['F', dataMlUsageMonth[5]],
+            ['S', dataMlUsageMonth[6]],
+          ];
+        } else {
+          let dataMonth = [['', 0]];
+        }
+      });
+     });
+  }
 
 
   render() {
@@ -130,7 +210,7 @@ export default class MeterGraphs extends Component {
 
           cornerRadius={4}
 
-          data={this.state.dataArray}
+          data={this.state.mainDataArray}
 
           hideHorizontalGridLines={true}
           hideVerticalGridLines={true}
@@ -147,8 +227,6 @@ export default class MeterGraphs extends Component {
 
           style={styles.chart}
           labelFontSize={14}
-
-          sliceColors={colorSlices}
         />
       </View>
     );
@@ -181,16 +259,16 @@ export default class MeterGraphs extends Component {
 
   viewTimeGraph(index, value) {
     if (value=='weekly') {
-      this.setState({dataArray: dataWeek});
+      this.setState({mainDataArray: dataWeek});
     }
     if (value=='daily(8am>7pm)') {
-      this.setState({dataArray: dataDayAmPm });
+      this.setState({mainDataArray: dataDayAmPm });
     }
     if (value=='daily(8pm>7am)') {
-      this.setState({dataArray: dataDayPmAm });
+      this.setState({mainDataArray: dataDayPmAm });
     }
     if (value=='monthly') {
-      this.setState({dataArray: dataMonth});
+      this.setState({mainDataArray: dataMonth});
     }
 
   }
