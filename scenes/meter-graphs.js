@@ -5,9 +5,7 @@ import Chart from 'react-native-chart';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 
-const colorSlices=['red','green','blue', 'black', 'yellow', 'orange','gray', 'silver' ];
 let dataMlUsageHrAmPm= [1,3,9,4,8,3,7,9,4,8,3,7];
-//let dataMlUsageHrAmPm= {this.state.dataAmPm.slice()};
 let dataDayAmPm = [
   ['8a', dataMlUsageHrAmPm[0]],
   ['9a', dataMlUsageHrAmPm[1]],
@@ -40,20 +38,20 @@ let dataDayPmAm = [
 ];
 
 //weekly
-// let dataMlUsageDay= [1,3,9,4,8,3,7];
-//change this so it gets input from database
-// let dataWeek = [
-//   ['S', dataMlUsageDay[0]],
-//   ['M', dataMlUsageDay[1]],
-//   ['T', dataMlUsageDay[2]],
-//   ['W', dataMlUsageDay[3]],
-//   ['Th', dataMlUsageDay[4]],
-//   ['F', dataMlUsageDay[5]],
-//   ['S', dataMlUsageDay[6]],
-// ];
+let dataMlUsageDay= [1,3,9,4,8,3,7];
+
+let dataWeek = [
+  ['S', dataMlUsageDay[0]],
+  ['M', dataMlUsageDay[1]],
+  ['T', dataMlUsageDay[2]],
+  ['W', dataMlUsageDay[3]],
+  ['Th', dataMlUsageDay[4]],
+  ['F', dataMlUsageDay[5]],
+  ['S', dataMlUsageDay[6]],
+];
 //monthly
 let dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
-//change this so it gets input from database
+
 let dataMonth = [
   ['Jan', dataMlUsageMonth[0]],
   ['Feb', dataMlUsageMonth[1]],
@@ -87,7 +85,6 @@ export default class MeterGraphs extends Component {
       graphshowAxes: true,
       graphTimeList: ['daily(8am>7pm)','daily(8pm>7am)','weekly','monthly'],
       dataArray: dataDayAmPm,
-      dataAmPm: [100,300,900,400,800,300,700,900,400,800,300,700]
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -95,6 +92,9 @@ export default class MeterGraphs extends Component {
     this.viewTimeGraph = this.viewTimeGraph.bind(this);
     this.color = 'white';
   }
+
+
+
 
 
   render() {
@@ -180,23 +180,8 @@ export default class MeterGraphs extends Component {
   }
 
   viewTimeGraph(index, value) {
-    let dataMlReplace = this.state.dataAmPm.slice();
-    let dataDayReplace = [
-      ['8a', dataMlReplace[0]],
-      ['9a', dataMlReplace[1]],
-      ['10a', dataMlReplace[2]],
-      ['11a', dataMlReplace[3]],
-      ['12p', dataMlReplace[4]],
-      ['1p', dataMlReplace[5]],
-      ['2p', dataMlReplace[6]],
-      ['3p', dataMlReplace[7]],
-      ['4p', dataMlReplace[8]],
-      ['5p', dataMlReplace[9]],
-      ['6p', dataMlReplace[10]],
-      ['7p', dataMlReplace[11]],
-    ];
     if (value=='weekly') {
-      this.setState({dataArray: dataDayReplace});
+      this.setState({dataArray: dataWeek});
     }
     if (value=='daily(8am>7pm)') {
       this.setState({dataArray: dataDayAmPm });
