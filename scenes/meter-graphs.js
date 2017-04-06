@@ -211,34 +211,6 @@ export default class MeterGraphs extends Component {
   }
 }
 
-
-/*Pseudo-code for getting input from database:
-Stringify JSON object
-ex. (timeStarted,timeEnded,totalWaterUsed)
-eg. (8.23am=>8.45am,10)
-//categorize into which hour the event was..ie if user
-//had shower from 8:59am until 9:30 then it will be graphed as a 9am event.
-//same hour
-if (charAt(1)==8 && charAt(5)==a && charAt(9)==8 && charAt(13)==a)
-{
-  arrayOfTimesAndUsage[[0,0]]=8
-  //if 2 digit number (check closed parenthesis position)
-  //then
-    arrayOfTimesAndUsage[[0,1]]=parseInt(charAt(16)&&charAt(17))
-  //else
-    arrayOfTimesAndUsage[[0,1]]=parseInt(charAt(16)
-}
-//^^copy and paste this for different hours and times (am/pm, 1-12)
-//could make life a lot easier if we just went off time ended or time started
-//or middle between them.
-//goes into next hour, choose where more water was used as hour
-//goes into multiple hours,
-//usageEvents when it goes on for more than a day?
-//add up multiple events within same hour, make one piece of data
-//
-*/
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -264,10 +236,10 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     margin: 2,
-    borderColor:  'rgb(31,58,147)',
-    backgroundColor: 'rgb(31,58,147)',
+    borderColor:  'gray',
     borderWidth: 1,
     borderRadius: 1,
+    backgroundColor: 'rgb(31,58,147)',
     width:170,
     height:40,
   },
@@ -283,7 +255,7 @@ const styles = StyleSheet.create({
     margin: 8,
     width: 152,
     height: 80,
-    borderColor: 'rgb(31,58,147)',
+    borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 3,
     backgroundColor: 'rgb(31,58,147)',
@@ -291,8 +263,8 @@ const styles = StyleSheet.create({
   dropdownDropdown2: {
     margin: 8,
     width: 152,
-    height: 100,
-    borderColor: 'rgb(31,58,147)',
+    height: 165,
+    borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 3,
     backgroundColor: 'rgb(31,58,147)',
