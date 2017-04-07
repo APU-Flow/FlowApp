@@ -57,7 +57,7 @@ export default class MeterGraphs extends Component {
       // let hourAgo = new Date();
       // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
     //dailyAmPm from back-end
-      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -89,7 +89,7 @@ export default class MeterGraphs extends Component {
       });
 
   //dailyPmAm
-    fetch(`http://138.68.56.236:3000/api/getDailyUsagePmAm?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+    fetch(`http://138.68.56.236:3000/api/getDailyUsagePmAm?date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -121,7 +121,7 @@ export default class MeterGraphs extends Component {
       });
 
   //weekly
-    fetch(`http://138.68.56.236:3000/api/getWeeklyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+    fetch(`http://138.68.56.236:3000/api/getWeeklyUsage?date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -148,7 +148,7 @@ export default class MeterGraphs extends Component {
       });
 
   //monthly
-    fetch(`http://138.68.56.236:3000/api/getMonthlyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+    fetch(`http://138.68.56.236:3000/api/getMonthlyUsage?year=2017&meterID=1&token=${encodeURI(token)}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
