@@ -161,13 +161,18 @@ export default class MeterGraphs extends Component {
         let dataMlUsageMonth = responseObject.data;
         if (Array.isArray(dataMlUsageMonth)) {
           let dataMonth = [
-            ['S', dataMlUsageMonth[0]],
-            ['M', dataMlUsageMonth[1]],
-            ['T', dataMlUsageMonth[2]],
-            ['W', dataMlUsageMonth[3]],
-            ['Th', dataMlUsageMonth[4]],
-            ['F', dataMlUsageMonth[5]],
-            ['S', dataMlUsageMonth[6]],
+            ['Jan', dataMlUsageMonth[0]],
+            ['Feb', dataMlUsageMonth[1]],
+            ['Mar', dataMlUsageMonth[2]],
+            ['Apr', dataMlUsageMonth[3]],
+            ['May', dataMlUsageMonth[4]],
+            ['Jun', dataMlUsageMonth[5]],
+            ['Jul', dataMlUsageMonth[6]],
+            ['Aug', dataMlUsageMonth[7]],
+            ['Sept', dataMlUsageMonth[8]],
+            ['Oct', dataMlUsageMonth[9]],
+            ['Nov', dataMlUsageMonth[10]],
+            ['Dec', dataMlUsageMonth[11]],
           ];
         } else {
           let dataMonth = [['', 0]];
