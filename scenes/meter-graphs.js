@@ -14,7 +14,7 @@ let dataDayPmAm = [['', 0]];
 
 //weekly
 //let dataMlUsageDay= [1,3,9,4,8,3,7];
-let dataWeek = [['', 0]];
+let dataWeek =   [['', 0]];
 
 //monthly
 //let dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
@@ -36,7 +36,7 @@ export default class MeterGraphs extends Component {
       graphType: 'bar',
       graphshowAxes: true,
       graphTimeList: ['daily(8am>7pm)','daily(8pm>7am)','weekly','monthly'],
-      mainDataArray: [['', 0]],
+      mainDataArray: dataDayAmPm,
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -169,7 +169,7 @@ export default class MeterGraphs extends Component {
             ['Jun', dataMlUsageMonth[5]],
             ['Jul', dataMlUsageMonth[6]],
             ['Aug', dataMlUsageMonth[7]],
-            ['Sept', dataMlUsageMonth[8]],
+            ['Sep', dataMlUsageMonth[8]],
             ['Oct', dataMlUsageMonth[9]],
             ['Nov', dataMlUsageMonth[10]],
             ['Dec', dataMlUsageMonth[11]],
@@ -212,6 +212,7 @@ export default class MeterGraphs extends Component {
 
           xAxisHeight={40}
           yAxisWidth={19}
+          yAxisShortLabel={true}
 
           cornerRadius={4}
 
@@ -263,19 +264,18 @@ export default class MeterGraphs extends Component {
   }
 
   viewTimeGraph(index, value) {
-    if (value=='weekly') {
-      this.setState({mainDataArray: dataWeek});
-    }
     if (value=='daily(8am>7pm)') {
       this.setState({mainDataArray: dataDayAmPm });
     }
     if (value=='daily(8pm>7am)') {
       this.setState({mainDataArray: dataDayPmAm });
     }
+    if (value=='weekly') {
+      this.setState({mainDataArray: dataWeek});
+    }
     if (value=='monthly') {
       this.setState({mainDataArray: dataMonth});
     }
-
   }
 }
 
