@@ -163,9 +163,14 @@ export default class MeterGraphs extends Component {
             ['6p', dataMlUsageHrAmPm[10]],
             ['7p', dataMlUsageHrAmPm[11]]
           ];
+          if (value=='daily(8am>7pm)') {
+            this.setState({mainDataArray: dataDayAmPm });
+          }
         } else {
-          let dataDayAmPm = [['', 1000]];
-          this.setState({mainDataArray: dataDayAmPm });
+          let dataDayAmPm = [['', 0]];
+          if (value=='daily(8am>7pm)') {
+            this.setState({mainDataArray: dataDayAmPm });
+          }
         }
       });
 
@@ -196,9 +201,14 @@ export default class MeterGraphs extends Component {
             ['6p', dataMlUsageHrPmAm[10]],
             ['7p', dataMlUsageHrPmAm[11]]
           ];
+          if (value=='daily(8pm>7am)') {
+            this.setState({mainDataArray: dataDayPmAm });
+          }
         } else {
-          let dataDayPmAm = [['', 20]];
-          this.setState({mainDataArray: dataDayPmAm });
+          let dataDayPmAm = [['', 0]];
+          if (value=='daily(8pm>7am)') {
+            this.setState({mainDataArray: dataDayPmAm });
+          }
         }
       });
 
@@ -224,8 +234,14 @@ export default class MeterGraphs extends Component {
             ['F', dataMlUsageDay[5]],
             ['S', dataMlUsageDay[6]],
           ];
+          if (value=='weekly') {
+            this.setState({mainDataArray: dataWeek});
+          }
         } else {
           let dataWeek = [['', 0]];
+          if (value=='weekly') {
+            this.setState({mainDataArray: dataWeek});
+          }
         }
       });
 
@@ -256,23 +272,17 @@ export default class MeterGraphs extends Component {
             ['Nov', dataMlUsageMonth[10]],
             ['Dec', dataMlUsageMonth[11]],
           ];
+          if (value=='monthly') {
+            this.setState({mainDataArray: dataMonth});
+          }
         } else {
           let dataMonth = [['', 0]];
+          if (value=='monthly') {
+            this.setState({mainDataArray: dataMonth});
+          }
         }
       });
      });
-    if (value=='daily(8am>7pm)') {
-      this.setState({mainDataArray: dataDayAmPm });
-    }
-    if (value=='daily(8pm>7am)') {
-      this.setState({mainDataArray: dataDayPmAm });
-    }
-    if (value=='weekly') {
-      this.setState({mainDataArray: dataWeek});
-    }
-    if (value=='monthly') {
-      this.setState({mainDataArray: dataMonth});
-    }
   }
 }
 
