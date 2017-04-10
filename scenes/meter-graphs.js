@@ -1,4 +1,4 @@
-// graphs.js
+// meter-graphs.js
 // Flow
 
 import React, { Component } from 'react';
@@ -72,7 +72,7 @@ colorSlices=["red","green","blue", "black", "yellow", "orange","gray", "silver",
       ["Dec", dataMlUsageMonth[11]],
     ];
 
-export default class Graphs extends Component {
+export default class MeterGraphs extends Component {
   static get defaultProps() {
     return {
       title: 'Graphs'
@@ -318,4 +318,4 @@ const styles = StyleSheet.create({
     }
 });
 
-module.exports = Graphs;
+module.exports = MeterGraphs;

@@ -16,19 +16,24 @@ var Settings = require('../scenes/settings');
 export default class NavBarIOS extends Component {
 
     static get defaultProps() {
-        return {
-            // This component should always be passed a method for pushing a scene to the navigator. When it isn't, log this error.
-            pushRoute(scene) {
-                console.log(`Error navigating to ${scene.name ? scene.name : 'next'} scene! No pushRoute method given to Splash scene!`);
-            },
-            currentRouteName: ''
-        };
-    }
+    return {
+      currentRouteName: 'Overview'
+    };
+  }
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: 'overview'
+            selectedTab: props.selectedTab
+        };
+    }
+
+    static get propTypes() {
+        return {
+            // pushRoute: React.PropTypes.func.isRequired,
+            currentRouteName: React.PropTypes.string,
+            navReset: React.PropTypes.func.isRequired,
+            // children: React.PropTypes.element.isRequired
         };
     }
 
@@ -46,6 +51,7 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'overview',
                         });
                     }}>
+                    {/*<Overview pushRoute={this.props.pushRoute}/>*/}
                     <Overview />
                 </Icon.TabBarItem>
                 <Icon.TabBarItem
