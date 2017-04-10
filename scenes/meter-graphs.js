@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, AsyncStorage, View, TouchableHighlight} from 'react-native';
+import { StyleSheet, Alert, Text, AsyncStorage, View, TouchableHighlight} from 'react-native';
 import Chart from 'react-native-chart';
 import ModalDropdown from 'react-native-modal-dropdown';
 
@@ -66,6 +66,7 @@ export default class MeterGraphs extends Component {
       .then((response) => response.json())
       .then((responseObject) => {
   let dataMlUsageHrAmPm = responseObject.data;
+  //Alert.alert('response', responseObject.message);
         if (Array.isArray(dataMlUsageHrAmPm)) {
           let dataDayAmPm = [
             ['8a', dataMlUsageHrAmPm[0]],
@@ -268,6 +269,7 @@ export default class MeterGraphs extends Component {
       .then((response) => response.json())
       .then((responseObject) => {
         let dataMlUsageDay = responseObject.data;
+        //Alert.alert('response', responseObject.message);
         if (Array.isArray(dataMlUsageDay)) {
           let dataWeek = [
             ['S', dataMlUsageDay[0]],
