@@ -45,6 +45,50 @@ export default class MeterGraphs extends Component {
     this.color = 'white';
   }
 
+   componentDidMount() {
+    AsyncStorage.multiGet(['email', 'token'], (errors, results) => {
+      if (errors) {
+        Alert.alert('Error', errors);
+      }
+      let email = results[0][1];
+      let token = results[1][1];
+      // let now = new Date();
+      // let hourAgo = new Date();
+      // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.json())
+      .then((responseObject) => {
+  let dataMlUsageHrAmPm = responseObject.data;
+        if (Array.isArray(dataMlUsageHrAmPm)) {
+          let dataDayAmPm = [
+            ['8a', dataMlUsageHrAmPm[0]],
+            ['9a', dataMlUsageHrAmPm[1]],
+            ['10a', dataMlUsageHrAmPm[2]],
+            ['11a', dataMlUsageHrAmPm[3]],
+            ['12p', dataMlUsageHrAmPm[4]],
+            ['1p', dataMlUsageHrAmPm[5]],
+            ['2p', dataMlUsageHrAmPm[6]],
+            ['3p', dataMlUsageHrAmPm[7]],
+            ['4p', dataMlUsageHrAmPm[8]],
+            ['5p', dataMlUsageHrAmPm[9]],
+            ['6p', dataMlUsageHrAmPm[10]],
+            ['7p', dataMlUsageHrAmPm[11]]
+          ];
+          this.setState({mainDataArray: dataDayAmPm });
+        } else {
+          this.setState({ mainDataArray: [['', 0]] });
+        }
+      });
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
