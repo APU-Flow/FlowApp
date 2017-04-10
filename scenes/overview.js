@@ -38,7 +38,7 @@ export default class Overview extends Component {
       // let now = new Date();
       // let hourAgo = new Date();
       // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
-      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -49,6 +49,7 @@ export default class Overview extends Component {
       .then((response) => response.json())
       .then((responseObject) => {
         let dataArray = responseObject.data;
+        Alert.alert('response', responseObject.message);
         if (Array.isArray(dataArray)) {
           let data = [
             ['8a', dataArray[0]],
