@@ -62,36 +62,32 @@ export default class LoginForm extends Component {
         password: this.state.password
       })
     })
-    .then((response) => response.json())
-    .then(async (responseObject) => {
-      if (responseObject.message === 'ok' && typeof responseObject.token === 'string') {
-        this.setState({ submitReport: '' });
+    .then((response) => {
+      switch (response.status) {
+        case 200:
+          response.json().then(async (responseObject) => {
+            this.setState({ submitReport: '' });
 
-        try {
-          // TODO: Handle undefined instead of hanging!
-          //Alert.alert(`${responseObject.email}, ${responseObject.firstName}, ${responseObject.token}`);
-          await AsyncStorage.multiSet([
-            ['email', responseObject.email],
-            ['firstName', responseObject.firstName],
-            ['token', responseObject.token]
-          ]);
-          //Alert.alert('Hit try end!');
-        } catch (error) {
-          Alert.alert('Error', error);
-        }
+            try {
+              await AsyncStorage.multiSet([
+                ['email', responseObject.email],
+                ['firstName', responseObject.firstName],
+                ['token', responseObject.token]
+              ]);
+            } catch (error) {
+              Alert.alert('Error', error);
+            }
 
-        this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
-      }
-      else if (responseObject.message === 'lol nice tri n00b') {
-        // Thank you George for that wonderful masterpiece, that piece of art of a server response
-        this.setState({ submitReport: 'Login failed; bad username or password.' });
-      }
-      else {
-        this.setState({ submitReport: 'Login failed; server returned invalid response.' });
+            this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
+          });
+          break;
+        default:
+          response.json().then((responseObject) => this.setState({ submitReport: `Login failed: ${responseObject.message}` }));
       }
     });
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
