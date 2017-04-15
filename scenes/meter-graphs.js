@@ -8,10 +8,6 @@ import ModalDropdown from 'react-native-modal-dropdown';
 // let dataMlUsageHrAmPm= [0];
 let dataDayAmPm = [['', 0]];
 
-//pm to am
-//let dataMlUsageHrPmAm= [1,3,9,4,8,3,7,18,4,8,3,7];
-let dataDayPmAm = [['', 0]];
-
 //weekly
 //let dataMlUsageDay= [1,3,9,4,8,3,7];
 let dataWeek =   [['', 0]];
@@ -215,44 +211,6 @@ export default class MeterGraphs extends Component {
           let dataDayAmPm = [['', 0]];
           if (value=='daily(8am>7pm)') {
             this.setState({mainDataArray: dataDayAmPm });
-          }
-        }
-      });
-
-  //dailyPmAm
-    fetch(`http://138.68.56.236:3000/api/getDailyUsagePmAm?date=${encodeURI(Date.now())}&meterID=1`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'x-access-token': token
-        }
-      })
-      .then((response) => response.json())
-      .then((responseObject) => {
-        let dataMlUsageHrPmAm = responseObject.data;
-        if (Array.isArray(dataMlUsageHrPmAm)) {
-          let dataDayPmAm = [
-            ['8a', dataMlUsageHrPmAm[0]],
-            ['9a', dataMlUsageHrPmAm[1]],
-            ['10a', dataMlUsageHrPmAm[2]],
-            ['11a', dataMlUsageHrPmAm[3]],
-            ['12p', dataMlUsageHrPmAm[4]],
-            ['1p', dataMlUsageHrPmAm[5]],
-            ['2p', dataMlUsageHrPmAm[6]],
-            ['3p', dataMlUsageHrPmAm[7]],
-            ['4p', dataMlUsageHrPmAm[8]],
-            ['5p', dataMlUsageHrPmAm[9]],
-            ['6p', dataMlUsageHrPmAm[10]],
-            ['7p', dataMlUsageHrPmAm[11]]
-          ];
-          if (value=='daily(8pm>7am)') {
-            this.setState({mainDataArray: dataDayPmAm });
-          }
-        } else {
-          let dataDayPmAm = [['', 0]];
-          if (value=='daily(8pm>7am)') {
-            this.setState({mainDataArray: dataDayPmAm });
           }
         }
       });
