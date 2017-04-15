@@ -48,6 +48,10 @@ export default class Meters extends Component {
           renderRow={this.dropdownRenderRow}
           onSelect={this.viewMeter}
         />
+        <TouchableHighlight style={styles.dropdown}
+            onPress={this.loadMeterForm}>
+            <Text style={styles.dropdownText}>Meter 1</Text>
+        </TouchableHighlight>
         <ModalDropdown style={styles.dropdown}
           options={this.state.meterList}
           textStyle={styles.dropdownText}

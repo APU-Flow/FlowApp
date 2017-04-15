@@ -54,12 +54,13 @@ export default class FlowApp extends Component {
               scene = <ChangeAccount {...route.passProps} />;
               break;
             case 'meters':
-              scene = <Meters {...route.passProps} />;
+              scene = <Meters pushRoute={navigator.push} {...route.passProps} />;
               break;
             case 'overview':
               scene = <Overview {...route.passProps} />;
               break;
             case 'meterGraphs':
+              drawerLock = 'locked-closed';
               scene = <MeterGraphs {...route.passProps} />;
               break;
           }
