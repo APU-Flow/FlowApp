@@ -49,7 +49,7 @@ export default class Overview extends Component {
       .then((response) => response.json())
       .then((responseObject) => {
         let dataArray = responseObject.data;
-        //Alert.alert('response', responseObject.message);
+        Alert.alert('response', responseObject.message);
         if (Array.isArray(dataArray)) {
           let data = [
             ['8a', dataArray[0]],

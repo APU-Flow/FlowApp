@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, Alert, View, TouchableHighlight, Navigator } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ModalDropdown from 'react-native-modal-dropdown';
 
@@ -10,7 +10,8 @@ export default class Meters extends Component {
 
   static get propTypes() {
     return {
-      title: React.PropTypes.string
+      title: React.PropTypes.string,
+      pushRoute: React.PropTypes.func.isRequired
     };
   }
 
@@ -32,6 +33,7 @@ export default class Meters extends Component {
     this.viewMeter = this.viewMeter.bind(this);
     this.addMeter = this.addMeter.bind(this);
     this.dropMeter = this.dropMeter.bind(this);
+    this.loadMeterForm = this.loadMeterForm.bind(this);
   }
 
   render() {
@@ -80,8 +82,19 @@ export default class Meters extends Component {
   }
 
   viewMeter(index, value) {
-    Alert.alert(value, `Taking you to ${value} overview screen.`);
+    Alert.alert(value, `Taking you to ${value} overview screen.`,
+      [
+        {text: 'Ok', onPress: () => {this.loadMeterForm}},
+      ],
+      { cancelable: false });
     return false; //this turns the selected option back to the original
+  }
+
+  loadMeterForm() {
+    this.props.pushRoute({
+      name: 'meterGraphs',
+      sceneConfig: Navigator.SceneConfigs.PushFromRight
+    });
   }
 
   addMeter(index, value) {
