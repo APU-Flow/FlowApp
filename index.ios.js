@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { AppRegistry, Navigator, Text } from 'react-native';
+import { AppRegistry, Navigator, Text, AsyncStorage, Alert } from 'react-native';
 
 import NavBarIOS from './components/nav-bar.ios';
 import Settings from './scenes/settings';
@@ -16,6 +16,11 @@ import Register from './scenes/register';
 import Overview from './scenes/overview';
 
 export default class FlowApp extends Component {
+
+  constructor(props) {
+    super(props);
+
+  }
 
   render() {
     return (
@@ -33,15 +38,13 @@ export default class FlowApp extends Component {
             case 'register':
               return <Register pushRoute={navigator.push} {...route.passProps} />;
             case 'overview':
-              return <NavBarIOS selectedTab = 'overview' />
+              return <NavBarIOS selectedTab = 'overview' {...route.passsProps}/>
             case 'graphs':
-              return <NavBarIOS selectedTab = 'graphs' />
+              return <NavBarIOS selectedTab = 'graphs' {...route.passsProps}/>
             case 'meters':
-              return <NavBarIOS selectedTab = 'meters' /> 
+              return <NavBarIOS selectedTab = 'meters' {...route.passsProps}/> 
             case 'settings':
-              return <NavBarIOS selectedTab = 'settings' /> 
-            case 'changeAccount':
-              return <ChangeAccount {...route.passProps} />;
+              return <NavBarIOS selectedTab = 'settings' logout={this.logout} {...route.passsProps} /> 
             case 'meterGraphs':
               return <NavBarIOS selectedTab = 'meterGraphs' />
             default:
@@ -51,6 +54,7 @@ export default class FlowApp extends Component {
       />
     );
   }
+
 }
 
 AppRegistry.registerComponent('FlowApp', () => FlowApp);

@@ -187,6 +187,37 @@ export default class Graphs extends Component {
    
   }
 
+   viewTimeGraph(index, value) {
+    let dataMlReplace = this.state.dataAmPm.slice();
+    let dataDayReplace = [
+      ['8a', dataMlReplace[0]],
+      ['9a', dataMlReplace[1]],
+      ['10a', dataMlReplace[2]],
+      ['11a', dataMlReplace[3]],
+      ['12p', dataMlReplace[4]],
+      ['1p', dataMlReplace[5]],
+      ['2p', dataMlReplace[6]],
+      ['3p', dataMlReplace[7]],
+      ['4p', dataMlReplace[8]],
+      ['5p', dataMlReplace[9]],
+      ['6p', dataMlReplace[10]],
+      ['7p', dataMlReplace[11]],
+    ];
+    if (value=='weekly') {
+      this.setState({dataArray: dataDayReplace});
+    }
+    if (value=='daily(8am>7pm)') {
+      this.setState({dataArray: dataDayAmPm });
+    }
+    if (value=='daily(8pm>7am)') {
+      this.setState({dataArray: dataDayPmAm });
+    }
+    if (value=='monthly') {
+      this.setState({dataArray: dataMonth});
+    }
+
+  }
+
   verifyInput(name, text) {
     switch (name) {
       // TODO: Stuff here

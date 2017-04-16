@@ -26,13 +26,15 @@ export default class NavBarIOS extends Component {
         this.state = {
             selectedTab: props.selectedTab
         };
+        
+        this.logout = this.logout.bind(this);
     }
 
     static get propTypes() {
         return {
             // pushRoute: React.PropTypes.func.isRequired,
+
             currentRouteName: React.PropTypes.string,
-            navReset: React.PropTypes.func.isRequired,
             // children: React.PropTypes.element.isRequired
         };
     }
@@ -51,7 +53,6 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'overview',
                         });
                     }}>
-                    {/*<Overview pushRoute={this.props.pushRoute}/>*/}
                     <Overview />
                 </Icon.TabBarItem>
                 <Icon.TabBarItem
@@ -88,11 +89,19 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'settings',
                         });
                     }}>
-                    <Settings navReset={navigator.resetTo} />
+                    <Settings logout={this.logout} />; />
                 </Icon.TabBarItem>
             </TabBarIOS>
         );
     }
+
+    logout() {
+    AsyncStorage.multiRemove(['email', 'token'], (err) => {
+      if (err) Alert.alert('Error', err);
+
+      navigator.resetTo('splash');
+    });
+  }
 }
 
 const styles = StyleSheet.create({
