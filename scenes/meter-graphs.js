@@ -5,8 +5,8 @@ import Chart from 'react-native-chart';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 //am to pm
-// let dataMlUsageHrAmPm= [0];
-let dataDayAmPm = [['', 0]];
+// let dataMlUsageHr= [0];
+let dataDay = [['', 0]];
 
 //weekly
 //let dataMlUsageDay= [1,3,9,4,8,3,7];
@@ -31,8 +31,8 @@ export default class MeterGraphs extends Component {
       graphList: ['line', 'bar'],
       graphType: 'bar',
       graphshowAxes: true,
-      graphTimeList: ['daily(8am>7pm)','daily(8pm>7am)','weekly','monthly'],
-      mainDataArray: dataDayAmPm,
+      graphTimeList: ['daily','weekly','monthly'],
+      mainDataArray: dataDay,
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -61,24 +61,24 @@ export default class MeterGraphs extends Component {
       })
       .then((response) => response.json())
       .then((responseObject) => {
-  let dataMlUsageHrAmPm = responseObject.data;
+  let dataMlUsageHr = responseObject.data;
   //Alert.alert('response', responseObject.message);
-        if (Array.isArray(dataMlUsageHrAmPm)) {
-          let dataDayAmPm = [
-            ['8a', dataMlUsageHrAmPm[0]],
-            ['9a', dataMlUsageHrAmPm[1]],
-            ['10a', dataMlUsageHrAmPm[2]],
-            ['11a', dataMlUsageHrAmPm[3]],
-            ['12p', dataMlUsageHrAmPm[4]],
-            ['1p', dataMlUsageHrAmPm[5]],
-            ['2p', dataMlUsageHrAmPm[6]],
-            ['3p', dataMlUsageHrAmPm[7]],
-            ['4p', dataMlUsageHrAmPm[8]],
-            ['5p', dataMlUsageHrAmPm[9]],
-            ['6p', dataMlUsageHrAmPm[10]],
-            ['7p', dataMlUsageHrAmPm[11]]
+        if (Array.isArray(dataMlUsageHr)) {
+          let dataDay = [
+            ['8a', dataMlUsageHr[0]],
+            ['9a', dataMlUsageHr[1]],
+            ['10a', dataMlUsageHr[2]],
+            ['11a', dataMlUsageHr[3]],
+            ['12p', dataMlUsageHr[4]],
+            ['1p', dataMlUsageHr[5]],
+            ['2p', dataMlUsageHr[6]],
+            ['3p', dataMlUsageHr[7]],
+            ['4p', dataMlUsageHr[8]],
+            ['5p', dataMlUsageHr[9]],
+            ['6p', dataMlUsageHr[10]],
+            ['7p', dataMlUsageHr[11]]
           ];
-          this.setState({mainDataArray: dataDayAmPm });
+          this.setState({mainDataArray: dataDay });
         } else {
           this.setState({ mainDataArray: [['', 0]] });
         }
@@ -177,7 +177,7 @@ export default class MeterGraphs extends Component {
       // let now = new Date();
       // let hourAgo = new Date();
       // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
-    //dailyAmPm from back-end
+    //daily from back-end
       fetch(`http://138.68.56.236:3000/api/getDailyUsage?date=${encodeURI(Date.now())}&meterID=1`, {
         method: 'GET',
         headers: {
@@ -188,29 +188,29 @@ export default class MeterGraphs extends Component {
       })
       .then((response) => response.json())
       .then((responseObject) => {
-        let dataMlUsageHrAmPm = responseObject.data;
-        if (Array.isArray(dataMlUsageHrAmPm)) {
-          let dataDayAmPm = [
-            ['8a', dataMlUsageHrAmPm[0]],
-            ['9a', dataMlUsageHrAmPm[1]],
-            ['10a', dataMlUsageHrAmPm[2]],
-            ['11a', dataMlUsageHrAmPm[3]],
-            ['12p', dataMlUsageHrAmPm[4]],
-            ['1p', dataMlUsageHrAmPm[5]],
-            ['2p', dataMlUsageHrAmPm[6]],
-            ['3p', dataMlUsageHrAmPm[7]],
-            ['4p', dataMlUsageHrAmPm[8]],
-            ['5p', dataMlUsageHrAmPm[9]],
-            ['6p', dataMlUsageHrAmPm[10]],
-            ['7p', dataMlUsageHrAmPm[11]]
+        let dataMlUsageHr = responseObject.data;
+        if (Array.isArray(dataMlUsageHr)) {
+          let dataDay = [
+            ['8a', dataMlUsageHr[0]],
+            ['9a', dataMlUsageHr[1]],
+            ['10a', dataMlUsageHr[2]],
+            ['11a', dataMlUsageHr[3]],
+            ['12p', dataMlUsageHr[4]],
+            ['1p', dataMlUsageHr[5]],
+            ['2p', dataMlUsageHr[6]],
+            ['3p', dataMlUsageHr[7]],
+            ['4p', dataMlUsageHr[8]],
+            ['5p', dataMlUsageHr[9]],
+            ['6p', dataMlUsageHr[10]],
+            ['7p', dataMlUsageHr[11]]
           ];
-          if (value=='daily(8am>7pm)') {
-            this.setState({mainDataArray: dataDayAmPm });
+          if (value=='daily') {
+            this.setState({mainDataArray: dataDay });
           }
         } else {
-          let dataDayAmPm = [['', 0]];
-          if (value=='daily(8am>7pm)') {
-            this.setState({mainDataArray: dataDayAmPm });
+          let dataDay = [['', 0]];
+          if (value=='daily') {
+            this.setState({mainDataArray: dataDay });
           }
         }
       });
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
   dropdownDropdown2: {
     margin: 8,
     width: 152,
-    height: 165,
+    height: 125,
     borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 3,
