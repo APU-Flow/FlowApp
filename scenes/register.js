@@ -214,12 +214,14 @@ export default class Register extends Component {
         zip: this.state.zip
       })
     })
-    .then((response) => response.json())
-    .then((responseObject) => {
-      if (responseObject.status === 'ok')
-        this.submitLogin();
-      else
-        this.setState({submitReport: 'Registration failed!'});
+    .then((response) => {
+      switch (response.status) {
+        case 200:
+          response.json().then((responseObject) => this.submitLogin());
+          break;
+        default:
+          response.json().then((responseObject) => this.setState({submitReport: `Registration failed: ${responseObject.message}`}));
+      }
     });
   }
 
@@ -235,26 +237,28 @@ export default class Register extends Component {
         password: this.state.password
       })
     })
-    .then((response) => response.json())
-    .then(async (responseObject) => {
-      if (typeof responseObject.token === 'string') {
-        this.setState({ submitReport: '' });
+    .then((response) => {
+      switch (response.status) {
+        case 200:
+          response.json().then(async (responseObject) => {
+            this.setState({ submitReport: '' });
 
-        try {
-          // TODO: Handle undefined instead of hanging!
-          await AsyncStorage.multiSet([
-            ['email', responseObject.email],
-            ['firstName', responseObject.firstName],
-            ['token', responseObject.token]
-          ]);
-        } catch (error) {
-          Alert.alert('Error', error);
-        }
+            try {
+              await AsyncStorage.multiSet([
+                ['email', responseObject.email],
+                ['firstName', responseObject.firstName],
+                ['token', responseObject.token]
+              ]);
+            } catch (error) {
+              Alert.alert('Error', error);
+            }
 
-        this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
+            this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
+          });
+          break;
+        default:
+          response.json().then((responseObject) => this.setState({ submitReport: `Login failed: ${responseObject.message}` }));
       }
-      else
-        this.setState({ submitReport: 'Login failed; bad username or password.' });
     });
   }
 

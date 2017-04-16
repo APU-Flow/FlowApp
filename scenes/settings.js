@@ -2,15 +2,14 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import ModalDropdown from 'react-native-modal-dropdown';
+import { StyleSheet, Text, Alert, ScrollView, View, TouchableHighlight, AsyncStorage } from 'react-native';
 
 export default class Settings extends Component {
 
   static get propTypes() {
     return {
-      title: React.PropTypes.string
+      title: React.PropTypes.string,
+      logout: React.PropTypes.func.isRequired
     };
   }
 
@@ -23,11 +22,6 @@ export default class Settings extends Component {
   constructor(props) {
     super(props);
 
-    // Initialize state variables
-    this.state = {
-      accountOptions: ['Logout', 'Change Account']
-    };
-
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
     this.confirmDeleteHistory = this.confirmDeleteHistory.bind(this);
     this.contactUs = this.contactUs.bind(this);
@@ -36,15 +30,14 @@ export default class Settings extends Component {
 
   render() {
     return (
-     <KeyboardAwareScrollView style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.title}>{this.props.title}</Text>
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.accountOptions}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Logout or Change Account'
-          renderRow={this.dropdownRenderRow}
-        />
+
+        <TouchableHighlight onPress={this.props.logout}>
+          <View style={styles.dropdown}>
+            <Text style={styles.dropdownText}>Logout / Change Account</Text>
+          </View>
+        </TouchableHighlight>
 
         <TouchableHighlight onPress={this.confirmDeleteHistory}>
           <View style={styles.dropdown}>
@@ -57,33 +50,47 @@ export default class Settings extends Component {
             <Text style={styles.dropdownText}>Contact Us</Text>
           </View>
         </TouchableHighlight>
-      </KeyboardAwareScrollView>
+      </ScrollView>
     );
   }
 
-  dropdownRenderRow(rowData, rowID, highlighted) {
-    let evenRow = rowID % 2;
-    return (
-      <TouchableHighlight underlayColor='cornflowerblue'>
-        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
-          <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
-             {rowData}
-          </Text>
-        </View>
-      </TouchableHighlight>
-    );
-  }
 
   confirmDeleteHistory() {
     Alert.alert(
       'Delete Data History',
       'Are you sure you want to delete your data history?',
       [
-        { text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel' },
-        { text: 'Yes', onPress: () => Alert.alert('Yes Pressed') }
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Yes', onPress: () => {
+          AsyncStorage.getItem('token', (err, token) => {
+            if (err) {
+              Alert.alert('Error', 'User login token missing!');
+              return;
+            }
+            fetch('http://138.68.56.236:3000/api/deleteUserData', {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': token
+              }
+            })
+            .then((response) => {
+              switch (response.status) {
+                case 200:
+                  response.json().then((responseObject) => {
+                    Alert.alert('Successful');
+                  });
+                  break;
+                default:
+                  response.json().then((responseObject) => Alert.alert('Failure', responseObject.message));
+              }
+            }); // End fetch() callbacks
+          }); // End AsyncStorage getItem
+        }} // End 'Yes' button function
       ],
       { cancelable: false }
-    );
+    ); // End confirmation alert
   }
 
   contactUs() {
@@ -122,26 +129,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-  dropdownDropdown: {
-    margin: 8,
-    width: 320,
-    height: 100,
-    borderColor: 'rgb(31,58,147)',
-    borderWidth: 2,
-    borderRadius: 3,
-    backgroundColor: 'rgb(31,58,147)',
-  },
-  dropdownRow: {
-    flexDirection: 'row',
-    height: 40,
-    alignItems: 'center',
-    backgroundColor: 'rgb(31,58,147)'
-  },
-  dropdownRowText: {
-    marginHorizontal: 4,
-    fontSize: 16,
-    color: 'white',
-    textAlignVertical: 'center',
-    textAlign: 'center',
-  }
 });
