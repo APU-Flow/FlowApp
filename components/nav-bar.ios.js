@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, TabBarIOS, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, TabBarIOS, View, Text, TouchableHighlight, AsyncStorage, Alert } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -10,6 +10,7 @@ var Overview = require('../scenes/overview');
 var Meters = require('../scenes/meters');
 var Graphs = require('../scenes/graphs');
 var Settings = require('../scenes/settings');
+var Splash = require('../scenes/splash');
 
 'use strict';
 
@@ -33,7 +34,6 @@ export default class NavBarIOS extends Component {
     static get propTypes() {
         return {
             // pushRoute: React.PropTypes.func.isRequired,
-
             currentRouteName: React.PropTypes.string,
             // children: React.PropTypes.element.isRequired
         };
@@ -89,7 +89,7 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'settings',
                         });
                     }}>
-                    <Settings logout={this.logout} />; />
+                    <Settings logout={this.logout} />
                 </Icon.TabBarItem>
             </TabBarIOS>
         );
@@ -99,7 +99,7 @@ export default class NavBarIOS extends Component {
     AsyncStorage.multiRemove(['email', 'token'], (err) => {
       if (err) Alert.alert('Error', err);
 
-      navigator.resetTo('splash');
+      navigator.resetTo('Splash');
     });
   }
 }

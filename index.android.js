@@ -50,7 +50,7 @@ export default class FlowApp extends Component {
               scene = <Register pushRoute={navigator.push} {...route.passProps} />;
               break;
             case 'settings':
-              scene = <Settings logout={this.logout} {...route.passsProps} />;
+              scene = <Settings logout={this.logout} {...route.passProps} />;
               break;
             case 'changeAccount':
               scene = <ChangeAccount {...route.passProps} />;

@@ -27,7 +27,6 @@ export default class Settings extends Component {
   constructor(props) {
     super(props);
 
-    // this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
     this.confirmDeleteHistory = this.confirmDeleteHistory.bind(this);
     this.contactUs = this.contactUs.bind(this);
   }
@@ -38,15 +37,15 @@ export default class Settings extends Component {
       <ScrollView style={styles.container}>
         <Text style={styles.title}>{this.props.title}</Text>
 
-        <TouchableHighlight onPress={this.props.logout}>
+        <TouchableHighlight style={styles.button} onPress={this.props.logout}>
           <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Logout / Change Account</Text>
+            <Text style={styles.buttonText}>Logout</Text>
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={this.confirmDeleteHistory}>
+        <TouchableHighlight style={styles.button} onPress={this.confirmDeleteHistory}>
           <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Delete Data History</Text>
+            <Text style={styles.buttonText}>Delete Data History</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.button}>
@@ -55,9 +54,6 @@ export default class Settings extends Component {
       </ScrollView>
     );
   }
-
-
-  
 
   confirmDeleteHistory() {
     Alert.alert(
@@ -128,6 +124,8 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     textAlignVertical: 'center',
+    color:'white',
+    fontSize: 18
   },
 });
 

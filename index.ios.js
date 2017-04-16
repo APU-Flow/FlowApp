@@ -38,13 +38,13 @@ export default class FlowApp extends Component {
             case 'register':
               return <Register pushRoute={navigator.push} {...route.passProps} />;
             case 'overview':
-              return <NavBarIOS selectedTab = 'overview' {...route.passsProps}/>
+              return <NavBarIOS selectedTab = 'overview' {...route.passProps}/>
             case 'graphs':
-              return <NavBarIOS selectedTab = 'graphs' {...route.passsProps}/>
+              return <NavBarIOS selectedTab = 'graphs' {...route.passProps}/>
             case 'meters':
-              return <NavBarIOS selectedTab = 'meters' {...route.passsProps}/> 
+              return <NavBarIOS selectedTab = 'meters' {...route.passProps}/> 
             case 'settings':
-              return <NavBarIOS selectedTab = 'settings' logout={this.logout} {...route.passsProps} /> 
+              return <NavBarIOS selectedTab = 'settings' {...route.passProps} /> 
             case 'meterGraphs':
               return <NavBarIOS selectedTab = 'meterGraphs' />
             default:
