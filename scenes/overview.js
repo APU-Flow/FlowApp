@@ -25,7 +25,7 @@ export default class Overview extends Component {
     super(props);
     // Initialize state variables
     this.state = {
-      data: [[null, null]]
+      data: [['', 0]]
     };
   }
 
@@ -39,7 +39,7 @@ export default class Overview extends Component {
       // let now = new Date();
       // let hourAgo = new Date();
       // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
-      fetch(`http://138.68.56.236:3001/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(new Date())}&meterID=1&token=${encodeURI(token)}`, {
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -47,27 +47,30 @@ export default class Overview extends Component {
           'x-access-token': token
         }
       })
-      .then((response) => response.json())
-      .then((responseObject) => {
-        let dataArray = responseObject.data;
-        if (Array.isArray(dataArray)) {
-          let data = [
-            ['8a', dataArray[0]],
-            ['9a', dataArray[1]],
-            ['10a', dataArray[2]],
-            ['11a', dataArray[3]],
-            ['12p', dataArray[4]],
-            ['1p', dataArray[5]],
-            ['2p', dataArray[6]],
-            ['3p', dataArray[7]],
-            ['4p', dataArray[8]],
-            ['5p', dataArray[9]],
-            ['6p', dataArray[10]],
-            ['7p', dataArray[11]]
-          ];
-          this.setState({ data });
-        } else {
-          this.setState({ data: [] });
+      .then((response) => {
+        switch (response.status) {
+          case 200:
+            response.json().then((responseObject) => {
+              let dataArray = responseObject.data;
+              let data = [
+                ['8a', dataArray[0]],
+                ['9a', dataArray[1]],
+                ['10a', dataArray[2]],
+                ['11a', dataArray[3]],
+                ['12p', dataArray[4]],
+                ['1p', dataArray[5]],
+                ['2p', dataArray[6]],
+                ['3p', dataArray[7]],
+                ['4p', dataArray[8]],
+                ['5p', dataArray[9]],
+                ['6p', dataArray[10]],
+                ['7p', dataArray[11]]
+              ];
+              this.setState({ data });
+            });
+            break;
+          default:
+            response.json().then((responseObject) => this.setState({ data: [['', 0]] }));
         }
       });
     });
@@ -102,9 +105,9 @@ export default class Overview extends Component {
 
         showDataPoint={false}
         showAxis={true}
-                  
+
         style={styles.chart}
-        labelFontSize={11}                  
+        labelFontSize={11}
         />
       </View>
     );
@@ -120,10 +123,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor:'rgb(52,152,219)',
-  },
-  text: {
-    margin: 10,
-    fontSize: 15
   },
   chart: {
     width: 300,

@@ -81,8 +81,7 @@ export default class Graphs extends Component {
 
   constructor(props) {
     super(props);
-   
-    // Initialize state variables
+    //Initialize state variables so the Text fields don't get mad.
     this.state = {
       graphList: ['line', 'bar', 'pie'],
     //graph state to switch rendering
@@ -188,26 +187,9 @@ export default class Graphs extends Component {
    
   }
 
-  viewTimeGraph(index, value) {
-    {var dataMlReplace= this.state.dataAmPm.slice()}
-    {var dataDayReplace=[
-      ["8a", dataMlReplace[0]],
-      ["9a", dataMlReplace[1]],
-      ["10a", dataMlReplace[2]],
-      ["11a", dataMlReplace[3]],
-      ["12p", dataMlReplace[4]],
-      ["1p", dataMlReplace[5]],
-      ["2p", dataMlReplace[6]],
-      ["3p", dataMlReplace[7]],
-      ["4p", dataMlReplace[8]],
-      ["5p", dataMlReplace[9]],
-      ["6p", dataMlReplace[10]],
-      ["7p", dataMlReplace[11]],
-      ];}
-    if (value=='weekly')
-    {
-      
-      this.setState({dataArray: dataDayReplace})
+  verifyInput(name, text) {
+    switch (name) {
+      // TODO: Stuff here
     }
     if (value=='daily(8am>7pm)')
     {

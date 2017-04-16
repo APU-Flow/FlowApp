@@ -4,9 +4,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import ModalDropdown from 'react-native-modal-dropdown';
+import { StyleSheet, Text, Alert, ScrollView, View, TouchableHighlight, AsyncStorage } from 'react-native';
 
 var Login = require('../scenes/login');
 var Splash = require('../scenes/splash');
@@ -16,7 +14,7 @@ export default class Settings extends Component {
   static get propTypes() {
     return {
       title: React.PropTypes.string,
-      navReset: React.PropTypes.func.isRequired
+      logout: React.PropTypes.func.isRequired
     };
   }
 
@@ -28,34 +26,36 @@ export default class Settings extends Component {
 
   constructor(props) {
     super(props);
+
+    this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
+    this.confirmDeleteHistory = this.confirmDeleteHistory.bind(this);
+    this.contactUs = this.contactUs.bind(this);
   }
 
 
   render() {
     return (
-      <KeyboardAwareScrollView style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.title}>{this.props.title}</Text>
-        <TouchableHighlight style={styles.button} onPress={this.handleLogout}>
-          <Text style={styles.buttonText}>Logout</Text>
+
+        <TouchableHighlight onPress={this.props.logout}>
+          <View style={styles.dropdown}>
+            <Text style={styles.dropdownText}>Logout / Change Account</Text>
+          </View>
+        </TouchableHighlight>
+
+        <TouchableHighlight onPress={this.confirmDeleteHistory}>
+          <View style={styles.dropdown}>
+            <Text style={styles.dropdownText}>Delete Data History</Text>
+          </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.button}>
           <Text style={styles.buttonText}>Add Meter</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.button}>
-          <Text style={styles.buttonText}>Drop Meter</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={styles.button} onPress={this.confirmDeleteHistory}>
-          <Text style={styles.buttonText}>Delete Data History</Text>
-        </TouchableHighlight>
-      </KeyboardAwareScrollView>
+      </ScrollView>
     );
   }
 
-  handleLogout() {
-    this.props.navReset({
-      name: 'login',
-    });
-  }
 
   
 
@@ -64,11 +64,37 @@ export default class Settings extends Component {
       'Delete Data History',
       'Are you sure you want to delete your data history?',
       [
-        { text: 'Cancel', onPress: () => Alert.alert('Data deleted'), style: 'cancel' },
-        { text: 'Yes', onPress: () => Alert.alert('Yes Pressed') }
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Yes', onPress: () => {
+          AsyncStorage.getItem('token', (err, token) => {
+            if (err) {
+              Alert.alert('Error', 'User login token missing!');
+              return;
+            }
+            fetch('http://138.68.56.236:3000/api/deleteUserData', {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': token
+              }
+            })
+            .then((response) => {
+              switch (response.status) {
+                case 200:
+                  response.json().then((responseObject) => {
+                    Alert.alert('Successful');
+                  });
+                  break;
+                default:
+                  response.json().then((responseObject) => Alert.alert('Failure', responseObject.message));
+              }
+            }); // End fetch() callbacks
+          }); // End AsyncStorage getItem
+        }} // End 'Yes' button function
       ],
       { cancelable: false }
-    );
+    ); // End confirmation alert
   }
 
   contactUs() {
@@ -101,10 +127,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-    color: '#FFF',
-    fontWeight: '500',
-    fontSize: 20
-  }
+    textAlignVertical: 'center',
+  },
 });
 
 module.exports = Settings;

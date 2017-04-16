@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { AppRegistry, Navigator, Text } from 'react-native';
+import { AppRegistry, Navigator, Text, AsyncStorage, Alert } from 'react-native';
 
 import MeterGraphs from './scenes/meter-graphs';
 import NavDrawerAndroid from './components/nav-drawer.android';
@@ -18,11 +18,13 @@ export default class FlowApp extends Component {
 
   constructor(props) {
     super(props);
-    
+
     // Initialize state variables
     this.state = {
       drawerLockMode: 'locked-closed'
     };
+
+    this.logout = this.logout.bind(this);
   }
 
   render() {
@@ -48,7 +50,7 @@ export default class FlowApp extends Component {
               scene = <Register pushRoute={navigator.push} {...route.passProps} />;
               break;
             case 'settings':
-              scene = <Settings {...route.passsProps} />;
+              scene = <Settings logout={this.logout} {...route.passsProps} />;
               break;
             case 'changeAccount':
               scene = <ChangeAccount {...route.passProps} />;
@@ -77,6 +79,15 @@ export default class FlowApp extends Component {
         }}
       />
     );
+  }
+
+
+  logout() {
+    AsyncStorage.multiRemove(['email', 'token'], (err) => {
+      if (err) Alert.alert('Error', err);
+
+      navigator.resetTo('splash');
+    });
   }
 }
 
