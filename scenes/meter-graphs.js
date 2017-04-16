@@ -80,7 +80,10 @@ export default class MeterGraphs extends Component {
           ];
           this.setState({mainDataArray: dataDay });
         } else {
-          this.setState({ mainDataArray: [['', 0]] });
+          let time = (((Date.now()/3600000)%24)-7).toString().charAt(0);
+          //let time = Date.prototype.getHours().toString();
+          Alert.alert('time', time);
+          //this.setState({ mainDataArray: [[time, 0]] });
         }
       });
     });
