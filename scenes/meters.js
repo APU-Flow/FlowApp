@@ -8,18 +8,6 @@ import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class Meters extends Component {
 
-  static get propTypes() {
-    return {
-      title: React.PropTypes.string
-    };
-  }
-
-  static get defaultProps() {
-    return {
-      title: 'Meters'
-    };
-  }
-
   constructor(props) {
     super(props);
 
@@ -37,7 +25,7 @@ export default class Meters extends Component {
   render() {
     return (
       <KeyboardAwareScrollView style={styles.container}>
-        <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={styles.title}>Meters</Text>
         <ModalDropdown style={styles.dropdown}
           options={this.state.meterList}
           textStyle={styles.dropdownText}

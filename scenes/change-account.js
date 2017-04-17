@@ -8,16 +8,6 @@ import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class ChangeAccount extends Component {
 
-  static get propTypes() {
-    return { title: React.PropTypes.string };
-  }
-
-  static get defaultProps() {
-    return {
-      title: 'Change Account'
-    };
-  }
-
   constructor(props) {
     super(props);
 
@@ -35,7 +25,7 @@ export default class ChangeAccount extends Component {
   render() {
     return (
      <KeyboardAwareScrollView style={styles.container}>
-        <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={styles.title}>Change Account</Text>
         <Text style={styles.text}>You're currently logged in as...</Text>
         <ModalDropdown style={styles.dropdown}
           options={this.state.switchableAccounts}

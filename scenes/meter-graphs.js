@@ -70,11 +70,6 @@ let dataMonth = [
 ];
 
 export default class MeterGraphs extends Component {
-  static get defaultProps() {
-    return {
-      title: 'MeterGraphs'
-    };
-  }
 
   constructor(props) {
     super(props);

@@ -39,30 +39,30 @@ export default class FlowApp extends Component {
           switch (route.name) {
             case 'splash':
               drawerLock = 'locked-closed';
-              scene = <Splash pushRoute={navigator.push} />;
+              scene = <Splash pushRoute={navigator.push}/>;
               break;
             case 'login':
               drawerLock = 'locked-closed';
-              scene = <Login pushRoute={navigator.push} {...route.passProps} />;
+              scene = <Login pushRoute={navigator.push}/>;
               break;
             case 'register':
               drawerLock = 'locked-closed';
-              scene = <Register pushRoute={navigator.push} {...route.passProps} />;
+              scene = <Register pushRoute={navigator.push}/>;
               break;
             case 'settings':
-              scene = <Settings logout={this.logout} {...route.passsProps} />;
+              scene = <Settings logout={this.logout}/>;
               break;
             case 'changeAccount':
-              scene = <ChangeAccount {...route.passProps} />;
+              scene = <ChangeAccount/>;
               break;
             case 'meters':
-              scene = <Meters {...route.passProps} />;
+              scene = <Meters/>;
               break;
             case 'overview':
-              scene = <Overview {...route.passProps} />;
+              scene = <Overview {...route.passProps}/>;
               break;
             case 'meterGraphs':
-              scene = <MeterGraphs {...route.passProps} />;
+              scene = <MeterGraphs/>;
               break;
           }
 
