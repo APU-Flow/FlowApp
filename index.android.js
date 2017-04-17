@@ -4,15 +4,16 @@
 import React, { Component } from 'react';
 import { AppRegistry, Navigator, Text, AsyncStorage, Alert } from 'react-native';
 
-import MeterGraphs from './scenes/meter-graphs';
-import NavDrawerAndroid from './components/nav-drawer.android';
-import Settings from './scenes/settings';
-import Meters from './scenes/meters';
+import AddMeter from './scenes/add-meter';
 import ChangeAccount from './scenes/change-account';
-import Splash from './scenes/splash';
 import Login from './scenes/login';
-import Register from './scenes/register';
+import MeterGraphs from './scenes/meter-graphs';
+import Meters from './scenes/meters';
+import NavDrawerAndroid from './components/nav-drawer.android';
 import Overview from './scenes/overview';
+import Register from './scenes/register';
+import Settings from './scenes/settings';
+import Splash from './scenes/splash';
 
 export default class FlowApp extends Component {
 
@@ -56,7 +57,10 @@ export default class FlowApp extends Component {
               scene = <ChangeAccount/>;
               break;
             case 'meters':
-              scene = <Meters/>;
+              scene = <Meters pushRoute={navigator.push}/>;
+              break;
+            case 'addMeter':
+              scene = <AddMeter finishAction={() => navigator.pop()}/>;
               break;
             case 'overview':
               scene = <Overview {...route.passProps}/>;

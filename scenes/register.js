@@ -191,9 +191,10 @@ export default class Register extends Component {
         break;
     }
 
-    this.setState({allValid: this.state.fieldValidities.every((value) => value === true)});
-
-    this.setState({[name]: text});
+    this.setState({
+      allValid: this.state.fieldValidities.every((value) => value === true),
+      [name]: text
+    });
   }
 
   submitRegistration() {

@@ -8,6 +8,12 @@ import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class Meters extends Component {
 
+  static get propTypes() {
+    return {
+      pushRoute: React.PropTypes.func.isRequired
+    };
+  }
+
   constructor(props) {
     super(props);
 
@@ -38,18 +44,13 @@ export default class Meters extends Component {
           options={this.state.meterList}
           textStyle={styles.dropdownText}
           dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Add A Meter'
-          renderRow={this.dropdownRenderRow}
-          onSelect={this.addMeter}
-        />
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.meterList}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
           defaultValue='Drop A Meter'
           renderRow={this.dropdownRenderRow}
           onSelect={this.dropMeter}
         />
+        <TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
+          <Text style={styles.buttonText}>Add a Meter</Text>
+        </TouchableHighlight>
       </KeyboardAwareScrollView>
     );
   }
@@ -72,17 +73,8 @@ export default class Meters extends Component {
     return false; //this turns the selected option back to the original
   }
 
-  addMeter(index, value) {
-    Alert.alert(
-      value,
-      'Are you sure this is the meter you would like to add?',
-      [
-        {text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => Alert.alert('Drop Meter', `${value} was added.`)},
-      ],
-      { cancelable: false }
-    );
-    return false; //this turns the selected option back to the original
+  addMeter() {
+    this.props.pushRoute({name: 'add-meter'});
   }
 
   dropMeter(index, value) {
@@ -114,6 +106,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '400',
     marginBottom: 15
+  },
+  buttonContainer: {
+    backgroundColor: 'rgb(31,58,147)',
+    paddingVertical: 15,
+    marginTop:42,
+    justifyContent:'center'
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#FFF',
+    fontWeight: '700',
+    fontSize: 20
   },
 
   dropdown: {
