@@ -136,21 +136,21 @@ export default class Register extends Component {
       case 'lastName':
         this.setState((prevState) => {
           let newValidities = prevState.fieldValidities;
-          newValidities[1] = (/^[A-Z'\-]{1,20}$/i.test(text));
+          newValidities[1] = /^[A-Z'\-]{1,20}$/i.test(text);
           return {fieldValidities: newValidities};
         });
         break;
       case 'email':
         this.setState((prevState) => {
           let newValidities = prevState.fieldValidities;
-          newValidities[2] = (/^[A-Z0-9._\-%+]{1,20}@[A-Z0-9\-.]{1,20}\.[A-Z]{2,4}$/i.test(text));
+          newValidities[2] = /^[A-Z0-9._\-%+]{1,20}@[A-Z0-9\-.]{1,20}\.[A-Z]{2,4}$/i.test(text);
           return {fieldValidities: newValidities};
         });
         break;
       case 'password':
         this.setState((prevState) => {
           let newValidities = prevState.fieldValidities;
-          newValidities[3] = (/^[A-Z0-9`~!@#$%^&*()\-=_+<>,.?]{5,20}$/i.test(text));
+          newValidities[3] = /^[A-Z0-9`~!@#$%^&*()\-=_+<>,.?]{5,20}$/i.test(text);
           return {fieldValidities: newValidities};
         });
         // Falls through to update passsword verification styles when password changes
@@ -164,28 +164,28 @@ export default class Register extends Component {
       case 'address':
         this.setState((prevState) => {
           let newValidities = prevState.fieldValidities;
-          newValidities[5] = (/^[0-9]{1,8} [A-Z'#.& \-]{2,30}$/i.test(text));
+          newValidities[5] = /^[0-9]{1,8} [A-Z'#.& \-]{2,30}$/i.test(text);
           return {fieldValidities: newValidities};
         });
         break;
       case 'city':
         this.setState((prevState) => {
           let newValidities = prevState.fieldValidities;
-          newValidities[6] = (/^[A-Z' \-]{2,25}$/i.test(text));
+          newValidities[6] = /^[A-Z' \-]{2,25}$/i.test(text);
           return {fieldValidities: newValidities};
         });
         break;
       case 'state':
         this.setState((prevState) => {
           let newValidities = prevState.fieldValidities;
-          newValidities[7] = (/^[A-Z]{2}$/.test(text));
+          newValidities[7] = /^[A-Z]{2}$/.test(text);
           return {fieldValidities: newValidities};
         });
         break;
       case 'zip':
         this.setState((prevState) => {
           let newValidities = prevState.fieldValidities;
-          newValidities[8] = (/^\d{5}(-\d{4})?$/.test(text));
+          newValidities[8] = /^\d{5}(-\d{4})?$/.test(text);
           return {fieldValidities: newValidities};
         });
         break;
