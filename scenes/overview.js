@@ -50,6 +50,7 @@ export default class Overview extends Component {
         switch (response.status) {
           case 200:
             response.json().then((responseObject) => {
+              Alert.alert(responseObject);
               let dataArray = responseObject.data;
               let data = [
                 ['8a', dataArray[0]],
@@ -69,6 +70,7 @@ export default class Overview extends Component {
             });
             break;
           default:
+            Alert.alert(`Failed: ${response.status}, ${response.message}`);
             response.json().then((responseObject) => this.setState({ data: [['', 0]] }));
         }
       });

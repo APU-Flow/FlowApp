@@ -78,12 +78,16 @@ export default class MeterGraphs extends Component {
             ['6p', dataMlUsageHr[10]],
             ['7p', dataMlUsageHr[11]]
           ];
-          this.setState({mainDataArray: dataDay });
-        } else {
-          let time = (((Date.now()/3600000)%24)-7).toString().charAt(0);
+          let time = new Date().getHours().toString();
           //let time = Date.prototype.getHours().toString();
           Alert.alert('time', time);
-          //this.setState({ mainDataArray: [[time, 0]] });
+          this.setState({mainDataArray: dataDay });
+        } else {
+          //let time = (((Date.now()/3600000)%24)-7).toString().charAt(0);
+          let time = (new Date().getHours()%12).toString();
+          //let time = Date.prototype.getHours().toString();
+          //Alert.alert('time', time);
+          this.setState({ mainDataArray: [[time, 0]] });
         }
       });
     });
