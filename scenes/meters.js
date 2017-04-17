@@ -4,9 +4,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import ModalDropdown from 'react-native-modal-dropdown';
+import { StyleSheet, Text, Alert, View, TouchableHighlight, ListView } from 'react-native';
 
 export default class Meters extends Component {
 
@@ -25,9 +23,10 @@ export default class Meters extends Component {
   constructor(props) {
     super(props);
 
-    // Initialize state variables
+    // TODO: create a route to pull in active meters associated with user 
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      meterList: ['Meter 1', 'Meter 2', 'Meter 3']
+      dataSource: ds.cloneWithRows(['Kitchen Sink', 'Upstairs Shower', 'Downstairs Bathroom Sink', 'Upstairs Bathroom Sink']),
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -38,33 +37,11 @@ export default class Meters extends Component {
 
   render() {
     return (
-      <KeyboardAwareScrollView style={styles.container}>
-        <Text style={styles.title}>{this.props.title}</Text>
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.meterList}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Device Overview'
-          renderRow={this.dropdownRenderRow}
-          onSelect={this.viewMeter}
-        />
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.meterList}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Add A Meter'
-          renderRow={this.dropdownRenderRow}
-          onSelect={this.addMeter}
-        />
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.meterList}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Drop A Meter'
-          renderRow={this.dropdownRenderRow}
-          onSelect={this.dropMeter}
-        />
-      </KeyboardAwareScrollView>
+     <ListView
+        style={styles.container}
+        dataSource={this.state.dataSource}
+        renderRow={(data) => <View><Text>{data}</Text></View>}
+      />
     );
   }
 
@@ -129,7 +106,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 15
   },
-
   dropdown: {
     margin: 8,
     borderColor:  'rgb(31,58,147)',

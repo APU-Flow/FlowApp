@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { AppRegistry, Navigator, Text, AsyncStorage, Alert } from 'react-native';
+import { AppRegistry, Navigator, Text, AsyncStorage, Alert} from 'react-native';
 
 import NavBarIOS from './components/nav-bar.ios';
 import Settings from './scenes/settings';
@@ -14,6 +14,7 @@ import Splash from './scenes/splash';
 import Login from './scenes/login';
 import Register from './scenes/register';
 import Overview from './scenes/overview';
+import Test from './scenes/test';
 
 export default class FlowApp extends Component {
 
@@ -25,7 +26,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'overview' }}
+        initialRoute={{ name: 'test' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottom}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
@@ -47,6 +48,8 @@ export default class FlowApp extends Component {
               return <NavBarIOS selectedTab = 'settings' {...route.passProps} /> 
             case 'meterGraphs':
               return <NavBarIOS selectedTab = 'meterGraphs' />
+            case 'test':
+              return  <Test pushRoute={navigator.push} />;
             default:
               return <Text>Bad route name given!</Text>
           }
