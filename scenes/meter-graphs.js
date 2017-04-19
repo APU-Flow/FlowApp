@@ -92,21 +92,18 @@ export default class MeterGraphs extends Component {
           {
             if (time==i)
             {
-              Alert.alert('time: ', time.toString());
-              l=i;
-              for (j=arrayVars.length;j>0;j--)
+              Alert.alert('time: ', time.toString())
+              l=i
+              for (j =0;j<arrayVars.length-1;j++)
               {
-                Alert.alert('l: ', l.toString());
-                arrayVars[j-1]=arrayOfHours[l];
-                Alert.alert('arrayVars0: ', arrayVars[0]);
-                l--;
-                if (l<0)
-                  l=23;
-                Alert.alert('l: ', l.toString());
+                if (l>23)
+                  l=0;
+                arrayVars[j]=arrayOfHours[l];
+                l++;
               }
             }
           }
-          //Alert.alert('time: ', stringTime)
+          Alert.alert('time: ', stringTime)
           this.setState({ mainDataArray: [[arrayVars[0], 0]] });
         }
       });
