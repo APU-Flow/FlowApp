@@ -133,7 +133,7 @@ export default class MeterGraphs extends Component {
           axisLineWidth={1}
 
           xAxisHeight={40}
-          yAxisWidth={60}
+          yAxisWidth={50}
           yAxisShortLabel={true}
 
           cornerRadius={4}
