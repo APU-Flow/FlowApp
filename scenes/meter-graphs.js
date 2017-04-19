@@ -82,29 +82,27 @@ export default class MeterGraphs extends Component {
           this.setState({mainDataArray: dataDay });
         } else {
           let time = (new Date().getHours());
-          let stringTime= (new Date().getHours()).toString();
           let arrayOfHours = ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
           let arrayVars = ['','','','','','','','','','','',''];
-          //rewrite this as for loop with if statement.
           //for entirety of 0-23, if time=i, match i with arrayOfVars j.
           //another for loop to loop through arrayOfVars
+          //whole thing allocates correct times to arrayVars
           for (i=0;i<24;i++)
           {
             if (time==i)
             {
-              Alert.alert('time: ', time.toString())
               l=i
               for (j =0;j<arrayVars.length-1;j++)
               {
-                if (l>23)
-                  l=0;
+                if (l==0)
+                  l=23;
                 arrayVars[j]=arrayOfHours[l];
-                l++;
+                l--;
               }
             }
           }
-          Alert.alert('time: ', stringTime)
-          this.setState({ mainDataArray: [[arrayVars[0], 0]] });
+          //Alert.alert('time: ', time.toString());
+          this.setState({ mainDataArray: [[arrayVars[11], 0]] });
         }
       });
     });
