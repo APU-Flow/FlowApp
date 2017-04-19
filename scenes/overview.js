@@ -24,21 +24,18 @@ export default class Overview extends Component {
     super(props);
     // Initialize state variables
     this.state = {
-      data: [['', 0]]
+      data: [['', 0]],
+      submitReport: ''
     };
   }
 
   componentDidMount() {
-    AsyncStorage.multiGet(['email', 'token'], (errors, results) => {
+    AsyncStorage.getItem('token', (errors, token) => {
       if (errors) {
         Alert.alert('Error', errors);
       }
-      let email = results[0][1];
-      let token = results[1][1];
-      // let now = new Date();
-      // let hourAgo = new Date();
-      // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
-      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1&token=${encodeURI(token)}`, {
+
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?&date=${encodeURI(Date.now())}&meterID=1`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -70,8 +67,12 @@ export default class Overview extends Component {
             });
             break;
           default:
-            Alert.alert(`Failed: ${response.status}, ${response.message}`);
-            response.json().then((responseObject) => this.setState({ data: [['', 0]] }));
+            response.json().then((responseObject) => {
+              this.setState({
+                submitReport: `${response.status}: ${responseObject.message}`,
+                data: [['', 0]]
+              });
+            });
         }
       });
     });
@@ -110,6 +111,7 @@ export default class Overview extends Component {
         style={styles.chart}
         labelFontSize={11}
         />
+        <Text>{this.state.submitReport}</Text>
       </View>
     );
   }
@@ -141,3 +143,16 @@ const styles = StyleSheet.create({
     marginBottom: 2
   },
 });
+
+function inspect(o) {
+  let output = '';
+  for (let x in o) {
+    output += `${x}: `;
+    if (typeof o[x] === 'object') {
+      output += `{${inspect(o[x])}}, `;
+    } else {
+      output += `${o[x]}, `;
+    }
+  }
+  return output.slice(0, -2);
+}

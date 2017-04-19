@@ -17,11 +17,6 @@ let dataWeek =   [['', 0]];
 let dataMonth = [['', 0]];
 
 export default class MeterGraphs extends Component {
-  static get defaultProps() {
-    return {
-      title: 'MeterGraphs'
-    };
-  }
 
   constructor(props) {
     super(props);
