@@ -81,42 +81,33 @@ export default class MeterGraphs extends Component {
           let time = new Date().getHours().toString();
           this.setState({mainDataArray: dataDay });
         } else {
-          let time = (new Date().getHours()).toString();
+          let time = (new Date().getHours());
+          let stringTime= (new Date().getHours()).toString();
           let arrayOfHours = ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
           let arrayVars = ['','','','','','','','','','','',''];
           //rewrite this as for loop with if statement.
           //for entirety of 0-23, if time=i, match i with arrayOfVars j.
           //another for loop to loop through arrayOfVars
-          switch (time)
+          for (i=0;i<24;i++)
           {
-            case '0': time= '1a';
-            case '1': time= '2a';
-            case '2': time= '3a';
-            case '3': time= '4a';
-            case '4': time= '5a';
-            case '5': time= '6a';
-            case '6': time= '7a';
-            case '7': time= '8a';
-            case '8': time= '9a';
-            case '9': time= '10a';
-            case '10': time= '11a';
-            case '11': time= '12p';
-            case '12': time= '1p';
-            case '13': time= '2p';
-            case '14': time= '3p';
-            case '15': time= '4p';
-            case '16': time= '5p';
-            case '17': time= '6p';
-            case '18': time= '7p';
-            case '19': time= '8p';
-            case '20': time= '9p';
-            case '21': time= '10p';
-            case '22': time= '11p';
-            case '23': time= '12a';
-            break;
+            if (time==i)
+            {
+              Alert.alert('time: ', time.toString());
+              l=i;
+              for (j=arrayVars.length;j>0;j--)
+              {
+                Alert.alert('l: ', l.toString());
+                arrayVars[j-1]=arrayOfHours[l];
+                Alert.alert('arrayVars0: ', arrayVars[0]);
+                l--;
+                if (l<0)
+                  l=23;
+                Alert.alert('l: ', l.toString());
+              }
+            }
           }
-          Alert.alert('time: ',time)
-          this.setState({ mainDataArray: [[time, 0]] });
+          //Alert.alert('time: ', stringTime)
+          this.setState({ mainDataArray: [[arrayVars[0], 0]] });
         }
       });
     });
