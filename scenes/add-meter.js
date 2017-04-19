@@ -24,21 +24,28 @@ export default class AddMeter extends Component {
       allValid: false,
       submitReport: ''
     };
+    AsyncStorage.getItem('token', (errors, token) => {
+      if (errors) {
+        Alert.alert('Error', errors);
+      }
+      this.setState({token});
 
-    fetch('http://138.68.56.236:3000/api/getNextMeterId', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      }
-    })
-    .then((response) => {
-      switch (response.status) {
-        case 200:
-          response.json().then((responseObject) => this.setState({meterId: responseObject.nextId}));
-          break;
-        default:
-          response.json().then((responseObject) => this.setState({submitReport: `Failed to send info to meter: ${responseObject.message}`}));
-      }
+      fetch('http://138.68.56.236:3000/api/getNextMeterId', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'x-access-token': token
+        }
+      })
+      .then((response) => {
+        switch (response.status) {
+          case 200:
+            response.json().then((responseObject) => this.setState({meterId: responseObject.nextId}));
+            break;
+          default:
+            response.json().then((responseObject) => this.setState({submitReport: `Failed to send info to meter: ${responseObject.message}`}));
+        }
+      });
     });
 
     // Bind functions to instance
@@ -120,7 +127,8 @@ export default class AddMeter extends Component {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-access-token': this.state.token
       },
       body: JSON.stringify({
         meterId: this.state.meterId,
