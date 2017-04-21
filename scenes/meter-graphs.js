@@ -211,6 +211,9 @@ export default class MeterGraphs extends Component {
         <View>
           <Text style={styles.title}>Device Overview</Text>
         </View>
+        <View>
+          <Text style={styles.label}>Ml</Text>
+        </View>
         <ModalDropdown style={styles.dropdown}
           options={this.state.graphList}
           textStyle={styles.dropdownText}
@@ -323,6 +326,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '400',
     marginBottom: 2
+  },
+  label: {
+    position: 'absolute',
+    right: 135,
+    top: 250,
+    color: 'white',
+    fontSize: 12,
   },
   dropdown: {
     margin: 2,
