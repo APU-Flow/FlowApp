@@ -24,9 +24,57 @@ export default class Meters extends Component {
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
-    this.viewMeter = this.viewMeter.bind(this);
     this.addMeter = this.addMeter.bind(this);
     this.dropMeter = this.dropMeter.bind(this);
+    this.viewMeter = this.viewMeter.bind(this);
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('token', (errors, token) => {
+      if (errors) {
+        Alert.alert('Error', errors);
+      }
+
+      fetch('http://138.68.56.236:3000/api/getMeterIdList', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => {
+        switch (response.status) {
+          case 200:
+            response.json().then((responseObject) => {
+              let {meterIds} = responseObject;
+
+              if (!Array.isArray(meterIds)) {
+                this.setState({
+                  submitReport: 'Failed to retrieve meter ID list - server returned invalid response!',
+                  meterList: []
+                });
+                return;
+              }
+
+              let meterList = [];
+              for (let i = 0; i < meterIds.length; i++) {
+                meterList[i] = meterIds[i].meterId;
+              }
+
+              this.setState({submitReport: '', meterList});
+            });
+            break;
+          default:
+            response.json().then((responseObject) => {
+              this.setState({
+                submitReport: `${response.status}: ${responseObject.message}`,
+                meterList: []
+              });
+            });
+        }
+      });
+    });
   }
 
   render() {
@@ -45,7 +93,7 @@ export default class Meters extends Component {
       <TouchableHighlight underlayColor='cornflowerblue'>
        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
           <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
-             {rowData}
+             {`Meter ${rowData}`}
           </Text>
         </View>
       </TouchableHighlight>
@@ -53,12 +101,14 @@ export default class Meters extends Component {
   }
 
   viewMeter(index, value) {
-    Alert.alert(value, `Taking you to ${value} overview screen.`);
-    return false; //this turns the selected option back to the original
+    this.props.pushRoute({
+      name: 'meterGraphs',
+      passProps: {meterId: value}
+    });
   }
 
   addMeter() {
-    this.props.pushRoute({name: 'add-meter'});
+    this.props.pushRoute({name: 'addMeter'});
   }
 
   dropMeter(index, value) {

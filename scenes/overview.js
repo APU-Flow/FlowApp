@@ -66,6 +66,12 @@ export default class Overview extends Component {
               this.setState({ data });
             });
             break;
+          case 204:
+            this.setState({
+              submitReport: 'No data found by server!',
+              data: [['', 0]]
+            });
+            break;
           default:
             response.json().then((responseObject) => {
               this.setState({
@@ -102,7 +108,7 @@ export default class Overview extends Component {
         verticalGridStep={5}
         horizontalGridStep={2}
 
-        type='line'
+        type='bar'
         lineWidth={4}
 
         showDataPoint={false}
@@ -143,18 +149,3 @@ const styles = StyleSheet.create({
     marginBottom: 2
   },
 });
-
-function inspect(o) {
-  let output = '';
-  for (let x in o) {
-    output += `${x}: `;
-    if (typeof o[x] === 'object') {
-      output += `{${inspect(o[x])}}, `;
-    } else {
-      output += `${o[x]}, `;
-    }
-  }
-  return output.slice(0, -2);
-}
-
-module.exports = Overview;
