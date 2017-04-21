@@ -59,23 +59,6 @@ export default class MeterGraphs extends Component {
   let dataMlUsageHr = responseObject.data;
   //Alert.alert('response', responseObject.message);
         if (Array.isArray(dataMlUsageHr)) {
-          let dataDay = [
-            ['8a', dataMlUsageHr[0]],
-            ['9a', dataMlUsageHr[1]],
-            ['10a', dataMlUsageHr[2]],
-            ['11a', dataMlUsageHr[3]],
-            ['12p', dataMlUsageHr[4]],
-            ['1p', dataMlUsageHr[5]],
-            ['2p', dataMlUsageHr[6]],
-            ['3p', dataMlUsageHr[7]],
-            ['4p', dataMlUsageHr[8]],
-            ['5p', dataMlUsageHr[9]],
-            ['6p', dataMlUsageHr[10]],
-            ['7p', dataMlUsageHr[11]] //gonna be array[0]
-          ];
-          let time = new Date().getHours().toString();
-          this.setState({mainDataArray: dataDay });
-        } else {
           let time = (new Date().getHours());
           let arrayOfHours = ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
           let arrayVars = ['','','','','','','','','','','',''];
@@ -87,17 +70,35 @@ export default class MeterGraphs extends Component {
             if (time==i)
             {
               l=i
-              for (j =0;j<arrayVars.length-1;j++)
+              for (j =0;j<arrayVars.length;j++)
               {
-                if (l==0)
+                if (l==-1)
                   l=23;
                 arrayVars[j]=arrayOfHours[l];
                 l--;
               }
             }
           }
+          let dataDay = [
+            [arrayVars[11], dataMlUsageHr[0]],
+            [arrayVars[10], dataMlUsageHr[1]],
+            [arrayVars[9], dataMlUsageHr[2]],
+            [arrayVars[8], dataMlUsageHr[3]],
+            [arrayVars[7], dataMlUsageHr[4]],
+            [arrayVars[6], dataMlUsageHr[5]],
+            [arrayVars[5], dataMlUsageHr[6]],
+            [arrayVars[4], dataMlUsageHr[7]],
+            [arrayVars[3], dataMlUsageHr[8]],
+            [arrayVars[2], dataMlUsageHr[9]],
+            [arrayVars[1], dataMlUsageHr[10]],
+            [arrayVars[0], dataMlUsageHr[11]] //gonna be array[0]
+          ];
+          //let time = new Date().getHours().toString();
+          this.setState({mainDataArray: dataDay });
+        } else {
+          
           //Alert.alert('time: ', time.toString());
-          this.setState({ mainDataArray: [[arrayVars[11], 0]] });
+          this.setState({ mainDataArray: [[arrayVars[10], 1000000]] });
         }
       });
     });
@@ -132,7 +133,7 @@ export default class MeterGraphs extends Component {
           axisLineWidth={1}
 
           xAxisHeight={40}
-          yAxisWidth={19}
+          yAxisWidth={50}
           yAxisShortLabel={true}
 
           cornerRadius={4}
@@ -153,7 +154,7 @@ export default class MeterGraphs extends Component {
           showAxis={this.state.graphshowAxes}
 
           style={styles.chart}
-          labelFontSize={14}
+          labelFontSize={10}
         />
       </View>
     );
@@ -207,19 +208,39 @@ export default class MeterGraphs extends Component {
       .then((responseObject) => {
         let dataMlUsageHr = responseObject.data;
         if (Array.isArray(dataMlUsageHr)) {
+          let time = (new Date().getHours());
+          let arrayOfHours = ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
+          let arrayVars = ['','','','','','','','','','','',''];
+          //for entirety of 0-23, if time=i, match i with arrayOfVars j.
+          //another for loop to loop through arrayOfVars
+          //whole thing allocates correct times to arrayVars
+          for (i=0;i<24;i++)
+          {
+            if (time==i)
+            {
+              l=i
+              for (j =0;j<arrayVars.length;j++)
+              {
+                if (l==-1)
+                  l=23;
+                arrayVars[j]=arrayOfHours[l];
+                l--;
+              }
+            }
+          }
           let dataDay = [
-            ['8a', dataMlUsageHr[0]],
-            ['9a', dataMlUsageHr[1]],
-            ['10a', dataMlUsageHr[2]],
-            ['11a', dataMlUsageHr[3]],
-            ['12p', dataMlUsageHr[4]],
-            ['1p', dataMlUsageHr[5]],
-            ['2p', dataMlUsageHr[6]],
-            ['3p', dataMlUsageHr[7]],
-            ['4p', dataMlUsageHr[8]],
-            ['5p', dataMlUsageHr[9]],
-            ['6p', dataMlUsageHr[10]],
-            ['7p', dataMlUsageHr[11]]
+            [arrayVars[11], dataMlUsageHr[0]],
+            [arrayVars[10], dataMlUsageHr[1]],
+            [arrayVars[9], dataMlUsageHr[2]],
+            [arrayVars[8], dataMlUsageHr[3]],
+            [arrayVars[7], dataMlUsageHr[4]],
+            [arrayVars[6], dataMlUsageHr[5]],
+            [arrayVars[5], dataMlUsageHr[6]],
+            [arrayVars[4], dataMlUsageHr[7]],
+            [arrayVars[3], dataMlUsageHr[8]],
+            [arrayVars[2], dataMlUsageHr[9]],
+            [arrayVars[1], dataMlUsageHr[10]],
+            [arrayVars[0], dataMlUsageHr[11]] //gonna be array[0]
           ];
           if (value=='daily') {
             this.setState({mainDataArray: dataDay });
@@ -246,20 +267,41 @@ export default class MeterGraphs extends Component {
         let dataMlUsageDay = responseObject.data;
         //Alert.alert('response', responseObject.message);
         if (Array.isArray(dataMlUsageDay)) {
+          let day = (new Date().getDay());
+          let arrayOfDays = ['Su','M','T','W','Th','F','S'];
+          let arrayDayVars = ['','','','','','',''];
+          //for entirety of 0-6, if day=i, match i with arrayOfVars j.
+          //another for loop to loop through arrayOfVars
+          //whole thing allocates correct hours to arrayDayVars
+          for (i=0;i<7;i++)
+          {
+            if (day==i)
+            {
+              l=i
+              for (j =0;j<arrayDayVars.length;j++)
+              {
+                if (l==-1)
+                  l=6;
+                arrayDayVars[j]=arrayOfDays[l];
+                l--;
+              }
+            }
+          }
           let dataWeek = [
-            ['S', dataMlUsageDay[0]],
-            ['M', dataMlUsageDay[1]],
-            ['T', dataMlUsageDay[2]],
-            ['W', dataMlUsageDay[3]],
-            ['Th', dataMlUsageDay[4]],
-            ['F', dataMlUsageDay[5]],
-            ['S', dataMlUsageDay[6]],
+            [arrayDayVars[6], dataMlUsageDay[0]],
+            [arrayDayVars[5], dataMlUsageDay[1]],
+            [arrayDayVars[4], dataMlUsageDay[2]],
+            [arrayDayVars[3], dataMlUsageDay[3]],
+            [arrayDayVars[2], dataMlUsageDay[4]],
+            [arrayDayVars[1], dataMlUsageDay[5]],
+            [arrayDayVars[0], dataMlUsageDay[6]],
           ];
           if (value=='weekly') {
             this.setState({mainDataArray: dataWeek});
           }
         } else {
-          let dataWeek = [['', 0]];
+          
+          //let dataWeek = [['', 0]];
           if (value=='weekly') {
             this.setState({mainDataArray: dataWeek});
           }
@@ -316,9 +358,9 @@ const styles = StyleSheet.create({
     backgroundColor:'rgb(52,152,219)',
   },
   chart: {
-    width: 345,
+    width: 300,
     height: 70,
-    margin: 1,
+    // margin: 1,
     marginTop: 5,
     marginBottom: 190,
   },
