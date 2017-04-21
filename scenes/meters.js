@@ -120,8 +120,10 @@ export default class Meters extends Component {
   viewMeter(index, value) {
     this.props.pushRoute({
       name: 'meterGraphs',
-      passProps: {meterId: value}
+      passProps: {meterId: value},
+      sceneConfig: Navigator.SceneConfigs.PushFromRight
     });
+    return false; //this turns the selected option back to the original
   }
 
   addMeter() {
