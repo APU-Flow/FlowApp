@@ -1,73 +1,20 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import { StyleSheet, Alert, Text, AsyncStorage, View, TouchableHighlight} from 'react-native';
 import Chart from 'react-native-chart';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-
-const colorSlices=['red','green','blue', 'black', 'yellow', 'orange','gray', 'silver' ];
-let dataMlUsageHrAmPm= [1,3,9,4,8,3,7,9,4,8,3,7];
-//let dataMlUsageHrAmPm= {this.state.dataAmPm.slice()};
-let dataDayAmPm = [
-  ['8a', dataMlUsageHrAmPm[0]],
-  ['9a', dataMlUsageHrAmPm[1]],
-  ['10a', dataMlUsageHrAmPm[2]],
-  ['11a', dataMlUsageHrAmPm[3]],
-  ['12p', dataMlUsageHrAmPm[4]],
-  ['1p', dataMlUsageHrAmPm[5]],
-  ['2p', dataMlUsageHrAmPm[6]],
-  ['3p', dataMlUsageHrAmPm[7]],
-  ['4p', dataMlUsageHrAmPm[8]],
-  ['5p', dataMlUsageHrAmPm[9]],
-  ['6p', dataMlUsageHrAmPm[10]],
-  ['7p', dataMlUsageHrAmPm[11]],
-];
-//pm to am
-let dataMlUsageHrPmAm= [1,3,9,4,8,3,7,18,4,8,3,7];
-let dataDayPmAm = [
-  ['8a', dataMlUsageHrPmAm[0]],
-  ['9a', dataMlUsageHrPmAm[1]],
-  ['10a', dataMlUsageHrPmAm[2]],
-  ['11a', dataMlUsageHrPmAm[3]],
-  ['12p', dataMlUsageHrPmAm[4]],
-  ['1p', dataMlUsageHrPmAm[5]],
-  ['2p', dataMlUsageHrPmAm[6]],
-  ['3p', dataMlUsageHrPmAm[7]],
-  ['4p', dataMlUsageHrPmAm[8]],
-  ['5p', dataMlUsageHrPmAm[9]],
-  ['6p', dataMlUsageHrPmAm[10]],
-  ['7p', dataMlUsageHrPmAm[11]],
-];
+//am to pm
+// let dataMlUsageHr= [0];
+let dataDay = [['', 0]];
 
 //weekly
-// let dataMlUsageDay= [1,3,9,4,8,3,7];
-//change this so it gets input from database
-// let dataWeek = [
-//   ['S', dataMlUsageDay[0]],
-//   ['M', dataMlUsageDay[1]],
-//   ['T', dataMlUsageDay[2]],
-//   ['W', dataMlUsageDay[3]],
-//   ['Th', dataMlUsageDay[4]],
-//   ['F', dataMlUsageDay[5]],
-//   ['S', dataMlUsageDay[6]],
-// ];
+//let dataMlUsageDay= [1,3,9,4,8,3,7];
+let dataWeek =   [['', 0]];
+
 //monthly
-let dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
-//change this so it gets input from database
-let dataMonth = [
-  ['Jan', dataMlUsageMonth[0]],
-  ['Feb', dataMlUsageMonth[1]],
-  ['Mar', dataMlUsageMonth[2]],
-  ['Apr', dataMlUsageMonth[3]],
-  ['May', dataMlUsageMonth[4]],
-  ['Jun', dataMlUsageMonth[5]],
-  ['Jul', dataMlUsageMonth[6]],
-  ['Aug', dataMlUsageMonth[7]],
-  ['Sep', dataMlUsageMonth[8]],
-  ['Oct', dataMlUsageMonth[9]],
-  ['Nov', dataMlUsageMonth[10]],
-  ['Dec', dataMlUsageMonth[11]],
-];
+//let dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
+let dataMonth = [['', 0]];
 
 export default class MeterGraphs extends Component {
 
@@ -76,13 +23,11 @@ export default class MeterGraphs extends Component {
 
     // Initialize state letiables
     this.state = {
-      graphList: ['line', 'bar', 'pie'],
-    //graph state to switch rendering
+      graphList: ['line', 'bar'],
       graphType: 'bar',
       graphshowAxes: true,
-      graphTimeList: ['daily(8am>7pm)','daily(8pm>7am)','weekly','monthly'],
-      dataArray: dataDayAmPm,
-      dataAmPm: [100,300,900,400,800,300,700,900,400,800,300,700]
+      graphTimeList: ['daily','weekly','monthly'],
+      mainDataArray: dataDay,
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -91,6 +36,73 @@ export default class MeterGraphs extends Component {
     this.color = 'white';
   }
 
+   componentDidMount() {
+    AsyncStorage.multiGet(['email', 'token'], (errors, results) => {
+      if (errors) {
+        Alert.alert('Error', errors);
+      }
+      let email = results[0][1];
+      let token = results[1][1];
+      // let now = new Date();
+      // let hourAgo = new Date();
+      // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.json())
+      .then((responseObject) => {
+  let dataMlUsageHr = responseObject.data;
+  //Alert.alert('response', responseObject.message);
+        if (Array.isArray(dataMlUsageHr)) {
+          let time = (new Date().getHours());
+          let arrayOfHours = ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
+          let arrayVars = ['','','','','','','','','','','',''];
+          //for entirety of 0-23, if time=i, match i with arrayOfVars j.
+          //another for loop to loop through arrayOfVars
+          //whole thing allocates correct times to arrayVars
+          for (i=0;i<24;i++)
+          {
+            if (time==i)
+            {
+              l=i
+              for (j =0;j<arrayVars.length;j++)
+              {
+                if (l==-1)
+                  l=23;
+                arrayVars[j]=arrayOfHours[l];
+                l--;
+              }
+            }
+          }
+          let dataDay = [
+            [arrayVars[11], dataMlUsageHr[0]],
+            [arrayVars[10], dataMlUsageHr[1]],
+            [arrayVars[9], dataMlUsageHr[2]],
+            [arrayVars[8], dataMlUsageHr[3]],
+            [arrayVars[7], dataMlUsageHr[4]],
+            [arrayVars[6], dataMlUsageHr[5]],
+            [arrayVars[5], dataMlUsageHr[6]],
+            [arrayVars[4], dataMlUsageHr[7]],
+            [arrayVars[3], dataMlUsageHr[8]],
+            [arrayVars[2], dataMlUsageHr[9]],
+            [arrayVars[1], dataMlUsageHr[10]],
+            [arrayVars[0], dataMlUsageHr[11]] //gonna be array[0]
+          ];
+          //let time = new Date().getHours().toString();
+          this.setState({mainDataArray: dataDay });
+        } else {
+          
+          //Alert.alert('time: ', time.toString());
+          this.setState({ mainDataArray: [[arrayVars[10], 1000000]] });
+        }
+      });
+    });
+  }
 
   render() {
     return (
@@ -101,7 +113,7 @@ export default class MeterGraphs extends Component {
         <ModalDropdown style={styles.dropdown}
         options={this.state.graphList}
         textStyle={styles.dropdownText}
-        dropdownStyle={styles.dropdownDropdown}
+        dropdownStyle={styles.dropdownDropdown1}
         defaultValue='Change Graph Type'
         renderRow={this.dropdownRenderRow}
         onSelect={this.viewGraph}
@@ -109,7 +121,7 @@ export default class MeterGraphs extends Component {
         <ModalDropdown style={styles.dropdown}
           options={this.state.graphTimeList}
           textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
+          dropdownStyle={styles.dropdownDropdown2}
           defaultValue='Change Graph Time'
           renderRow={this.dropdownRenderRow}
           onSelect={this.viewTimeGraph}
@@ -121,11 +133,12 @@ export default class MeterGraphs extends Component {
           axisLineWidth={1}
 
           xAxisHeight={40}
-          yAxisWidth={19}
+          yAxisWidth={50}
+          yAxisShortLabel={true}
 
           cornerRadius={4}
 
-          data={this.state.dataArray}
+          data={this.state.mainDataArray}
 
           hideHorizontalGridLines={true}
           hideVerticalGridLines={true}
@@ -141,9 +154,7 @@ export default class MeterGraphs extends Component {
           showAxis={this.state.graphshowAxes}
 
           style={styles.chart}
-          labelFontSize={14}
-
-          sliceColors={colorSlices}
+          labelFontSize={10}
         />
       </View>
     );
@@ -172,73 +183,171 @@ export default class MeterGraphs extends Component {
       this.setState({graphType: 'line'});
       this.setState({graphshowAxes: true});
     }
-    if (value=='pie')
-    {
-      this.setState({graphType: 'pie'});
-      this.setState({graphshowAxes: false});
-    }
-
   }
 
   viewTimeGraph(index, value) {
-    let dataMlReplace = this.state.dataAmPm.slice();
-    let dataDayReplace = [
-      ['8a', dataMlReplace[0]],
-      ['9a', dataMlReplace[1]],
-      ['10a', dataMlReplace[2]],
-      ['11a', dataMlReplace[3]],
-      ['12p', dataMlReplace[4]],
-      ['1p', dataMlReplace[5]],
-      ['2p', dataMlReplace[6]],
-      ['3p', dataMlReplace[7]],
-      ['4p', dataMlReplace[8]],
-      ['5p', dataMlReplace[9]],
-      ['6p', dataMlReplace[10]],
-      ['7p', dataMlReplace[11]],
-    ];
-    if (value=='weekly') {
-      this.setState({dataArray: dataDayReplace});
-    }
-    if (value=='daily(8am>7pm)') {
-      this.setState({dataArray: dataDayAmPm });
-    }
-    if (value=='daily(8pm>7am)') {
-      this.setState({dataArray: dataDayPmAm });
-    }
-    if (value=='monthly') {
-      this.setState({dataArray: dataMonth});
-    }
+     AsyncStorage.multiGet(['email', 'token'], (errors, results) => {
+      if (errors) {
+        Alert.alert('Error', errors);
+      }
+      let email = results[0][1];
+      let token = results[1][1];
+      // let now = new Date();
+      // let hourAgo = new Date();
+      // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
+    //daily from back-end
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?date=${encodeURI(Date.now())}&meterID=1`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.json())
+      .then((responseObject) => {
+        let dataMlUsageHr = responseObject.data;
+        if (Array.isArray(dataMlUsageHr)) {
+          let time = (new Date().getHours());
+          let arrayOfHours = ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
+          let arrayVars = ['','','','','','','','','','','',''];
+          //for entirety of 0-23, if time=i, match i with arrayOfVars j.
+          //another for loop to loop through arrayOfVars
+          //whole thing allocates correct times to arrayVars
+          for (i=0;i<24;i++)
+          {
+            if (time==i)
+            {
+              l=i
+              for (j =0;j<arrayVars.length;j++)
+              {
+                if (l==-1)
+                  l=23;
+                arrayVars[j]=arrayOfHours[l];
+                l--;
+              }
+            }
+          }
+          let dataDay = [
+            [arrayVars[11], dataMlUsageHr[0]],
+            [arrayVars[10], dataMlUsageHr[1]],
+            [arrayVars[9], dataMlUsageHr[2]],
+            [arrayVars[8], dataMlUsageHr[3]],
+            [arrayVars[7], dataMlUsageHr[4]],
+            [arrayVars[6], dataMlUsageHr[5]],
+            [arrayVars[5], dataMlUsageHr[6]],
+            [arrayVars[4], dataMlUsageHr[7]],
+            [arrayVars[3], dataMlUsageHr[8]],
+            [arrayVars[2], dataMlUsageHr[9]],
+            [arrayVars[1], dataMlUsageHr[10]],
+            [arrayVars[0], dataMlUsageHr[11]] //gonna be array[0]
+          ];
+          if (value=='daily') {
+            this.setState({mainDataArray: dataDay });
+          }
+        } else {
+          let dataDay = [['', 0]];
+          if (value=='daily') {
+            this.setState({mainDataArray: dataDay });
+          }
+        }
+      });
 
+  //weekly
+    fetch(`http://138.68.56.236:3000/api/getWeeklyUsage?date=${encodeURI(Date.now())}&meterID=1`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.json())
+      .then((responseObject) => {
+        let dataMlUsageDay = responseObject.data;
+        //Alert.alert('response', responseObject.message);
+        if (Array.isArray(dataMlUsageDay)) {
+          let day = (new Date().getDay());
+          let arrayOfDays = ['Su','M','T','W','Th','F','S'];
+          let arrayDayVars = ['','','','','','',''];
+          //for entirety of 0-6, if day=i, match i with arrayOfVars j.
+          //another for loop to loop through arrayOfVars
+          //whole thing allocates correct hours to arrayDayVars
+          for (i=0;i<7;i++)
+          {
+            if (day==i)
+            {
+              l=i
+              for (j =0;j<arrayDayVars.length;j++)
+              {
+                if (l==-1)
+                  l=6;
+                arrayDayVars[j]=arrayOfDays[l];
+                l--;
+              }
+            }
+          }
+          let dataWeek = [
+            [arrayDayVars[6], dataMlUsageDay[0]],
+            [arrayDayVars[5], dataMlUsageDay[1]],
+            [arrayDayVars[4], dataMlUsageDay[2]],
+            [arrayDayVars[3], dataMlUsageDay[3]],
+            [arrayDayVars[2], dataMlUsageDay[4]],
+            [arrayDayVars[1], dataMlUsageDay[5]],
+            [arrayDayVars[0], dataMlUsageDay[6]],
+          ];
+          if (value=='weekly') {
+            this.setState({mainDataArray: dataWeek});
+          }
+        } else {
+          
+          //let dataWeek = [['', 0]];
+          if (value=='weekly') {
+            this.setState({mainDataArray: dataWeek});
+          }
+        }
+      });
+
+  //monthly
+    fetch(`http://138.68.56.236:3000/api/getMonthlyUsage?year=2017&meterID=1`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => response.json())
+      .then((responseObject) => {
+        let dataMlUsageMonth = responseObject.data;
+        if (Array.isArray(dataMlUsageMonth)) {
+          let dataMonth = [
+            ['Jan', dataMlUsageMonth[0]],
+            ['Feb', dataMlUsageMonth[1]],
+            ['Mar', dataMlUsageMonth[2]],
+            ['Apr', dataMlUsageMonth[3]],
+            ['May', dataMlUsageMonth[4]],
+            ['Jun', dataMlUsageMonth[5]],
+            ['Jul', dataMlUsageMonth[6]],
+            ['Aug', dataMlUsageMonth[7]],
+            ['Sep', dataMlUsageMonth[8]],
+            ['Oct', dataMlUsageMonth[9]],
+            ['Nov', dataMlUsageMonth[10]],
+            ['Dec', dataMlUsageMonth[11]],
+          ];
+          if (value=='monthly') {
+            this.setState({mainDataArray: dataMonth});
+          }
+        } else {
+          let dataMonth = [['', 0]];
+          if (value=='monthly') {
+            this.setState({mainDataArray: dataMonth});
+          }
+        }
+      });
+     });
   }
 }
-
-
-/*Pseudo-code for getting input from database:
-Stringify JSON object
-ex. (timeStarted,timeEnded,totalWaterUsed)
-eg. (8.23am=>8.45am,10)
-//categorize into which hour the event was..ie if user
-//had shower from 8:59am until 9:30 then it will be graphed as a 9am event.
-//same hour
-if (charAt(1)==8 && charAt(5)==a && charAt(9)==8 && charAt(13)==a)
-{
-  arrayOfTimesAndUsage[[0,0]]=8
-  //if 2 digit number (check closed parenthesis position)
-  //then
-    arrayOfTimesAndUsage[[0,1]]=parseInt(charAt(16)&&charAt(17))
-  //else
-    arrayOfTimesAndUsage[[0,1]]=parseInt(charAt(16)
-}
-//^^copy and paste this for different hours and times (am/pm, 1-12)
-//could make life a lot easier if we just went off time ended or time started
-//or middle between them.
-//goes into next hour, choose where more water was used as hour
-//goes into multiple hours,
-//usageEvents when it goes on for more than a day?
-//add up multiple events within same hour, make one piece of data
-//
-*/
-
 
 const styles = StyleSheet.create({
   container: {
@@ -249,9 +358,9 @@ const styles = StyleSheet.create({
     backgroundColor:'rgb(52,152,219)',
   },
   chart: {
-    width: 345,
+    width: 300,
     height: 70,
-    margin: 1,
+    // margin: 1,
     marginTop: 5,
     marginBottom: 190,
   },
@@ -265,10 +374,10 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     margin: 2,
-    borderColor:  'rgb(31,58,147)',
-    backgroundColor: 'rgb(31,58,147)',
+    borderColor:  'gray',
     borderWidth: 1,
     borderRadius: 1,
+    backgroundColor: 'rgb(31,58,147)',
     width:170,
     height:40,
   },
@@ -280,11 +389,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-  dropdownDropdown: {
+  dropdownDropdown1: {
     margin: 8,
     width: 152,
-    height: 100,
-    borderColor: 'rgb(31,58,147)',
+    height: 80,
+    borderColor: 'gray',
+    borderWidth: 2,
+    borderRadius: 3,
+    backgroundColor: 'rgb(31,58,147)',
+  },
+  dropdownDropdown2: {
+    margin: 8,
+    width: 152,
+    height: 125,
+    borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 3,
     backgroundColor: 'rgb(31,58,147)',
