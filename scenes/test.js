@@ -7,31 +7,23 @@ var Overview = require('../scenes/overview');
 
 class Test extends Component {
 
-  state = {
-    isRefreshing: false,
-    loaded: 0,
-    data: [['', 0]],
-    submitReport: ''
-  };
-
-  // _onClick = (row) => {
-  //   row.clicks++;
-  //   this.setState({
-  //     rowData: this.state.rowData,
-  //   });
-  // };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [['', 0]],
+      submitReport: '',
+      isRefreshing: false
+    };
+  }
 
   render() {
-    // const rows = this.state.rowData.map((row, ii) => {
-    //   return <Row key={ii} data={row} onClick={this._onClick}/>;
-    // });
     return (
       <ScrollView
         style={styles.container}
         refreshControl={
           <RefreshControl
             refreshing={this.state.isRefreshing}
-            onRefresh={this._onRefresh}
+            onRefresh={() => this._onRefresh()}
             tintColor="#FFF"
             colors={['#ff0000', '#00ff00', '#0000ff']}
             progressBackgroundColor="#ffff00"
@@ -72,8 +64,10 @@ class Test extends Component {
     );
   }
 
-  componentDidMount() {
-    AsyncStorage.getItem('token', (errors, token) => {
+
+  fetchData() {
+    return new Promise((resolve, reject) => {
+      AsyncStorage.getItem('token', (errors, token) => {
       if (errors) {
         Alert.alert('Error', errors);
       }
@@ -106,6 +100,7 @@ class Test extends Component {
                 ['7p', dataArray[11]]
               ];
               this.setState({ data });
+              resolve();
             });
             break;
           default:
@@ -114,27 +109,38 @@ class Test extends Component {
                 submitReport: `${response.status}: ${responseObject.message}`,
                 data: [['', 0]]
               });
+              resolve();
             });
-        }
+          }
+        });
       });
     });
   }
 
+  componentDidMount() {
+      this.fetchData();
+  }
+
   _onRefresh = () => {
-    this.setState({isRefreshing: true});
-    setTimeout(() => {
-      this.setState({
-        isRefreshing: false,
+      this.setState({isRefreshing: true});
+      this.fetchData().then(() => {
+        this.setState({isRefreshing: false});
       });
-    }, 5000);
-  };
+    };
+
+  // _onRefresh = () => {
+  //   this.setState({isRefreshing: true});
+  //   setTimeout(() => {
+  //     this.setState({
+  //       isRefreshing: false,
+  //     });
+  //   }, 5000);
+  // };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     flexDirection: 'column',
     backgroundColor:'rgb(52,152,219)',
   },
