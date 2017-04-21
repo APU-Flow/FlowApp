@@ -32,43 +32,41 @@ class Test extends Component {
           <RefreshControl
             refreshing={this.state.isRefreshing}
             onRefresh={this._onRefresh}
-            tintColor="#ff0000"
-            title="Loading..."
-            titleColor="#00ff00"
+            tintColor="#FFF"
             colors={['#ff0000', '#00ff00', '#0000ff']}
             progressBackgroundColor="#ffff00"
           />
         }>
-        <Text style={styles.title}>Overview</Text>
-        <Chart
-        color={'white'}
-        axisColor={'white'}
-        axisLabelColor={'white'}
-        axisLineWidth={1}
+        <Text style={styles.title}>Test</Text>
+          <Chart
+            color={'white'}
+            axisColor={'white'}
+            axisLabelColor={'white'}
+            axisLineWidth={1}
 
-        xAxisHeight={20}
-        yAxisWidth={60}
+            xAxisHeight={20}
+            yAxisWidth={60}
 
-        cornerRadius={4}
+            cornerRadius={4}
 
-        data={this.state.data}
+            data={this.state.data}
 
-        hideHorizontalGridLines={true}
-        hideVerticalGridLines={true}
+            hideHorizontalGridLines={true}
+            hideVerticalGridLines={true}
 
-        widthPercent={1}
-        verticalGridStep={5}
-        horizontalGridStep={2}
+            widthPercent={1}
+            verticalGridStep={5}
+            horizontalGridStep={2}
 
-        type='line'
-        lineWidth={4}
+            type='line'
+            lineWidth={4}
 
-        showDataPoint={false}
-        showAxis={true}
+            showDataPoint={false}
+            showAxis={true}
 
-        style={styles.chart}
-        labelFontSize={11}
-        />
+            style={styles.chart}
+            labelFontSize={11}
+          />
         <Text>{this.state.submitReport}</Text>
       </ScrollView>
     );
@@ -141,8 +139,8 @@ const styles = StyleSheet.create({
     backgroundColor:'rgb(52,152,219)',
   },
   chart: {
-    width: 300,
-    height: 100,
+    width: 400,
+    height: 550,
     margin: 1,
     marginTop: 25,
     marginBottom: 120,
@@ -150,9 +148,9 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: 'white',
-    marginTop: 45,
+    marginTop: 35,
     fontSize: 40,
-    fontWeight: '400',
+    fontWeight: '300',
     marginBottom: 2
   },
 });
