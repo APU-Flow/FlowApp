@@ -2,7 +2,7 @@
 // Flow
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, Alert, View, TouchableHighlight, Navigator } from 'react-native';
+import { StyleSheet, Text, Alert, View, TouchableHighlight, Navigator, AsyncStorage } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ModalDropdown from 'react-native-modal-dropdown';
 
@@ -19,14 +19,62 @@ export default class Meters extends Component {
 
     // Initialize state variables
     this.state = {
-      meterList: ['Meter 1', 'Meter 2', 'Meter 3']
+      meterList: [],
+      submitReport: ''
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
-    this.viewMeter = this.viewMeter.bind(this);
     this.addMeter = this.addMeter.bind(this);
     this.dropMeter = this.dropMeter.bind(this);
-    this.loadMeterForm = this.loadMeterForm.bind(this);
+    this.viewMeter = this.viewMeter.bind(this);
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('token', (errors, token) => {
+      if (errors) {
+        Alert.alert('Error', errors);
+      }
+
+      fetch('http://138.68.56.236:3000/api/getMeterIdList', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        }
+      })
+      .then((response) => {
+        switch (response.status) {
+          case 200:
+            response.json().then((responseObject) => {
+              let {meterIds} = responseObject;
+
+              if (!Array.isArray(meterIds)) {
+                this.setState({
+                  submitReport: 'Failed to retrieve meter ID list - server returned invalid response!',
+                  meterList: []
+                });
+                return;
+              }
+
+              let meterList = [];
+              for (let i = 0; i < meterIds.length; i++) {
+                meterList[i] = meterIds[i].meterId;
+              }
+
+              this.setState({submitReport: '', meterList});
+            });
+            break;
+          default:
+            response.json().then((responseObject) => {
+              this.setState({
+                submitReport: `${response.status}: ${responseObject.message}`,
+                meterList: []
+              });
+            });
+        }
+      });
+    });
   }
 
   render() {
@@ -41,10 +89,6 @@ export default class Meters extends Component {
           renderRow={this.dropdownRenderRow}
           onSelect={this.viewMeter}
         />
-        <TouchableHighlight style={styles.dropdown}
-            onPress={this.loadMeterForm}>
-            <Text style={styles.dropdownText}>Meter 1</Text>
-        </TouchableHighlight>
         <ModalDropdown style={styles.dropdown}
           options={this.state.meterList}
           textStyle={styles.dropdownText}
@@ -53,9 +97,9 @@ export default class Meters extends Component {
           renderRow={this.dropdownRenderRow}
           onSelect={this.dropMeter}
         />
-        <TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
+        {/*<TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
           <Text style={styles.buttonText}>Add a Meter</Text>
-        </TouchableHighlight>
+        </TouchableHighlight>*/}
       </KeyboardAwareScrollView>
     );
   }
@@ -66,7 +110,7 @@ export default class Meters extends Component {
       <TouchableHighlight underlayColor='cornflowerblue'>
        <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
           <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
-             {rowData}
+             {`Meter ${rowData}`}
           </Text>
         </View>
       </TouchableHighlight>
@@ -74,23 +118,16 @@ export default class Meters extends Component {
   }
 
   viewMeter(index, value) {
-    Alert.alert(value, `Taking you to ${value} overview screen.`,
-      [
-        {text: 'Ok', onPress: () => {this.loadMeterForm}},
-      ],
-      { cancelable: false });
+    this.props.pushRoute({
+      name: 'meterGraphs',
+      passProps: {meterId: value},
+      sceneConfig: Navigator.SceneConfigs.PushFromRight
+    });
     return false; //this turns the selected option back to the original
   }
 
-  loadMeterForm() {
-    this.props.pushRoute({
-      name: 'meterGraphs',
-      sceneConfig: Navigator.SceneConfigs.PushFromRight
-    });
-  }
-
   addMeter() {
-    this.props.pushRoute({name: 'add-meter'});
+    this.props.pushRoute({name: 'addMeter'});
   }
 
   dropMeter(index, value) {
