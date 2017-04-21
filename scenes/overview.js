@@ -65,6 +65,12 @@ export default class Overview extends Component {
               this.setState({ data });
             });
             break;
+          case 204:
+            this.setState({
+              submitReport: 'No data found by server!',
+              data: [['', 0]]
+            });
+            break;
           default:
             response.json().then((responseObject) => {
               this.setState({
