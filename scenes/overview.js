@@ -156,3 +156,5 @@ function inspect(o) {
   }
   return output.slice(0, -2);
 }
+
+module.exports = Overview;
