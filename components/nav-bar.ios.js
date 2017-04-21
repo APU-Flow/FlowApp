@@ -11,6 +11,7 @@ var Meters = require('../scenes/meters');
 var Graphs = require('../scenes/graphs');
 var Settings = require('../scenes/settings');
 var Splash = require('../scenes/splash');
+var Test = require('../scenes/test');
 
 'use strict';
 
@@ -68,16 +69,16 @@ export default class NavBarIOS extends Component {
                     <Graphs />
                 </Icon.TabBarItem>
                 <Icon.TabBarItem
-                    title="Meters"
+                    title="Test"
                     iconName="ios-water-outline"
                     selectedIconName="ios-water"
-                    selected={this.state.selectedTab === 'meters'}
+                    selected={this.state.selectedTab === 'test'}
                     onPress={() => {
                         this.setState({
-                            selectedTab: 'meters',
+                            selectedTab: 'test',
                         });
                     }}>
-                    <Meters />
+                    <Test />
                 </Icon.TabBarItem>
                 <Icon.TabBarItem
                     title="Settings"
