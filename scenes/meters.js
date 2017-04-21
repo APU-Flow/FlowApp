@@ -97,9 +97,9 @@ export default class Meters extends Component {
           renderRow={this.dropdownRenderRow}
           onSelect={this.dropMeter}
         />
-        <TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
+        {/*<TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
           <Text style={styles.buttonText}>Add a Meter</Text>
-        </TouchableHighlight>
+        </TouchableHighlight>*/}
       </KeyboardAwareScrollView>
     );
   }
@@ -120,8 +120,7 @@ export default class Meters extends Component {
   viewMeter(index, value) {
     this.props.pushRoute({
       name: 'meterGraphs',
-      passProps: {meterId: value},
-      sceneConfig: Navigator.SceneConfigs.PushFromRight
+      passProps: {meterId: value}
     });
   }
 

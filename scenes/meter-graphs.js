@@ -1,22 +1,18 @@
+// meter-graphs.js
+// Flow
 
 import React, { Component } from 'react';
 import { StyleSheet, Alert, Text, AsyncStorage, View, TouchableHighlight} from 'react-native';
 import Chart from 'react-native-chart';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-//am to pm
-// let dataMlUsageHr= [0];
-let dataDay = [['', 0]];
-
-//weekly
-//let dataMlUsageDay= [1,3,9,4,8,3,7];
-let dataWeek =   [['', 0]];
-
-//monthly
-//let dataMlUsageMonth=[1,3,9,4,8,3,7,9,4,8,3,7];
-let dataMonth = [['', 0]];
-
 export default class MeterGraphs extends Component {
+
+  static get propTypes() {
+    return {
+      meterId: React.PropTypes.number.isRequired
+    };
+  }
 
   constructor(props) {
     super(props);
@@ -27,82 +23,187 @@ export default class MeterGraphs extends Component {
       graphType: 'bar',
       graphshowAxes: true,
       graphTimeList: ['daily','weekly','monthly'],
-      mainDataArray: dataDay,
+      dataDay: [['', 0]],
+      dataWeek: [['', 0]],
+      dataMonth: [['', 0]],
+      mainDataArray: [['', 0]],
     };
 
+    this.requestDailyEvents = this.requestDailyEvents.bind(this);
+    this.requestWeeklyEvents = this.requestWeeklyEvents.bind(this);
+    this.requestMonthlyEvents = this.requestMonthlyEvents.bind(this);
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
     this.viewGraph = this.viewGraph.bind(this);
     this.viewTimeGraph = this.viewTimeGraph.bind(this);
-    this.color = 'white';
   }
 
-   componentDidMount() {
-    AsyncStorage.multiGet(['email', 'token'], (errors, results) => {
+  componentDidMount() {
+    AsyncStorage.getItem('token', (errors, token) => {
       if (errors) {
         Alert.alert('Error', errors);
       }
-      let email = results[0][1];
-      let token = results[1][1];
-      // let now = new Date();
-      // let hourAgo = new Date();
-      // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
-      fetch(`http://138.68.56.236:3000/api/getDailyUsage?email=${encodeURI(email)}&date=${encodeURI(Date.now())}&meterID=1`, {
+
+      this.setState({token}, () => {
+        this.requestDailyEvents().then(() => {
+          this.setState((prevState) => { return {graphData: prevState.dailyData}; });
+        });
+        this.requestWeeklyEvents();
+        this.requestMonthlyEvents();
+      });
+    });
+  }
+
+  requestDailyEvents() {
+    return new Promise((resolve, reject) => {
+      let now = new Date();
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?date=${encodeURI(now.valueOf())}&meterID=${this.props.meterId}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded',
-          'x-access-token': token
+          'x-access-token': this.state.token
         }
       })
-      .then((response) => response.json())
+      .then((response) => {
+        switch (response.status) {
+          case 204:
+            return {data: null};
+          default:
+            return response.json();
+        }
+      })
       .then((responseObject) => {
-  let dataMlUsageHr = responseObject.data;
-  //Alert.alert('response', responseObject.message);
-        if (Array.isArray(dataMlUsageHr)) {
-          let time = (new Date().getHours());
-          let arrayOfHours = ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
-          let arrayVars = ['','','','','','','','','','','',''];
-          //for entirety of 0-23, if time=i, match i with arrayOfVars j.
-          //another for loop to loop through arrayOfVars
-          //whole thing allocates correct times to arrayVars
-          for (i=0;i<24;i++)
-          {
-            if (time==i)
-            {
-              l=i
-              for (j =0;j<arrayVars.length;j++)
-              {
-                if (l==-1)
-                  l=23;
-                arrayVars[j]=arrayOfHours[l];
-                l--;
-              }
-            }
+        let {data} = responseObject;
+
+        if (Array.isArray(data)) {
+          if (data.length !== 12) {
+            reject('Invalid data array returned from server!');
+            return;
           }
-          let dataDay = [
-            [arrayVars[11], dataMlUsageHr[0]],
-            [arrayVars[10], dataMlUsageHr[1]],
-            [arrayVars[9], dataMlUsageHr[2]],
-            [arrayVars[8], dataMlUsageHr[3]],
-            [arrayVars[7], dataMlUsageHr[4]],
-            [arrayVars[6], dataMlUsageHr[5]],
-            [arrayVars[5], dataMlUsageHr[6]],
-            [arrayVars[4], dataMlUsageHr[7]],
-            [arrayVars[3], dataMlUsageHr[8]],
-            [arrayVars[2], dataMlUsageHr[9]],
-            [arrayVars[1], dataMlUsageHr[10]],
-            [arrayVars[0], dataMlUsageHr[11]] //gonna be array[0]
+
+          let dayGraphData = [];
+          let hourStrings = [
+            '12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a',
+            '12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'
           ];
-          //let time = new Date().getHours().toString();
-          this.setState({mainDataArray: dataDay });
+
+          // We know data.length === 12, as verified above, so we can just use 12
+          for (let i = 0; i < 12; i++) {
+            let hour = now.getHours() - (11 - i);
+
+            dayGraphData[i] = [
+              hourStrings[(hour < 0) ? hour+24 : hour],
+              data[i]
+            ];
+          }
+
+          this.setState({dailyData: dayGraphData}, () => resolve(dayGraphData));
         } else {
-          
-          //Alert.alert('time: ', time.toString());
-          this.setState({ mainDataArray: [[arrayVars[10], 1000000]] });
+          this.setState({dailyData: [['', 0]]}, () => resolve(false));
         }
       });
     });
   }
+
+  requestWeeklyEvents() {
+    return new Promise((resolve, reject) => {
+      let now = new Date();
+      fetch(`http://138.68.56.236:3000/api/getWeeklyUsage?&date=${encodeURI(now.valueOf())}&meterID=${this.props.meterId}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': this.state.token
+        }
+      })
+      .then((response) => {
+        switch (response.status) {
+          case 204:
+            return {data: null};
+          default:
+            return response.json();
+        }
+      })
+      .then((responseObject) => {
+        let {data} = responseObject;
+
+        if (Array.isArray(data)) {
+          if (data.length !== 7) {
+            reject('Invalid data array returned from server!');
+            return;
+          }
+
+          let weekGraphData = [];
+          let weekdayStrings = ['S','M','T','W','Th','F','Sa'];
+
+          // We know data.length === 7, as verified above, so we can just use 7
+          for (let i = 0; i < 7; i++) {
+            let weekday = now.getDay() - (6 - i);
+
+            weekGraphData[i] = [
+              weekdayStrings[(weekday < 0) ? weekday+7 : weekday],
+              data[i]
+            ];
+          }
+
+          this.setState({weeklyData: weekGraphData}, () => resolve(weekGraphData));
+        } else {
+          this.setState({weeklyData: [['', 0]]}, () => resolve(false));
+        }
+      });
+    });
+  }
+
+  requestMonthlyEvents() {
+    return new Promise((resolve, reject) => {
+      let now = new Date();
+      fetch(`http://138.68.56.236:3000/api/getMonthlyUsage?&year=${encodeURI(now.getFullYear())}&meterID=${this.props.meterId}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': this.state.token
+        }
+      })
+      .then((response) => {
+        switch (response.status) {
+          case 204:
+            return {data: null};
+          default:
+            return response.json();
+        }
+      })
+      .then((responseObject) => {
+        let {data} = responseObject;
+
+        if (Array.isArray(data)) {
+          if (data.length !== 12) {
+            reject('Invalid data array returned from server!');
+            return;
+          }
+
+          let monthGraphData = [];
+          let monthStrings = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+          // We know data.length === 12, as verified above, so we can just use 12
+          for (let i = 0; i < 12; i++) {
+            let month = now.getMonth() - (11 - i);
+
+            monthGraphData[i] = [
+              monthStrings[(month < 0) ? month+12 : month],
+              data[i]
+            ];
+          }
+
+
+          this.setState({monthlyData: monthGraphData}, () => resolve(monthGraphData));
+        } else {
+          this.setState({monthlyData: [['', 0]]}, () => resolve(false));
+        }
+      });
+    });
+  }
+
 
   render() {
     return (
@@ -111,12 +212,12 @@ export default class MeterGraphs extends Component {
           <Text style={styles.title}>Device Overview</Text>
         </View>
         <ModalDropdown style={styles.dropdown}
-        options={this.state.graphList}
-        textStyle={styles.dropdownText}
-        dropdownStyle={styles.dropdownDropdown1}
-        defaultValue='Change Graph Type'
-        renderRow={this.dropdownRenderRow}
-        onSelect={this.viewGraph}
+          options={this.state.graphList}
+          textStyle={styles.dropdownText}
+          dropdownStyle={styles.dropdownDropdown1}
+          defaultValue='Change Graph Type'
+          renderRow={this.dropdownRenderRow}
+          onSelect={this.viewGraph}
         />
         <ModalDropdown style={styles.dropdown}
           options={this.state.graphTimeList}
@@ -173,179 +274,31 @@ export default class MeterGraphs extends Component {
     );
   }
   viewGraph(index, value) {
-    if (value=='bar')
-    {
-      this.setState({graphType: 'bar'});
-      this.setState({graphshowAxes: true});
-    }
-    if (value=='line')
-    {
-      this.setState({graphType: 'line'});
-      this.setState({graphshowAxes: true});
-    }
+    this.setState({
+      graphType: value,
+      graphshowAxes: true
+    });
+
   }
 
   viewTimeGraph(index, value) {
-     AsyncStorage.multiGet(['email', 'token'], (errors, results) => {
-      if (errors) {
-        Alert.alert('Error', errors);
-      }
-      let email = results[0][1];
-      let token = results[1][1];
-      // let now = new Date();
-      // let hourAgo = new Date();
-      // hourAgo.setHours(hourAgo.getHours()-1);//token, email, date, meterID=1,
-    //daily from back-end
-      fetch(`http://138.68.56.236:3000/api/getDailyUsage?date=${encodeURI(Date.now())}&meterID=1`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'x-access-token': token
-        }
-      })
-      .then((response) => response.json())
-      .then((responseObject) => {
-        let dataMlUsageHr = responseObject.data;
-        if (Array.isArray(dataMlUsageHr)) {
-          let time = (new Date().getHours());
-          let arrayOfHours = ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
-          let arrayVars = ['','','','','','','','','','','',''];
-          //for entirety of 0-23, if time=i, match i with arrayOfVars j.
-          //another for loop to loop through arrayOfVars
-          //whole thing allocates correct times to arrayVars
-          for (i=0;i<24;i++)
-          {
-            if (time==i)
-            {
-              l=i
-              for (j =0;j<arrayVars.length;j++)
-              {
-                if (l==-1)
-                  l=23;
-                arrayVars[j]=arrayOfHours[l];
-                l--;
-              }
-            }
-          }
-          let dataDay = [
-            [arrayVars[11], dataMlUsageHr[0]],
-            [arrayVars[10], dataMlUsageHr[1]],
-            [arrayVars[9], dataMlUsageHr[2]],
-            [arrayVars[8], dataMlUsageHr[3]],
-            [arrayVars[7], dataMlUsageHr[4]],
-            [arrayVars[6], dataMlUsageHr[5]],
-            [arrayVars[5], dataMlUsageHr[6]],
-            [arrayVars[4], dataMlUsageHr[7]],
-            [arrayVars[3], dataMlUsageHr[8]],
-            [arrayVars[2], dataMlUsageHr[9]],
-            [arrayVars[1], dataMlUsageHr[10]],
-            [arrayVars[0], dataMlUsageHr[11]] //gonna be array[0]
-          ];
-          if (value=='daily') {
-            this.setState({mainDataArray: dataDay });
-          }
-        } else {
-          let dataDay = [['', 0]];
-          if (value=='daily') {
-            this.setState({mainDataArray: dataDay });
-          }
-        }
-      });
-
-  //weekly
-    fetch(`http://138.68.56.236:3000/api/getWeeklyUsage?date=${encodeURI(Date.now())}&meterID=1`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'x-access-token': token
-        }
-      })
-      .then((response) => response.json())
-      .then((responseObject) => {
-        let dataMlUsageDay = responseObject.data;
-        //Alert.alert('response', responseObject.message);
-        if (Array.isArray(dataMlUsageDay)) {
-          let day = (new Date().getDay());
-          let arrayOfDays = ['Su','M','T','W','Th','F','S'];
-          let arrayDayVars = ['','','','','','',''];
-          //for entirety of 0-6, if day=i, match i with arrayOfVars j.
-          //another for loop to loop through arrayOfVars
-          //whole thing allocates correct hours to arrayDayVars
-          for (i=0;i<7;i++)
-          {
-            if (day==i)
-            {
-              l=i
-              for (j =0;j<arrayDayVars.length;j++)
-              {
-                if (l==-1)
-                  l=6;
-                arrayDayVars[j]=arrayOfDays[l];
-                l--;
-              }
-            }
-          }
-          let dataWeek = [
-            [arrayDayVars[6], dataMlUsageDay[0]],
-            [arrayDayVars[5], dataMlUsageDay[1]],
-            [arrayDayVars[4], dataMlUsageDay[2]],
-            [arrayDayVars[3], dataMlUsageDay[3]],
-            [arrayDayVars[2], dataMlUsageDay[4]],
-            [arrayDayVars[1], dataMlUsageDay[5]],
-            [arrayDayVars[0], dataMlUsageDay[6]],
-          ];
-          if (value=='weekly') {
-            this.setState({mainDataArray: dataWeek});
-          }
-        } else {
-          
-          //let dataWeek = [['', 0]];
-          if (value=='weekly') {
-            this.setState({mainDataArray: dataWeek});
-          }
-        }
-      });
-
-  //monthly
-    fetch(`http://138.68.56.236:3000/api/getMonthlyUsage?year=2017&meterID=1`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'x-access-token': token
-        }
-      })
-      .then((response) => response.json())
-      .then((responseObject) => {
-        let dataMlUsageMonth = responseObject.data;
-        if (Array.isArray(dataMlUsageMonth)) {
-          let dataMonth = [
-            ['Jan', dataMlUsageMonth[0]],
-            ['Feb', dataMlUsageMonth[1]],
-            ['Mar', dataMlUsageMonth[2]],
-            ['Apr', dataMlUsageMonth[3]],
-            ['May', dataMlUsageMonth[4]],
-            ['Jun', dataMlUsageMonth[5]],
-            ['Jul', dataMlUsageMonth[6]],
-            ['Aug', dataMlUsageMonth[7]],
-            ['Sep', dataMlUsageMonth[8]],
-            ['Oct', dataMlUsageMonth[9]],
-            ['Nov', dataMlUsageMonth[10]],
-            ['Dec', dataMlUsageMonth[11]],
-          ];
-          if (value=='monthly') {
-            this.setState({mainDataArray: dataMonth});
-          }
-        } else {
-          let dataMonth = [['', 0]];
-          if (value=='monthly') {
-            this.setState({mainDataArray: dataMonth});
-          }
-        }
-      });
-     });
+    switch (value) {
+      case 'daily':
+        this.setState((prevState) => {
+          return {mainDataArray: prevState.dailyData};
+        });
+        break;
+      case 'weekly':
+        this.setState((prevState) => {
+          return {mainDataArray: prevState.weeklyData};
+        });
+        break;
+      case 'monthly':
+        this.setState((prevState) => {
+          return {mainDataArray: prevState.monthlyData};
+        });
+        break;
+    }
   }
 }
 
@@ -360,7 +313,6 @@ const styles = StyleSheet.create({
   chart: {
     width: 300,
     height: 70,
-    // margin: 1,
     marginTop: 5,
     marginBottom: 190,
   },
