@@ -4,15 +4,16 @@
 import React, { Component } from 'react';
 import { AppRegistry, Navigator, Text, AsyncStorage, Alert } from 'react-native';
 
-import MeterGraphs from './scenes/meter-graphs';
-import NavDrawerAndroid from './components/nav-drawer.android';
-import Settings from './scenes/settings';
-import Meters from './scenes/meters';
+import AddMeter from './scenes/add-meter';
 import ChangeAccount from './scenes/change-account';
-import Splash from './scenes/splash';
 import Login from './scenes/login';
-import Register from './scenes/register';
+import MeterGraphs from './scenes/meter-graphs';
+import Meters from './scenes/meters';
+import NavDrawerAndroid from './components/nav-drawer.android';
 import Overview from './scenes/overview';
+import Register from './scenes/register';
+import Settings from './scenes/settings';
+import Splash from './scenes/splash';
 
 export default class FlowApp extends Component {
 
@@ -39,30 +40,33 @@ export default class FlowApp extends Component {
           switch (route.name) {
             case 'splash':
               drawerLock = 'locked-closed';
-              scene = <Splash pushRoute={navigator.push} />;
+              scene = <Splash pushRoute={navigator.push}/>;
               break;
             case 'login':
               drawerLock = 'locked-closed';
-              scene = <Login pushRoute={navigator.push} {...route.passProps} />;
+              scene = <Login pushRoute={navigator.push}/>;
               break;
             case 'register':
               drawerLock = 'locked-closed';
-              scene = <Register pushRoute={navigator.push} {...route.passProps} />;
+              scene = <Register pushRoute={navigator.push}/>;
               break;
             case 'settings':
-              scene = <Settings logout={this.logout} {...route.passProps} />;
+              scene = <Settings logout={this.logout}/>;
               break;
             case 'changeAccount':
-              scene = <ChangeAccount {...route.passProps} />;
+              scene = <ChangeAccount/>;
               break;
             case 'meters':
-              scene = <Meters {...route.passProps} />;
+              scene = <Meters pushRoute={navigator.push}/>;
+              break;
+            case 'addMeter':
+              scene = <AddMeter finishAction={() => navigator.pop()}/>;
               break;
             case 'overview':
-              scene = <Overview {...route.passProps} />;
+              scene = <Overview {...route.passProps}/>;
               break;
             case 'meterGraphs':
-              scene = <MeterGraphs {...route.passProps} />;
+              scene = <MeterGraphs/>;
               break;
           }
 

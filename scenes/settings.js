@@ -14,14 +14,7 @@ export default class Settings extends Component {
 
   static get propTypes() {
     return {
-      title: React.PropTypes.string,
       logout: React.PropTypes.func.isRequired
-    };
-  }
-
-  static get defaultProps() {
-    return {
-      title: 'Settings'
     };
   }
 
@@ -39,7 +32,7 @@ export default class Settings extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={styles.title}>Settings</Text>
 
         <TouchableHighlight style={styles.button} onPress={this.props.logout}>
           <View style={styles.dropdown}>

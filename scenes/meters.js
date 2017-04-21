@@ -10,13 +10,7 @@ export default class Meters extends Component {
 
   static get propTypes() {
     return {
-      title: React.PropTypes.string
-    };
-  }
-
-  static get defaultProps() {
-    return {
-      title: 'Meters'
+      pushRoute: React.PropTypes.func.isRequired
     };
   }
 
@@ -63,17 +57,8 @@ export default class Meters extends Component {
     return false; //this turns the selected option back to the original
   }
 
-  addMeter(index, value) {
-    Alert.alert(
-      value,
-      'Are you sure this is the meter you would like to add?',
-      [
-        {text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => Alert.alert('Drop Meter', `${value} was added.`)},
-      ],
-      { cancelable: false }
-    );
-    return false; //this turns the selected option back to the original
+  addMeter() {
+    this.props.pushRoute({name: 'add-meter'});
   }
 
   dropMeter(index, value) {
