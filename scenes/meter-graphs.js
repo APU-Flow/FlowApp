@@ -99,7 +99,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({dailyData: dayGraphData}, () => resolve(dayGraphData));
         } else {
-          this.setState({dailyData: [['', 0]]}, () => resolve(false));
+          this.setState({dailyData: [['', 0]], graphType: 'line'}, () => resolve(false));
         }
       });
     });
@@ -148,7 +148,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({weeklyData: weekGraphData}, () => resolve(weekGraphData));
         } else {
-          this.setState({weeklyData: [['', 0]]}, () => resolve(false));
+          this.setState({weeklyData: [['', 0]], graphType: 'line'}, () => resolve(false));
         }
       });
     });
@@ -198,7 +198,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({monthlyData: monthGraphData}, () => resolve(monthGraphData));
         } else {
-          this.setState({monthlyData: [['', 0]]}, () => resolve(false));
+          this.setState({monthlyData: [['', 0]], graphType: 'line'}, () => resolve(false));
         }
       });
     });
