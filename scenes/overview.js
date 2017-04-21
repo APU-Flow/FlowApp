@@ -47,7 +47,6 @@ export default class Overview extends Component {
         switch (response.status) {
           case 200:
             response.json().then((responseObject) => {
-              Alert.alert(responseObject);
               let dataArray = responseObject.data;
               let data = [
                 ['8a', dataArray[0]],
@@ -143,16 +142,3 @@ const styles = StyleSheet.create({
     marginBottom: 2
   },
 });
-
-function inspect(o) {
-  let output = '';
-  for (let x in o) {
-    output += `${x}: `;
-    if (typeof o[x] === 'object') {
-      output += `{${inspect(o[x])}}, `;
-    } else {
-      output += `${o[x]}, `;
-    }
-  }
-  return output.slice(0, -2);
-}
