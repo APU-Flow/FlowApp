@@ -24,9 +24,17 @@ export default class AddMeter extends Component {
       allValid: false,
       submitReport: ''
     };
+
+    // Bind functions to instance
+    this.verifyInput = this.verifyInput.bind(this);
+    this.submitRegistration = this.submitRegistration.bind(this);
+    this.submitToServer = this.submitToServer.bind(this);
+  }
+
+  componentDidMount() {
     AsyncStorage.getItem('token', (errors, token) => {
       if (errors) {
-        Alert.alert('Error', errors);
+        Alert.alert('Error', errors.toString());
       }
       this.setState({token});
 
@@ -47,11 +55,6 @@ export default class AddMeter extends Component {
         }
       });
     });
-
-    // Bind functions to instance
-    this.verifyInput = this.verifyInput.bind(this);
-    this.submitRegistration = this.submitRegistration.bind(this);
-    this.submitToServer = this.submitToServer.bind(this);
   }
 
   render() {
