@@ -65,6 +65,12 @@ export default class Meters extends Component {
               this.setState({submitReport: '', meterList});
             });
             break;
+          case 204:
+            this.setState({
+              submitReport: 'No meters found for this user!',
+              meterList: []
+            });
+            break;
           default:
             response.json().then((responseObject) => {
               this.setState({
