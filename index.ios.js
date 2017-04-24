@@ -7,8 +7,6 @@ import { AppRegistry, Navigator, Text, AsyncStorage, Alert} from 'react-native';
 import NavBarIOS from './components/nav-bar.ios';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
-import Graphs from './scenes/graphs';
-import MeterGraphs from './scenes/meter-graphs';
 import ChangeAccount from './scenes/change-account';
 import Splash from './scenes/splash';
 import Login from './scenes/login';
@@ -26,7 +24,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'test' }}
+        initialRoute={{ name: 'login' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottom}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
@@ -37,7 +35,7 @@ export default class FlowApp extends Component {
             case 'login':
               return <Login pushRoute={navigator.push} {...route.passProps} />;
             case 'register':
-              return <Register pushRoute={navigator.push} {...route.passProps} />;
+              return <Register pushRoute={navigator.push} {...route.passProps}/>;
             case 'overview':
               return <NavBarIOS selectedTab = 'overview' {...route.passProps}/>
             case 'graphs':
@@ -46,8 +44,6 @@ export default class FlowApp extends Component {
               return <NavBarIOS selectedTab = 'meters' {...route.passProps}/> 
             case 'settings':
               return <NavBarIOS selectedTab = 'settings' {...route.passProps} /> 
-            case 'meterGraphs':
-              return <NavBarIOS selectedTab = 'meterGraphs' />
             case 'test':
               return  <Test pushRoute={navigator.push} />;
             default:

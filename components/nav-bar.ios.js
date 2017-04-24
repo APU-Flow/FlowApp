@@ -3,7 +3,6 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, TabBarIOS, View, Text, TouchableHighlight, AsyncStorage, Alert } from 'react-native';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 
 var Overview = require('../scenes/overview');
