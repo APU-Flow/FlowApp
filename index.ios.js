@@ -13,6 +13,7 @@ import Login from './scenes/login';
 import Register from './scenes/register';
 import Overview from './scenes/overview';
 import Test from './scenes/test';
+import Graphs from './scenes/graphs';
 
 export default class FlowApp extends Component {
 

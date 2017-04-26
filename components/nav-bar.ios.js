@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 var Overview = require('../scenes/overview');
 var Meters = require('../scenes/meters');
-var Graphs = require('../scenes/graphs');
+var MeterGraphs = require('../scenes/graphs');
 var Settings = require('../scenes/settings');
 var Splash = require('../scenes/splash');
 var Test = require('../scenes/test');
@@ -65,7 +65,7 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'graphs',
                         });
                     }}>
-                    <Graphs />
+                    <MeterGraphs />
                 </Icon.TabBarItem>
                 <Icon.TabBarItem
                     title="Test"
