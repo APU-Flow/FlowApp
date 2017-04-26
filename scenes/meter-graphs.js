@@ -44,8 +44,8 @@ export default class MeterGraphs extends Component {
       }
 
       this.setState({token}, () => {
-        this.requestDailyEvents().then(() => {
-          this.setState((prevState) => { return {graphData: prevState.dailyData}; });
+        this.requestDailyEvents().then((graphData) => {
+          this.setState({graphData});
         });
         this.requestWeeklyEvents();
         this.requestMonthlyEvents();
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
   label: {
     position: 'absolute',
     right: 135,
-    top: 250,
+    top: 230,
     color: 'white',
     fontSize: 12,
   },
