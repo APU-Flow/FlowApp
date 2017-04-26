@@ -33,7 +33,7 @@ export default class Overview extends Component {
   componentDidMount() {
     AsyncStorage.getItem('token', (errors, token) => {
       if (errors) {
-        Alert.alert('Error', errors);
+        Alert.alert('Error', errors.toString());
       }
 
       fetch(`http://138.68.56.236:3000/api/getDailyUsage?&date=${encodeURI(Date.now())}&meterID=1`, {
