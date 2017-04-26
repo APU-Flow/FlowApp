@@ -187,10 +187,8 @@ export default class MeterGraphs extends Component {
 
           // We know data.length === 12, as verified above, so we can just use 12
           for (let i = 0; i < 12; i++) {
-            let month = now.getMonth() - (11 - i);
-
             monthGraphData[i] = [
-              monthStrings[(month < 0) ? month+12 : month],
+              monthStrings[i],
               data[i]
             ];
           }
