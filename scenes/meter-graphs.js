@@ -21,7 +21,6 @@ export default class MeterGraphs extends Component {
     this.state = {
       graphList: ['line', 'bar'],
       graphType: 'bar',
-      graphshowAxes: true,
       graphTimeList: ['daily','weekly','monthly'],
       dataDay: [['', 0]],
       dataWeek: [['', 0]],
@@ -45,7 +44,7 @@ export default class MeterGraphs extends Component {
 
       this.setState({token}, () => {
         this.requestDailyEvents().then((graphData) => {
-          this.setState({graphData});
+          this.setState({mainDataArray: graphData});
         });
         this.requestWeeklyEvents();
         this.requestMonthlyEvents();
@@ -187,10 +186,8 @@ export default class MeterGraphs extends Component {
 
           // We know data.length === 12, as verified above, so we can just use 12
           for (let i = 0; i < 12; i++) {
-            let month = now.getMonth() - (11 - i);
-
             monthGraphData[i] = [
-              monthStrings[(month < 0) ? month+12 : month],
+              monthStrings[i],
               data[i]
             ];
           }
@@ -255,7 +252,7 @@ export default class MeterGraphs extends Component {
           lineWidth={4}
 
           showDataPoint={false}
-          showAxis={this.state.graphshowAxes}
+          showAxis={true}
 
           style={styles.chart}
           labelFontSize={10}
