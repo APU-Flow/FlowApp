@@ -87,6 +87,9 @@ export default class Overview extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Overview</Text>
+        <View>
+          <Text style={styles.label}>Ml</Text>
+        </View>
         <Chart
         color={'white'}
         axisColor={'white'}
@@ -131,6 +134,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor:'rgb(52,152,219)',
+  },
+  label: {
+    position: 'absolute',
+    right: 140,
+    top: 220,
+    color: 'white',
+    fontSize: 12,
   },
   chart: {
     width: 300,
