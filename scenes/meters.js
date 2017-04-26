@@ -32,7 +32,7 @@ export default class Meters extends Component {
   componentDidMount() {
     AsyncStorage.getItem('token', (errors, token) => {
       if (errors) {
-        Alert.alert('Error', errors);
+        Alert.alert('Error', errors.toString());
       }
 
       fetch('http://138.68.56.236:3000/api/getMeterIdList', {
@@ -63,6 +63,12 @@ export default class Meters extends Component {
               }
 
               this.setState({submitReport: '', meterList});
+            });
+            break;
+          case 204:
+            this.setState({
+              submitReport: 'No meters found for this user!',
+              meterList: []
             });
             break;
           default:

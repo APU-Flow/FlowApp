@@ -40,7 +40,7 @@ export default class MeterGraphs extends Component {
   componentDidMount() {
     AsyncStorage.getItem('token', (errors, token) => {
       if (errors) {
-        Alert.alert('Error', errors);
+        Alert.alert('Error', errors.toString());
       }
 
       this.setState({token}, () => {

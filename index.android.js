@@ -89,7 +89,7 @@ export default class FlowApp extends Component {
 
   logout() {
     AsyncStorage.multiRemove(['email', 'token'], (err) => {
-      if (err) Alert.alert('Error', err);
+      if (err) Alert.alert('Error', err.toString());
 
       navigator.resetTo('splash');
     });

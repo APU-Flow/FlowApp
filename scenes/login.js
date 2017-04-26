@@ -75,7 +75,7 @@ export default class LoginForm extends Component {
                 ['token', responseObject.token]
               ]);
             } catch (error) {
-              Alert.alert('Error', error);
+              Alert.alert('Error', error.toString());
             }
 
             this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
