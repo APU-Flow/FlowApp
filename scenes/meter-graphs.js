@@ -326,8 +326,8 @@ const styles = StyleSheet.create({
   },
   label: {
     position: 'absolute',
-    right: 135,
-    top: 230,
+    right: 150,
+    top: 265,
     color: 'white',
     fontSize: 12,
   },

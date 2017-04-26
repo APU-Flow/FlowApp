@@ -31,7 +31,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'overview' }}
+        initialRoute={{ name: 'meterGraphs' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottomAndroid}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
@@ -91,7 +91,7 @@ export default class FlowApp extends Component {
     AsyncStorage.multiRemove(['email', 'token'], (err) => {
       if (err) Alert.alert('Error', err.toString());
 
-      navigator.resetTo('splash');
+      navigator.resetTo(navigator.route.splash);
     });
   }
 }
