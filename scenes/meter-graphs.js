@@ -21,7 +21,6 @@ export default class MeterGraphs extends Component {
     this.state = {
       graphList: ['line', 'bar'],
       graphType: 'bar',
-      graphshowAxes: true,
       graphTimeList: ['daily','weekly','monthly'],
       dataDay: [['', 0]],
       dataWeek: [['', 0]],
@@ -44,8 +43,8 @@ export default class MeterGraphs extends Component {
       }
 
       this.setState({token}, () => {
-        this.requestDailyEvents().then(() => {
-          this.setState((prevState) => { return {graphData: prevState.dailyData}; });
+        this.requestDailyEvents().then((graphData) => {
+          this.setState({mainDataArray: graphData});
         });
         this.requestWeeklyEvents();
         this.requestMonthlyEvents();
@@ -250,7 +249,7 @@ export default class MeterGraphs extends Component {
           lineWidth={4}
 
           showDataPoint={false}
-          showAxis={this.state.graphshowAxes}
+          showAxis={true}
 
           style={styles.chart}
           labelFontSize={10}
