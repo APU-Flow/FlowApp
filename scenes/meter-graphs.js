@@ -26,6 +26,7 @@ export default class MeterGraphs extends Component {
       dataWeek: [['', 0]],
       dataMonth: [['', 0]],
       mainDataArray: [['', 0]],
+      graphColor: 'white',
     };
 
     this.requestDailyEvents = this.requestDailyEvents.bind(this);
@@ -98,7 +99,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({dailyData: dayGraphData}, () => resolve(dayGraphData));
         } else {
-          this.setState({dailyData: [['', 0]], graphType: 'line'}, () => resolve(false));
+          this.setState({dailyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
         }
       });
     });
@@ -147,7 +148,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({weeklyData: weekGraphData}, () => resolve(weekGraphData));
         } else {
-          this.setState({weeklyData: [['', 0]], graphType: 'line'}, () => resolve(false));
+          this.setState({weeklyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
         }
       });
     });
@@ -195,7 +196,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({monthlyData: monthGraphData}, () => resolve(monthGraphData));
         } else {
-          this.setState({monthlyData: [['', 0]], graphType: 'line'}, () => resolve(false));
+          this.setState({monthlyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
         }
       });
     });
@@ -228,7 +229,7 @@ export default class MeterGraphs extends Component {
           onSelect={this.viewTimeGraph}
         />
         <Chart
-          color={'white'}
+          color={this.state.graphColor}
           axisColor={'white'}
           axisLabelColor={'white'}
           axisLineWidth={1}

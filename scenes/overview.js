@@ -24,60 +24,56 @@ export default class Overview extends Component {
     super(props);
     // Initialize state variables
     this.state = {
-      data: [['', 0]],
-      submitReport: ''
+      weeklyData: [['', 0]],
+      submitReport: '',
+      graphColor: 'white',
     };
   }
 
   componentDidMount() {
-    AsyncStorage.getItem('token', (errors, token) => {
-      if (errors) {
-        Alert.alert('Error', errors.toString());
-      }
-
-      fetch(`http://138.68.56.236:3000/api/getDailyUsage?&date=${encodeURI(Date.now())}&meterID=1`, {
+    return new Promise((resolve, reject) => {
+      let now = new Date();
+      fetch(`http://138.68.56.236:3000/api/getWeeklyUsage?&date=${encodeURI(now.valueOf())}&meterID=${this.props.meterId}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded',
-          'x-access-token': token
+          'x-access-token': this.state.token
         }
       })
       .then((response) => {
         switch (response.status) {
-          case 200:
-            response.json().then((responseObject) => {
-              let dataArray = responseObject.data;
-              let data = [
-                ['8a', dataArray[0]],
-                ['9a', dataArray[1]],
-                ['10a', dataArray[2]],
-                ['11a', dataArray[3]],
-                ['12p', dataArray[4]],
-                ['1p', dataArray[5]],
-                ['2p', dataArray[6]],
-                ['3p', dataArray[7]],
-                ['4p', dataArray[8]],
-                ['5p', dataArray[9]],
-                ['6p', dataArray[10]],
-                ['7p', dataArray[11]]
-              ];
-              this.setState({ data });
-            });
-            break;
           case 204:
-            this.setState({
-              submitReport: 'No data found by server!',
-              data: [['', 0]]
-            });
-            break;
+            return {data: null};
           default:
-            response.json().then((responseObject) => {
-              this.setState({
-                submitReport: `${response.status}: ${responseObject.message}`,
-                data: [['', 0]]
-              });
-            });
+            return response.json();
+        }
+      })
+      .then((responseObject) => {
+        let {data} = responseObject;
+
+        if (Array.isArray(data)) {
+          if (data.length !== 7) {
+            reject('Invalid data array returned from server!');
+            return;
+          }
+
+          let weekGraphData = [];
+          let weekdayStrings = ['S','M','T','W','Th','F','Sa'];
+
+          // We know data.length === 7, as verified above, so we can just use 7
+          for (let i = 0; i < 7; i++) {
+            let weekday = now.getDay() - (6 - i);
+
+            weekGraphData[i] = [
+              weekdayStrings[(weekday < 0) ? weekday+7 : weekday],
+              data[i]
+            ];
+          }
+
+          this.setState({weeklyData: weekGraphData}, () => resolve(weekGraphData));
+        } else {
+          this.setState({weeklyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
         }
       });
     });
@@ -91,7 +87,7 @@ export default class Overview extends Component {
           <Text style={styles.label}>Ml</Text>
         </View>
         <Chart
-        color={'white'}
+        color={this.state.graphColor}
         axisColor={'white'}
         axisLabelColor={'white'}
         axisLineWidth={1}
@@ -101,7 +97,7 @@ export default class Overview extends Component {
 
         cornerRadius={4}
 
-        data={this.state.data}
+        data={this.state.weeklyData}
 
         hideHorizontalGridLines={true}
         hideVerticalGridLines={true}
