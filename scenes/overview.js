@@ -25,15 +25,31 @@ export default class Overview extends Component {
     // Initialize state variables
     this.state = {
       weeklyData: [['', 0]],
+      mainDataArray: [['', 0]],
       submitReport: '',
       graphColor: 'white',
     };
+    this.requestDailyEvents = this.requestDailyEvents.bind(this);
   }
 
-  componentDidMount() {
+   componentDidMount() {
+    AsyncStorage.getItem('token', (errors, token) => {
+      if (errors) {
+        Alert.alert('Error', errors.toString());
+      }
+
+      this.setState({token}, () => {
+        this.requestDailyEvents().then((graphData) => {
+          this.setState({mainDataArray: graphData});
+        });
+      });
+    });
+  }
+
+   requestDailyEvents() {
     return new Promise((resolve, reject) => {
       let now = new Date();
-      fetch(`http://138.68.56.236:3000/api/getWeeklyUsage?&date=${encodeURI(now.valueOf())}&meterID=${this.props.meterId}`, {
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?date=${encodeURI(now.valueOf())}&meterID=${this.props.meterId}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -53,27 +69,30 @@ export default class Overview extends Component {
         let {data} = responseObject;
 
         if (Array.isArray(data)) {
-          if (data.length !== 7) {
+          if (data.length !== 12) {
             reject('Invalid data array returned from server!');
             return;
           }
 
-          let weekGraphData = [];
-          let weekdayStrings = ['S','M','T','W','Th','F','Sa'];
+          let dayGraphData = [];
+          let hourStrings = [
+            '12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a',
+            '12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'
+          ];
 
-          // We know data.length === 7, as verified above, so we can just use 7
-          for (let i = 0; i < 7; i++) {
-            let weekday = now.getDay() - (6 - i);
+          // We know data.length === 12, as verified above, so we can just use 12
+          for (let i = 0; i < 12; i++) {
+            let hour = now.getHours() - (11 - i);
 
-            weekGraphData[i] = [
-              weekdayStrings[(weekday < 0) ? weekday+7 : weekday],
+            dayGraphData[i] = [
+              hourStrings[(hour < 0) ? hour+24 : hour],
               data[i]
             ];
           }
 
-          this.setState({weeklyData: weekGraphData}, () => resolve(weekGraphData));
+          this.setState({dailyData: dayGraphData}, () => resolve(dayGraphData));
         } else {
-          this.setState({weeklyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
+          this.setState({dailyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
         }
       });
     });
@@ -97,7 +116,7 @@ export default class Overview extends Component {
 
         cornerRadius={4}
 
-        data={this.state.weeklyData}
+        data={this.state.mainDataArray}
 
         hideHorizontalGridLines={true}
         hideVerticalGridLines={true}
