@@ -87,6 +87,7 @@ export default class FlowApp extends Component {
             </NavDrawerAndroid>
           );
         }}
+
       />
     );
   }
