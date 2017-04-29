@@ -45,7 +45,10 @@ export default class MeterGraphs extends Component {
 
       this.setState({token}, () => {
         this.requestDailyEvents().then((graphData) => {
-          this.setState({mainDataArray: graphData});
+          this.setState({
+            mainDataArray: graphData,
+            graphColor: (graphData[0][0] === '') ? 'rgb(52,152,219)' : 'white'
+          });
         });
         this.requestWeeklyEvents();
         this.requestMonthlyEvents();
@@ -99,7 +102,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({dailyData: dayGraphData}, () => resolve(dayGraphData));
         } else {
-          this.setState({dailyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
+          this.setState({dailyData: [['', 0]]}, () => resolve([['', 0]]));
         }
       });
     });
@@ -148,7 +151,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({weeklyData: weekGraphData}, () => resolve(weekGraphData));
         } else {
-          this.setState({weeklyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
+          this.setState({weeklyData: [['', 0]]}, () => resolve([['', 0]]));
         }
       });
     });
@@ -196,7 +199,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({monthlyData: monthGraphData}, () => resolve(monthGraphData));
         } else {
-          this.setState({monthlyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
+          this.setState({monthlyData: [['', 0]]}, () => resolve([['', 0]]));
         }
       });
     });
@@ -286,17 +289,26 @@ export default class MeterGraphs extends Component {
     switch (value) {
       case 'daily':
         this.setState((prevState) => {
-          return {mainDataArray: prevState.dailyData};
+          return {
+            mainDataArray: prevState.dailyData,
+            graphColor: (prevState.dailyData[0][0] === '') ? 'rgb(52,152,219)' : 'white'
+          };
         });
         break;
       case 'weekly':
         this.setState((prevState) => {
-          return {mainDataArray: prevState.weeklyData};
+          return {
+            mainDataArray: prevState.weeklyData,
+            graphColor: (prevState.weeklyData[0][0] === '') ? 'rgb(52,152,219)' : 'white'
+          };
         });
         break;
       case 'monthly':
         this.setState((prevState) => {
-          return {mainDataArray: prevState.monthlyData};
+          return {
+            mainDataArray: prevState.monthlyData,
+            graphColor: (prevState.monthlyData[0][0] === '') ? 'rgb(52,152,219)' : 'white'
+          };
         });
         break;
     }

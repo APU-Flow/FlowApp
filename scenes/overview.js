@@ -90,7 +90,7 @@ export default class Overview extends Component {
 
           this.setState({dailyData: dayGraphData}, () => resolve(dayGraphData));
         } else {
-          this.setState({dailyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve(false));
+          this.setState({dailyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve([['', 0]]));
         }
       });
     });
