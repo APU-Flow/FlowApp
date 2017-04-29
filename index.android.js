@@ -51,7 +51,7 @@ export default class FlowApp extends Component {
               scene = <Register pushRoute={navigator.push}/>;
               break;
             case 'settings':
-              scene = <Settings logout={this.logout} {...route.passProps} />;
+              scene = <Settings logout={() => this.logout(navigator)} {...route.passProps} />;
               break;
             case 'changeAccount':
               scene = <ChangeAccount/>;
@@ -87,11 +87,11 @@ export default class FlowApp extends Component {
   }
 
 
-  logout() {
-    AsyncStorage.multiRemove(['email', 'token'], (err) => {
+  logout(navigator) {
+    AsyncStorage.multiRemove(['email', 'token', 'firstName'], (err) => {
       if (err) Alert.alert('Error', err.toString());
 
-      navigator.resetTo('splash');
+      navigator.resetTo({name: 'splash'});
     });
   }
 }
