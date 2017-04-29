@@ -22,11 +22,14 @@ export default class FlowApp extends Component {
 
     // Initialize state variables
     this.state = {
-      drawerLockMode: 'locked-closed'
+      drawerLockMode: 'locked-closed',
+      navigator: null,
+      route: null
     };
 
     this.logout = this.logout.bind(this);
   }
+
 
   render() {
     return (
@@ -75,6 +78,8 @@ export default class FlowApp extends Component {
             <NavDrawerAndroid
               drawerLockMode={drawerLock}
               pushRoute={navigator.push}
+              popRoute={navigator.pop}
+              logout={() => this.logout(navigator)}
               currentRouteName={route.name}>
 
                 {scene}
