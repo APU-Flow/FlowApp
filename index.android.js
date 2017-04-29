@@ -82,16 +82,18 @@ export default class FlowApp extends Component {
             </NavDrawerAndroid>
           );
         }}
+
       />
     );
   }
 
-
+//this doesn't work, it can't get the Navigator from the above code,
+//so it tries to popToTop of like a new navigator.
+//(online it says to do props.)
   logout() {
     AsyncStorage.multiRemove(['email', 'token'], (err) => {
       if (err) Alert.alert('Error', err.toString());
-
-      navigator.resetTo('splash');
+      navigator.popToTop();
     });
   }
 }
