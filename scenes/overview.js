@@ -24,15 +24,13 @@ export default class Overview extends Component {
     super(props);
     // Initialize state variables
     this.state = {
-      weeklyData: [['', 0]],
       mainDataArray: [['', 0]],
-      submitReport: '',
       graphColor: 'white',
     };
     this.requestDailyEvents = this.requestDailyEvents.bind(this);
   }
 
-   componentDidMount() {
+  componentDidMount() {
     AsyncStorage.getItem('token', (errors, token) => {
       if (errors) {
         Alert.alert('Error', errors.toString());
@@ -46,10 +44,10 @@ export default class Overview extends Component {
     });
   }
 
-   requestDailyEvents() {
+  requestDailyEvents() {
     return new Promise((resolve, reject) => {
       let now = new Date();
-      fetch(`http://138.68.56.236:3000/api/getDailyUsage?date=${encodeURI(now.valueOf())}&meterID=${this.props.meterId}`, {
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?date=${encodeURI(now.valueOf())}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -134,7 +132,6 @@ export default class Overview extends Component {
         style={styles.chart}
         labelFontSize={11}
         />
-        <Text>{this.state.submitReport}</Text>
       </View>
     );
   }
