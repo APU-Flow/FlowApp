@@ -138,7 +138,7 @@ export default class Register extends Component {
         break;
       case 'lastName':
         fieldIndex = 1;
-        validityTest = /^[A-Z'\-]{1,20}$/i.test(text);
+        validityTest = /^[A-Z' \-]{1,20}$/i.test(text);
         break;
       case 'email':
         fieldIndex = 2;
@@ -154,7 +154,7 @@ export default class Register extends Component {
         break;
       case 'address':
         fieldIndex = 5;
-        validityTest = /^[0-9]{1,8} [A-Z'#.& \-]{2,30}$/i.test(text);
+        validityTest = /^(\d{1,7} [A-Z'#.& \-]{2,30}|P\.?O\.? box (# )?\d{1,6})$/i.test(text);
         break;
       case 'city':
         fieldIndex = 6;

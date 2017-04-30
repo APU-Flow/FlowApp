@@ -42,7 +42,7 @@ export default class NavDrawerAndroid extends Component {
       case 'overview':
         Alert.alert(
           'Logout?',
-          'Would you like to log out?',
+          'Would you like to logout?',
           [
             { text: 'No', style: 'cancel' },
             { text: 'Yes', onPress: this.props.logout }
