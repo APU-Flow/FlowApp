@@ -22,11 +22,14 @@ export default class FlowApp extends Component {
 
     // Initialize state variables
     this.state = {
-      drawerLockMode: 'locked-closed'
+      drawerLockMode: 'locked-closed',
+      navigator: null,
+      route: null
     };
 
     this.logout = this.logout.bind(this);
   }
+
 
   render() {
     return (
@@ -51,7 +54,7 @@ export default class FlowApp extends Component {
               scene = <Register pushRoute={navigator.push}/>;
               break;
             case 'settings':
-              scene = <Settings logout={this.logout} {...route.passProps} />;
+              scene = <Settings logout={() => this.logout(navigator)} {...route.passProps} />;
               break;
             case 'changeAccount':
               scene = <ChangeAccount/>;
@@ -75,6 +78,8 @@ export default class FlowApp extends Component {
             <NavDrawerAndroid
               drawerLockMode={drawerLock}
               pushRoute={navigator.push}
+              popRoute={navigator.pop}
+              logout={() => this.logout(navigator)}
               currentRouteName={route.name}>
 
                 {scene}
@@ -82,16 +87,17 @@ export default class FlowApp extends Component {
             </NavDrawerAndroid>
           );
         }}
+
       />
     );
   }
 
 
-  logout() {
-    AsyncStorage.multiRemove(['email', 'token'], (err) => {
+  logout(navigator) {
+    AsyncStorage.multiRemove(['email', 'token', 'firstName'], (err) => {
       if (err) Alert.alert('Error', err.toString());
 
-      navigator.resetTo('splash');
+      navigator.resetTo({name: 'splash'});
     });
   }
 }
