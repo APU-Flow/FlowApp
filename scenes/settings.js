@@ -106,6 +106,7 @@ export default class Settings extends Component {
     ); // End confirmation alert
   }
 
+
   dropdownRenderRow(rowData, rowID, highlighted) {
     let evenRow = rowID % 2;
     return (

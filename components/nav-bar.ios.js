@@ -16,6 +16,13 @@ var Test = require('../scenes/test');
 
 export default class NavBarIOS extends Component {
 
+    static get propTypes() {
+        return {
+            logout: React.PropTypes.func.isRequired
+        };
+    }
+
+
     static get defaultProps() {
         return {
             currentRouteName: 'Overview'
@@ -25,21 +32,11 @@ export default class NavBarIOS extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: props.selectedTab,
-            logout: props.logout
+            selectedTab: props.selectedTab
         };
-
-        this.logout = this.logout.bind(this);
+    
     }
 
-    static get propTypes() {
-        return {
-            // pushRoute: React.PropTypes.func.isRequired,
-            logout: React.PropTypes.func.isRequired,
-            currentRouteName: React.PropTypes.string,
-            // children: React.PropTypes.element.isRequired
-        };
-    }
 
     render() {
         return (
@@ -67,7 +64,7 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'graphs',
                         });
                     }}>
-                    <MeterGraphs meterId={meterId = this.props.meterId} />
+                    <MeterGraphs meterId={this.props.meterId} />
                 </Icon.TabBarItem>
                 <Icon.TabBarItem
                     title="Test"
@@ -95,19 +92,6 @@ export default class NavBarIOS extends Component {
                 </Icon.TabBarItem>
             </TabBarIOS>
         );
-    }
-
-    // logout(navigator) {
-    //     AsyncStorage.multiRemove(['email', 'token', 'firstName'], (err) => {
-    //         if (err) Alert.alert('Error', err.toString());
-
-    //         navigator.resetTo({ name: 'splash' });
-    //     });
-    // }
-    logout() {
-        this.props.logout({
-            name: 'splash'
-        });
     }
 }
 

@@ -19,13 +19,14 @@ export default class FlowApp extends Component {
 
   constructor(props) {
     super(props);
-
+    
+    this.logout = this.logout.bind(this);
   }
 
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'settings' }}
+        initialRoute={{ name: 'login' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottom}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
@@ -38,15 +39,15 @@ export default class FlowApp extends Component {
             case 'register':
               return <Register pushRoute={navigator.push} {...route.passProps}/>;
             case 'overview':
-              return <NavBarIOS selectedTab = 'overview' {...route.passProps}/>
+              return <NavBarIOS selectedTab = 'overview' {...route.passProps} logout={() => this.logout(navigator)}/>
             case 'graphs':
-              return <NavBarIOS selectedTab = 'graphs' {...route.passProps}/>
+              return <NavBarIOS selectedTab = 'graphs' {...route.passProps} logout={() => this.logout(navigator)}/>
             case 'meters':
-              return <NavBarIOS selectedTab = 'meters' {...route.passProps}/> 
+              return <NavBarIOS selectedTab = 'meters' {...route.passProps} logout={() => this.logout(navigator)}/> 
             case 'settings':
-              return <NavBarIOS selectedTab = 'settings' logout={() => this.logout(navigator)} {...route.passProps} />;
+              return <NavBarIOS selectedTab = 'settings' logout={() => this.logout(navigator)} {...route.passProps}/>
             case 'test':
-              return <NavBarIOS selectedTab = 'test' {...route.passProps}/>
+              return <NavBarIOS selectedTab = 'test' {...route.passProps} logout={() => this.logout(navigator)}/>
             default:
               return <Text>Bad route name given!</Text>
           }
@@ -60,7 +61,6 @@ export default class FlowApp extends Component {
             if (err) Alert.alert('Error', err.toString());
 
             navigator.resetTo({ name: 'login' });
-
         });
     }
 
