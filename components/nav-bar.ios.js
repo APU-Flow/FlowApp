@@ -17,23 +17,25 @@ var Test = require('../scenes/test');
 export default class NavBarIOS extends Component {
 
     static get defaultProps() {
-    return {
-      currentRouteName: 'Overview'
-    };
-  }
+        return {
+            currentRouteName: 'Overview'
+        };
+    }
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: props.selectedTab
+            selectedTab: props.selectedTab,
+            logout: props.logout
         };
-        
+
         this.logout = this.logout.bind(this);
     }
 
     static get propTypes() {
         return {
             // pushRoute: React.PropTypes.func.isRequired,
+            logout: React.PropTypes.func.isRequired,
             currentRouteName: React.PropTypes.string,
             // children: React.PropTypes.element.isRequired
         };
@@ -65,7 +67,7 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'graphs',
                         });
                     }}>
-                    <MeterGraphs />
+                    <MeterGraphs meterId={meterId = this.props.meterId} />
                 </Icon.TabBarItem>
                 <Icon.TabBarItem
                     title="Test"
@@ -89,19 +91,24 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'settings',
                         });
                     }}>
-                    <Settings logout={this.logout} />
+                    <Settings logout={this.props.logout} />
                 </Icon.TabBarItem>
             </TabBarIOS>
         );
     }
 
-    logout() {
-    AsyncStorage.multiRemove(['email', 'token'], (err) => {
-      if (err) Alert.alert('Error', err);
+    // logout(navigator) {
+    //     AsyncStorage.multiRemove(['email', 'token', 'firstName'], (err) => {
+    //         if (err) Alert.alert('Error', err.toString());
 
-      navigator.resetTo('Splash');
-    });
-  }
+    //         navigator.resetTo({ name: 'splash' });
+    //     });
+    // }
+    logout() {
+        this.props.logout({
+            name: 'splash'
+        });
+    }
 }
 
 const styles = StyleSheet.create({

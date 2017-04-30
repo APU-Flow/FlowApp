@@ -21,7 +21,6 @@ export default class Settings extends Component {
   constructor(props) {
     super(props);
 
-    // TODO: create a route to pull in active meters associated with user 
     this.state = {
       meterList: ['Meter 1', 'Meter 2', 'Meter 3']
     };

@@ -25,7 +25,7 @@ export default class FlowApp extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'login' }}
+        initialRoute={{ name: 'settings' }}
         configureScene={(route) => route.sceneConfig || Navigator.SceneConfigs.FloatFromBottom}
         renderScene={(route, navigator) => {
           let scene = <Text>Bad route name given!</Text>;
@@ -44,9 +44,9 @@ export default class FlowApp extends Component {
             case 'meters':
               return <NavBarIOS selectedTab = 'meters' {...route.passProps}/> 
             case 'settings':
-              return <NavBarIOS selectedTab = 'settings' {...route.passProps} /> 
+              return <NavBarIOS selectedTab = 'settings' logout={() => this.logout(navigator)} {...route.passProps} />;
             case 'test':
-              return  <Test pushRoute={navigator.push} />;
+              return <NavBarIOS selectedTab = 'test' {...route.passProps}/>
             default:
               return <Text>Bad route name given!</Text>
           }
@@ -54,6 +54,15 @@ export default class FlowApp extends Component {
       />
     );
   }
+
+  logout(navigator) {
+        AsyncStorage.multiRemove(['email', 'token', 'firstName'], (err) => {
+            if (err) Alert.alert('Error', err.toString());
+
+            navigator.resetTo({ name: 'login' });
+
+        });
+    }
 
 }
 
