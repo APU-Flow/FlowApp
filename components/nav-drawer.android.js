@@ -20,7 +20,8 @@ export default class NavDrawerAndroid extends Component {
   static get defaultProps() {
     return {
       drawerLockMode: 'unlocked',
-      currentRouteName: ''
+      currentRouteName: '',
+      drawerState: 'closed',
     };
   }
 
@@ -36,9 +37,21 @@ export default class NavDrawerAndroid extends Component {
   }
 
   handleBackButton() {
+    if (this.state.drawerState === 'open') {
+      this.drawerLayout.closeDrawer();
+      return true;
+    }
     switch (this.props.currentRouteName) {
       case 'splash':
-        return false;
+        Alert.alert(
+          'Exit?',
+          'Would you like to exit?',
+          [
+            { text: 'No', style: 'cancel' },
+            { text: 'Yes', onPress: () => BackAndroid.exitApp() }
+          ]
+        );
+        return true;
       case 'overview':
         Alert.alert(
           'Logout?',
@@ -83,10 +96,13 @@ export default class NavDrawerAndroid extends Component {
     );
     return (
       <DrawerLayoutAndroid
+        ref={(drawerLayout) => this.drawerLayout = drawerLayout}
         drawerWidth={300}
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         renderNavigationView={() => navigationView}
-        drawerLockMode={this.props.drawerLockMode}>
+        drawerLockMode={this.props.drawerLockMode}
+        onDrawerOpen={() => this.setState({drawerState: 'open'})}
+        onDrawerClose={() => this.setState({drawerState: 'closed'})}>
 
           {this.props.children}
 
