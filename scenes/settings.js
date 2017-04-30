@@ -87,7 +87,7 @@ export default class Settings extends Component {
   }
 
   contactUs() {
-    Alert.alert('Contact Us at www.flow.org');
+    Alert.alert('See more from the Flow Team:', 'https://github.com/APU-Flow');
   }
 
 }

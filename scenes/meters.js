@@ -94,6 +94,7 @@ export default class Meters extends Component {
           defaultValue='Device Overview'
           renderRow={this.dropdownRenderRow}
           onSelect={this.viewMeter}
+          disabled={this.state.meterList.length === 0}
         />
         <ModalDropdown style={styles.dropdown}
           options={this.state.meterList}
@@ -102,10 +103,12 @@ export default class Meters extends Component {
           defaultValue='Drop A Meter'
           renderRow={this.dropdownRenderRow}
           onSelect={this.dropMeter}
+          disabled={this.state.meterList.length === 0}
         />
         {/*<TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
           <Text style={styles.buttonText}>Add a Meter</Text>
         </TouchableHighlight>*/}
+        <Text>{this.state.submitReport}</Text>
       </KeyboardAwareScrollView>
     );
   }
