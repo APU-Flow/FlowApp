@@ -26,6 +26,7 @@ export default class MeterGraphs extends Component {
       dataWeek: [['', 0]],
       dataMonth: [['', 0]],
       mainDataArray: [['', 0]],
+      graphColor: 'white',
     };
 
     this.requestDailyEvents = this.requestDailyEvents.bind(this);
@@ -44,7 +45,10 @@ export default class MeterGraphs extends Component {
 
       this.setState({token}, () => {
         this.requestDailyEvents().then((graphData) => {
-          this.setState({mainDataArray: graphData});
+          this.setState({
+            mainDataArray: graphData,
+            graphColor: (graphData[0][0] === '') ? 'rgb(52,152,219)' : 'white'
+          });
         });
         this.requestWeeklyEvents();
         this.requestMonthlyEvents();
@@ -98,7 +102,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({dailyData: dayGraphData}, () => resolve(dayGraphData));
         } else {
-          this.setState({dailyData: [['', 0]]}, () => resolve(false));
+          this.setState({dailyData: [['', 0]]}, () => resolve([['', 0]]));
         }
       });
     });
@@ -147,7 +151,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({weeklyData: weekGraphData}, () => resolve(weekGraphData));
         } else {
-          this.setState({weeklyData: [['', 0]]}, () => resolve(false));
+          this.setState({weeklyData: [['', 0]]}, () => resolve([['', 0]]));
         }
       });
     });
@@ -195,7 +199,7 @@ export default class MeterGraphs extends Component {
 
           this.setState({monthlyData: monthGraphData}, () => resolve(monthGraphData));
         } else {
-          this.setState({monthlyData: [['', 0]]}, () => resolve(false));
+          this.setState({monthlyData: [['', 0]]}, () => resolve([['', 0]]));
         }
       });
     });
@@ -207,6 +211,9 @@ export default class MeterGraphs extends Component {
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>Device Overview</Text>
+        </View>
+        <View>
+          <Text style={styles.label}>Ml</Text>
         </View>
         <ModalDropdown style={styles.dropdown}
           options={this.state.graphList}
@@ -225,7 +232,7 @@ export default class MeterGraphs extends Component {
           onSelect={this.viewTimeGraph}
         />
         <Chart
-          color={'white'}
+          color={this.state.graphColor}
           axisColor={'white'}
           axisLabelColor={'white'}
           axisLineWidth={1}
@@ -282,17 +289,26 @@ export default class MeterGraphs extends Component {
     switch (value) {
       case 'daily':
         this.setState((prevState) => {
-          return {mainDataArray: prevState.dailyData};
+          return {
+            mainDataArray: prevState.dailyData,
+            graphColor: (prevState.dailyData[0][0] === '') ? 'rgb(52,152,219)' : 'white'
+          };
         });
         break;
       case 'weekly':
         this.setState((prevState) => {
-          return {mainDataArray: prevState.weeklyData};
+          return {
+            mainDataArray: prevState.weeklyData,
+            graphColor: (prevState.weeklyData[0][0] === '') ? 'rgb(52,152,219)' : 'white'
+          };
         });
         break;
       case 'monthly':
         this.setState((prevState) => {
-          return {mainDataArray: prevState.monthlyData};
+          return {
+            mainDataArray: prevState.monthlyData,
+            graphColor: (prevState.monthlyData[0][0] === '') ? 'rgb(52,152,219)' : 'white'
+          };
         });
         break;
     }
@@ -320,6 +336,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '400',
     marginBottom: 2
+  },
+  label: {
+    position: 'absolute',
+    right: 150,
+    top: 265,
+    color: 'white',
+    fontSize: 12,
   },
   dropdown: {
     margin: 2,

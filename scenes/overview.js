@@ -25,9 +25,10 @@ export default class Overview extends Component {
     super(props);
     // Initialize state variables
     this.state = {
-      data: [['', 0]],
-      submitReport: ''
+      mainDataArray: [['', 0]],
+      graphColor: 'white',
     };
+    this.requestDailyEvents = this.requestDailyEvents.bind(this);
   }
 
   componentDidMount() {
@@ -36,49 +37,61 @@ export default class Overview extends Component {
         Alert.alert('Error', errors.toString());
       }
 
-      fetch(`http://138.68.56.236:3000/api/getDailyUsage?&date=${encodeURI(Date.now())}&meterID=1`, {
+      this.setState({token}, () => {
+        this.requestDailyEvents().then((graphData) => {
+          this.setState({mainDataArray: graphData});
+        });
+      });
+    });
+  }
+
+  requestDailyEvents() {
+    return new Promise((resolve, reject) => {
+      let now = new Date();
+      fetch(`http://138.68.56.236:3000/api/getDailyUsage?date=${encodeURI(now.valueOf())}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded',
-          'x-access-token': token
+          'x-access-token': this.state.token
         }
       })
       .then((response) => {
         switch (response.status) {
-          case 200:
-            response.json().then((responseObject) => {
-              let dataArray = responseObject.data;
-              let data = [
-                ['8a', dataArray[0]],
-                ['9a', dataArray[1]],
-                ['10a', dataArray[2]],
-                ['11a', dataArray[3]],
-                ['12p', dataArray[4]],
-                ['1p', dataArray[5]],
-                ['2p', dataArray[6]],
-                ['3p', dataArray[7]],
-                ['4p', dataArray[8]],
-                ['5p', dataArray[9]],
-                ['6p', dataArray[10]],
-                ['7p', dataArray[11]]
-              ];
-              this.setState({ data });
-            });
-            break;
           case 204:
-            this.setState({
-              submitReport: 'No data found by server!',
-              data: [['', 0]]
-            });
-            break;
+            return {data: null};
           default:
-            response.json().then((responseObject) => {
-              this.setState({
-                submitReport: `${response.status}: ${responseObject.message}`,
-                data: [['', 0]]
-              });
-            });
+            return response.json();
+        }
+      })
+      .then((responseObject) => {
+        let {data} = responseObject;
+
+        if (Array.isArray(data)) {
+          if (data.length !== 12) {
+            reject('Invalid data array returned from server!');
+            return;
+          }
+
+          let dayGraphData = [];
+          let hourStrings = [
+            '12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a',
+            '12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'
+          ];
+
+          // We know data.length === 12, as verified above, so we can just use 12
+          for (let i = 0; i < 12; i++) {
+            let hour = now.getHours() - (11 - i);
+
+            dayGraphData[i] = [
+              hourStrings[(hour < 0) ? hour+24 : hour],
+              data[i]
+            ];
+          }
+
+          this.setState({dailyData: dayGraphData}, () => resolve(dayGraphData));
+        } else {
+          this.setState({dailyData: [['', 0]], graphColor: 'rgb(52,152,219)'}, () => resolve([['', 0]]));
         }
       });
     });
@@ -88,8 +101,11 @@ export default class Overview extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Overview</Text>
+        <View>
+          <Text style={styles.label}>Ml</Text>
+        </View>
         <Chart
-        color={'white'}
+        color={this.state.graphColor}
         axisColor={'white'}
         axisLabelColor={'white'}
         axisLineWidth={1}
@@ -99,7 +115,7 @@ export default class Overview extends Component {
 
         cornerRadius={4}
 
-        data={this.state.data}
+        data={this.state.mainDataArray}
 
         hideHorizontalGridLines={true}
         hideVerticalGridLines={true}
@@ -117,7 +133,6 @@ export default class Overview extends Component {
         style={styles.chart}
         labelFontSize={11}
         />
-        <Text>{this.state.submitReport}</Text>
       </View>
     );
   }
@@ -132,6 +147,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor:'rgb(52,152,219)',
+  },
+  label: {
+    position: 'absolute',
+    right: 140,
+    top: 220,
+    color: 'white',
+    fontSize: 12,
   },
   chart: {
     width: 300,
