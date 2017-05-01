@@ -1,6 +1,5 @@
 // login.js
 // Flow
-
 'use strict';
 
 import React, { Component } from 'react';
@@ -10,14 +9,7 @@ export default class Login extends Component {
 
   static get propTypes() {
     return {
-      title: React.PropTypes.string,
       pushRoute: React.PropTypes.func.isRequired
-    };
-  }
-
-  static get defaultProps() {
-    return {
-      title: 'Login'
     };
   }
 
@@ -137,5 +129,3 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
-
-module.exports = Login;

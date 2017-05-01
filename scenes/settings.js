@@ -1,14 +1,10 @@
 // settings.js
 // Flow
-
 'use strict';
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, Alert, ScrollView, View, TouchableHighlight, AsyncStorage } from 'react-native';
-import ModalDropdown from 'react-native-modal-dropdown';
 
-var Login = require('../scenes/login');
-var Splash = require('../scenes/splash');
 
 export default class Settings extends Component {
 
@@ -45,23 +41,6 @@ export default class Settings extends Component {
           </View>
         </TouchableHighlight>
 
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.meterList}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Add Meter'
-          renderRow={this.dropdownRenderRow}
-          onSelect={this.addMeter}
-        />
-
-        <ModalDropdown style={styles.dropdown}
-          options={this.state.meterList}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownDropdown}
-          defaultValue='Drop Meter'
-          renderRow={this.dropdownRenderRow}
-          onSelect={this.dropMeter}
-        />
       </ScrollView>
     );
   }
@@ -72,68 +51,36 @@ export default class Settings extends Component {
       'Are you sure you want to delete your data history?',
       [
         { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Yes', onPress: () => {
-            AsyncStorage.getItem('token', (err, token) => {
-              if (err) {
-                Alert.alert('Error', 'User login token missing!');
-                return;
+        { text: 'Yes', onPress: () => {
+          AsyncStorage.getItem('token', (err, token) => {
+            if (err) {
+              Alert.alert('Error', 'User login token missing!');
+              return;
+            }
+            fetch('http://138.68.56.236:3000/api/deleteUserData', {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': token
               }
-              fetch('http://138.68.56.236:3000/api/deleteUserData', {
-                method: 'GET',
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/x-www-form-urlencoded',
-                  'x-access-token': token
+            })
+              .then((response) => {
+                switch (response.status) {
+                  case 200:
+                    response.json().then((responseObject) => {
+                      Alert.alert('Successful');
+                    });
+                    break;
+                  default:
+                    response.json().then((responseObject) => Alert.alert('Failure', responseObject.message));
                 }
-              })
-                .then((response) => {
-                  switch (response.status) {
-                    case 200:
-                      response.json().then((responseObject) => {
-                        Alert.alert('Successful');
-                      });
-                      break;
-                    default:
-                      response.json().then((responseObject) => Alert.alert('Failure', responseObject.message));
-                  }
-                }); // End fetch() callbacks
-            }); // End AsyncStorage getItem
-          }
-        } // End 'Yes' button function
+              }); // End fetch() callbacks
+          }); // End AsyncStorage getItem
+        }} // End 'Yes' button function
       ],
       { cancelable: false }
     ); // End confirmation alert
-  }
-
-  contactUs() {
-    Alert.alert('See more from the Flow Team:', 'https://github.com/APU-Flow');
-  }
-
-  addMeter(index, value) {
-    Alert.alert(
-      value,
-      'Are you sure this is the meter you would like to add?',
-      [
-        { text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel' },
-        { text: 'Yes', onPress: () => Alert.alert('Drop Meter', `${value} was added.`) },
-      ],
-      { cancelable: false }
-    );
-    return false; //this turns the selected option back to the original
-  }
-
-  dropMeter(index, value) {
-    Alert.alert(
-      `${value}`,
-      'Are you sure you want to drop this meter?',
-      [
-        { text: 'Cancel', onPress: () => Alert.alert('Cancel Pressed'), style: 'cancel' },
-        { text: 'Yes', onPress: () => Alert.alert('Drop Meter', `${value} was dropped.`) },
-      ],
-      { cancelable: false }
-    );
-    return false; //this turns the selected option back to the original
   }
 
 }
@@ -172,36 +119,4 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 1,
   },
-  dropdownText: {
-    marginVertical: 10,
-    marginHorizontal: 6,
-    fontSize: 18,
-    color: 'white',
-    textAlign: 'center',
-    textAlignVertical: 'center',
-  },
-  dropdownDropdown: {
-    margin: 8,
-    width: 320,
-    height: 100,
-    borderColor: 'rgb(31,58,147)',
-    borderWidth: 2,
-    borderRadius: 3,
-    backgroundColor: 'rgb(31,58,147)',
-  },
-  dropdownRow: {
-    flexDirection: 'row',
-    height: 40,
-    alignItems: 'center',
-    backgroundColor: 'rgb(31,58,147)'
-  },
-  dropdownRowText: {
-    marginHorizontal: 4,
-    fontSize: 16,
-    color: 'white',
-    textAlignVertical: 'center',
-    textAlign: 'center',
-  }
 });
-
-module.exports = Settings;

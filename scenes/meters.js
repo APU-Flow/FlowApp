@@ -1,6 +1,5 @@
 // meters.js
 // Flow
-
 'use strict';
 
 import React, { Component } from 'react';
@@ -22,6 +21,8 @@ export default class Meters extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(['Kitchen Sink', 'Upstairs Shower', 'Downstairs Bathroom Sink', 'Upstairs Bathroom Sink']),
+      meterList: [],
+      submitReport: '',
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -94,7 +95,7 @@ export default class Meters extends Component {
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Device Overview'
           renderRow={this.dropdownRenderRow}
-          //disabled={this.state.meterList.length === 0}
+          disabled={this.state.meterList.length === 0}
           onSelect={this.viewMeter}
         />
         <ModalDropdown style={styles.dropdown}
@@ -103,12 +104,12 @@ export default class Meters extends Component {
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Drop A Meter'
           renderRow={this.dropdownRenderRow}
-          //disabled={this.state.meterList.length === 0}
+          disabled={this.state.meterList.length === 0}
           onSelect={this.dropMeter}
         />
-        {/*<TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
+        <TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
           <Text style={styles.buttonText}>Add a Meter</Text>
-        </TouchableHighlight>*/}
+        </TouchableHighlight>
         <Text>{this.state.submitReport}</Text>
       </KeyboardAwareScrollView>
     );
@@ -207,5 +208,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
-
-module.exports = Meters;

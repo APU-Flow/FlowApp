@@ -1,6 +1,5 @@
 // splash.js
 // Flow
-
 'use strict';
 
 import React, { Component } from 'react';
@@ -95,5 +94,3 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
-
-module.exports = Splash;

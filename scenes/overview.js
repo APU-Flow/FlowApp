@@ -171,6 +171,3 @@ const styles = StyleSheet.create({
     marginBottom: 2
   },
 });
-
-
-module.exports = Overview;

@@ -1,5 +1,6 @@
 // change-account.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native';

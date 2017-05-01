@@ -1,5 +1,6 @@
 // add-meter.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { AsyncStorage, StyleSheet, TextInput, Text, TouchableHighlight, Alert } from 'react-native';
@@ -27,8 +28,8 @@ export default class AddMeter extends Component {
 
     // Bind functions to instance
     this.verifyInput = this.verifyInput.bind(this);
-    this.submitRegistration = this.submitRegistration.bind(this);
     this.submitToServer = this.submitToServer.bind(this);
+    this.submitToMeter = this.submitToMeter.bind(this);
   }
 
   componentDidMount() {

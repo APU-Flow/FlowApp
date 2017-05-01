@@ -1,12 +1,13 @@
-// meter-graphs.js
+// graphs.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { StyleSheet, Alert, Text, AsyncStorage, View, TouchableHighlight} from 'react-native';
 import Chart from 'react-native-chart';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-export default class MeterGraphs extends Component {
+export default class Graphs extends Component {
 
   static get propTypes() {
     return {
@@ -393,5 +394,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
-
-module.exports = MeterGraphs;
