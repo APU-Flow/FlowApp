@@ -250,7 +250,7 @@ export default class Graphs extends Component {
           hideVerticalGridLines={true}
 
           widthPercent={1}
-          verticalGridStep={5}
+          verticalGridStep={1}
           horizontalGridStep={2}
 
           type={this.state.graphType}
