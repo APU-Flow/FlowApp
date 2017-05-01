@@ -1,5 +1,6 @@
 // splash.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, TouchableHighlight, Navigator } from 'react-native';

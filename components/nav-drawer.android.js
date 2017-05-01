@@ -1,24 +1,28 @@
 // nav-drawer.android.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, DrawerLayoutAndroid, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, DrawerLayoutAndroid, View, Text, TouchableHighlight, Alert, BackAndroid } from 'react-native';
 
 export default class NavDrawerAndroid extends Component {
 
   static get propTypes() {
     return {
       pushRoute: React.PropTypes.func.isRequired,
+      popRoute: React.PropTypes.func.isRequired,
+      logout: React.PropTypes.func.isRequired,
       currentRouteName: React.PropTypes.string,
       drawerLockMode: React.PropTypes.string,
       children: React.PropTypes.element.isRequired
     };
   }
-  
+
   static get defaultProps() {
     return {
       drawerLockMode: 'unlocked',
-      currentRouteName: ''
+      currentRouteName: '',
+      drawerState: 'closed',
     };
   }
 
@@ -29,6 +33,48 @@ export default class NavDrawerAndroid extends Component {
     this.state = {
       routeList: ['overview', 'meters', 'settings']
     };
+
+    this.handleBackButton = this.handleBackButton.bind(this);
+  }
+
+  handleBackButton() {
+    if (this.state.drawerState === 'open') {
+      this.drawerLayout.closeDrawer();
+      return true;
+    }
+    switch (this.props.currentRouteName) {
+      case 'splash':
+        Alert.alert(
+          'Exit?',
+          'Would you like to exit?',
+          [
+            { text: 'No', style: 'cancel' },
+            { text: 'Yes', onPress: () => BackAndroid.exitApp() }
+          ]
+        );
+        return true;
+      case 'overview':
+        Alert.alert(
+          'Logout?',
+          'Would you like to logout?',
+          [
+            { text: 'No', style: 'cancel' },
+            { text: 'Yes', onPress: this.props.logout }
+          ]
+        );
+        return true;
+      default:
+        this.props.popRoute();
+        return true;
+    }
+  }
+
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
 
   render() {
@@ -51,10 +97,13 @@ export default class NavDrawerAndroid extends Component {
     );
     return (
       <DrawerLayoutAndroid
+        ref={(drawerLayout) => this.drawerLayout = drawerLayout}
         drawerWidth={300}
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         renderNavigationView={() => navigationView}
-        drawerLockMode={this.props.drawerLockMode}>
+        drawerLockMode={this.props.drawerLockMode}
+        onDrawerOpen={() => this.setState({drawerState: 'open'})}
+        onDrawerClose={() => this.setState({drawerState: 'closed'})}>
 
           {this.props.children}
 

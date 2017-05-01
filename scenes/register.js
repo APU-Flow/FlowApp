@@ -43,6 +43,7 @@ export default class Register extends Component {
         <Text style={styles.text}>Register</Text>
         <TextInput style={[styles.field, !this.state.fieldValidities[0] && styles.invalid]}
           borderColor={this.state.fieldValidities[0] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="First Name"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -51,6 +52,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[1] && styles.invalid]}
           borderColor={this.state.fieldValidities[1] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Last Name"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -59,6 +61,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[2] && styles.invalid]}
           borderColor={this.state.fieldValidities[2] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Email Address"
           placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="email-address"
@@ -68,6 +71,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[3] && styles.invalid]}
           borderColor={this.state.fieldValidities[3] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
@@ -77,6 +81,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[4] && styles.invalid]}
           borderColor={this.state.fieldValidities[4] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Re-enter Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
@@ -86,6 +91,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[5] && styles.invalid]}
           borderColor={this.state.fieldValidities[5] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Street Address"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -94,6 +100,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[6] && styles.invalid]}
           borderColor={this.state.fieldValidities[6] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="City"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -102,6 +109,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[7] && styles.invalid]}
           borderColor={this.state.fieldValidities[7] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="State"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="characters"
@@ -110,6 +118,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[8] && styles.invalid]}
           borderColor={this.state.fieldValidities[8] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Zip"
           placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="numeric"
@@ -117,7 +126,10 @@ export default class Register extends Component {
           onChangeText={(text) => this.verifyInput('zip', text)}
         />
         <Text>{this.state.submitReport}</Text>
-        <TouchableHighlight style={styles.buttonContainer} onPress={this.submitRegistration} disabled={!this.state.allValid}>
+        <TouchableHighlight
+          style={[styles.buttonContainer, !this.state.allValid && styles.buttonDisabled]}
+          onPress={this.submitRegistration}
+          disabled={!this.state.allValid}>
           <Text style={styles.buttonText}>SUBMIT</Text>
         </TouchableHighlight>
       </KeyboardAwareScrollView>
@@ -125,75 +137,62 @@ export default class Register extends Component {
   }
 
   verifyInput(name, text) {
+    let fieldIndex = -1;
+    let validityTest = false;
+
     switch (name) {
       case 'firstName':
-        this.setState((prevState) => {
-          let newValidities = prevState.fieldValidities;
-          newValidities[0] = /^[A-Z' \-]{1,20}$/i.test(text);
-          return {fieldValidities: newValidities};
-        });
+        fieldIndex = 0;
+        validityTest = /^[A-Z' \-]{1,20}$/i.test(text);
         break;
       case 'lastName':
-        this.setState((prevState) => {
-          let newValidities = prevState.fieldValidities;
-          newValidities[1] = (/^[A-Z'\-]{1,20}$/i.test(text));
-          return {fieldValidities: newValidities};
-        });
+        fieldIndex = 1;
+        validityTest = /^[A-Z' \-]{1,20}$/i.test(text);
         break;
       case 'email':
-        this.setState((prevState) => {
-          let newValidities = prevState.fieldValidities;
-          newValidities[2] = (/^[A-Z0-9._\-%+]{1,20}@[A-Z0-9\-.]{1,20}\.[A-Z]{2,4}$/i.test(text));
-          return {fieldValidities: newValidities};
-        });
+        fieldIndex = 2;
+        validityTest = /^[A-Z0-9._\-%+]{1,20}@[A-Z0-9\-.]{1,20}\.[A-Z]{2,4}$/i.test(text);
         break;
       case 'password':
-        this.setState((prevState) => {
-          let newValidities = prevState.fieldValidities;
-          newValidities[3] = (/^[A-Z0-9`~!@#$%^&*()\-=_+<>,.?]{5,20}$/i.test(text));
-          return {fieldValidities: newValidities};
-        });
-        // Falls through to update passsword verification styles when password changes
+        fieldIndex = 3;
+        validityTest = /^[A-Z0-9`~!@#$%^&*()\-=_+<>,.?]{5,20}$/i.test(text);
+        break;
       case 'passwordVerification':
-        this.setState((prevState) => {
-          let newValidities = prevState.fieldValidities;
-          newValidities[4] = (text == this.state.password);
-          return {fieldValidities: newValidities};
-        });
+        fieldIndex = 4;
+        validityTest = (text == this.state.password);
         break;
       case 'address':
-        this.setState((prevState) => {
-          let newValidities = prevState.fieldValidities;
-          newValidities[5] = (/^[0-9]{1,8} [A-Z'#.& \-]{2,30}$/i.test(text));
-          return {fieldValidities: newValidities};
-        });
+        fieldIndex = 5;
+        validityTest = /^(\d{1,7} [A-Z'#.& \-]{2,30}|P\.?O\.? box (# )?\d{1,6})$/i.test(text);
         break;
       case 'city':
-        this.setState((prevState) => {
-          let newValidities = prevState.fieldValidities;
-          newValidities[6] = (/^[A-Z' \-]{2,25}$/i.test(text));
-          return {fieldValidities: newValidities};
-        });
+        fieldIndex = 6;
+        validityTest = /^[A-Z' \-]{2,25}$/i.test(text);
         break;
       case 'state':
-        this.setState((prevState) => {
-          let newValidities = prevState.fieldValidities;
-          newValidities[7] = (/^[A-Z]{2}$/.test(text));
-          return {fieldValidities: newValidities};
-        });
+        fieldIndex = 7;
+        validityTest = /^[A-Z]{2}$/.test(text);
         break;
       case 'zip':
-        this.setState((prevState) => {
-          let newValidities = prevState.fieldValidities;
-          newValidities[8] = (/^\d{5}(-\d{4})?$/.test(text));
-          return {fieldValidities: newValidities};
-        });
+        fieldIndex = 8;
+        validityTest = /^\d{5}(-\d{4})?$/.test(text);
         break;
     }
 
-    this.setState({allValid: this.state.fieldValidities.every((value) => value === true)});
-
-    this.setState({[name]: text});
+    this.setState((prevState) => {
+      let newValidities = prevState.fieldValidities;
+      newValidities[fieldIndex] = validityTest;
+      if (fieldIndex === 3) {
+        // If we just verified the password, also verify the password verification
+        newValidities[4] = (text === prevState.passwordVerification);
+      }
+      let allValid = newValidities.every((value) => value === true);
+      return {
+        fieldValidities: newValidities,
+        allValid,
+        [name]: text
+      };
+    });
   }
 
   submitRegistration() {
@@ -214,12 +213,14 @@ export default class Register extends Component {
         zip: this.state.zip
       })
     })
-    .then((response) => response.json())
-    .then((responseObject) => {
-      if (responseObject.status === 'ok')
-        this.submitLogin();
-      else
-        this.setState({submitReport: 'Registration failed!'});
+    .then((response) => {
+      switch (response.status) {
+        case 200:
+          response.json().then((responseObject) => this.submitLogin());
+          break;
+        default:
+          response.json().then((responseObject) => this.setState({submitReport: `Registration failed: ${responseObject.message}`}));
+      }
     });
   }
 
@@ -234,27 +235,29 @@ export default class Register extends Component {
         email: this.state.email,
         password: this.state.password
       })
-    })    
-    .then((response) => response.json())
-    .then(async (responseObject) => {
-      if (typeof responseObject.token === 'string') {
-        this.setState({ submitReport: '' });
-        
-        try {
-          // TODO: Handle undefined instead of hanging!
-          await AsyncStorage.multiSet([
-            ['email', responseObject.email],
-            ['firstName', responseObject.firstName],
-            ['token', responseObject.token]
-          ]);
-        } catch (error) {
-          Alert.alert('Error', error);
-        }
+    })
+    .then((response) => {
+      switch (response.status) {
+        case 200:
+          response.json().then(async (responseObject) => {
+            this.setState({ submitReport: '' });
 
-        this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
+            try {
+              await AsyncStorage.multiSet([
+                ['email', responseObject.email],
+                ['firstName', responseObject.firstName],
+                ['token', responseObject.token]
+              ]);
+            } catch (error) {
+              Alert.alert('Error', error.toString());
+            }
+
+            this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
+          });
+          break;
+        default:
+          response.json().then((responseObject) => this.setState({ submitReport: `Login failed: ${responseObject.message}` }));
       }
-      else
-        this.setState({ submitReport: 'Login failed; bad username or password.' });
     });
   }
 
@@ -284,6 +287,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     marginTop:42,
     justifyContent:'center'
+  },
+  buttonDisabled: {
+    backgroundColor: 'rgb(112,120,145)'
   },
   buttonText: {
     textAlign: 'center',

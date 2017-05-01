@@ -1,10 +1,11 @@
 // login.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { Alert, AsyncStorage, View, StyleSheet, TextInput, Text, TouchableHighlight } from 'react-native';
 
-export default class LoginForm extends Component {
+export default class Login extends Component {
 
   static get propTypes() {
     return {
@@ -29,6 +30,7 @@ export default class LoginForm extends Component {
         <TextInput style={styles.field}
           placeholder="Email"
           placeholderTextColor="rgba(255,255,255,0.5)"
+          keyboardType="email-address"
           autoCapitalize="none"
           returnKeyType="next"
           onChangeText={(text) => this.setState({ email: text })}
@@ -37,7 +39,7 @@ export default class LoginForm extends Component {
           placeholder="Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
-          returnKeyType="next"
+          returnKeyType="done"
           secureTextEntry={true}
           onChangeText={(text) => this.setState({ password: text })}
         />
@@ -61,37 +63,33 @@ export default class LoginForm extends Component {
         email: this.state.email,
         password: this.state.password
       })
-    })    
-    .then((response) => response.json())
-    .then(async (responseObject) => {
-      if (responseObject.message === 'ok' && typeof responseObject.token === 'string') {
-        this.setState({ submitReport: '' });
-        
-        try {
-          // TODO: Handle undefined instead of hanging!
-          //Alert.alert(`${responseObject.email}, ${responseObject.firstName}, ${responseObject.token}`);
-          await AsyncStorage.multiSet([
-            ['email', responseObject.email],
-            ['firstName', responseObject.firstName],
-            ['token', responseObject.token]
-          ]);
-          //Alert.alert('Hit try end!');
-        } catch (error) {
-          Alert.alert('Error', error);
-        }
+    })
+    .then((response) => {
+      switch (response.status) {
+        case 200:
+          response.json().then(async (responseObject) => {
+            this.setState({ submitReport: '' });
 
-        this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
-      }
-      else if (responseObject.message === 'lol nice tri n00b') {
-        // Thank you George for that wonderful masterpiece, that piece of art of a server response
-        this.setState({ submitReport: 'Login failed; bad username or password.' });
-      }
-      else {
-        this.setState({ submitReport: 'Login failed; server returned invalid response.' });
+            try {
+              await AsyncStorage.multiSet([
+                ['email', responseObject.email],
+                ['firstName', responseObject.firstName],
+                ['token', responseObject.token]
+              ]);
+            } catch (error) {
+              Alert.alert('Error', error.toString());
+            }
+
+            this.props.pushRoute({ name: 'overview', passProps: {message: JSON.stringify(responseObject)} });
+          });
+          break;
+        default:
+          response.json().then((responseObject) => this.setState({ submitReport: `Login failed: ${responseObject.message}` }));
       }
     });
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {

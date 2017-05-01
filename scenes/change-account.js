@@ -1,5 +1,6 @@
 // change-account.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, Alert, View, TouchableHighlight } from 'react-native';
@@ -7,16 +8,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class ChangeAccount extends Component {
-
-  static get propTypes() {
-    return { title: React.PropTypes.string };
-  }
-
-  static get defaultProps() {
-    return {
-      title: 'Change Account'
-    };
-  }
 
   constructor(props) {
     super(props);
@@ -35,21 +26,21 @@ export default class ChangeAccount extends Component {
   render() {
     return (
      <KeyboardAwareScrollView style={styles.container}>
-        <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={styles.title}>Change Account</Text>
         <Text style={styles.text}>You're currently logged in as...</Text>
         <ModalDropdown style={styles.dropdown}
           options={this.state.switchableAccounts}
           textStyle={styles.dropdownText}
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Switch to Which Account?'
-          renderRow={this.dropdownRenderRow}            
+          renderRow={this.dropdownRenderRow}
         />
         <ModalDropdown style={styles.dropdown}
           options={this.state.settingsOptions}
           textStyle={styles.dropdownText}
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Account Settings'
-          renderRow={this.dropdownRenderRow}              
+          renderRow={this.dropdownRenderRow}
         />
         <TouchableHighlight onPress={this.confirmDeleteAccount}>
           <View style={styles.dropdown}>
