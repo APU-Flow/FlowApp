@@ -107,7 +107,7 @@ export default class Meters extends Component {
           disabled={this.state.meterList.length === 0}
           onSelect={this.dropMeter}
         />
-        <TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
+        <TouchableHighlight style={styles.button} onPress={this.addMeter}>
           <Text style={styles.buttonText}>Add a Meter</Text>
         </TouchableHighlight>
         <Text>{this.state.submitReport}</Text>
@@ -169,6 +169,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '400',
     marginBottom: 15
+  },
+  button: {
+    margin: 8,
+    backgroundColor: 'rgb(31,58,147)',
+    height: 45,
+    justifyContent: 'center',
+    marginTop: 15
+  },
+  buttonText: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: 'white',
+    fontSize: 18
   },
   dropdown: {
     margin: 8,
