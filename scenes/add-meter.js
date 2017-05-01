@@ -88,7 +88,7 @@ export default class AddMeter extends Component {
           onChangeText={(text) => this.verifyInput('password', text)}
         />
         <Text>{this.state.submitReport}</Text>
-        <TouchableHighlight style={styles.buttonContainer} onPress={this.submitToServer} disabled={!this.state.allValid}>
+        <TouchableHighlight style={styles.buttonContainer} onPress={this.submitToServer} disabled={true}>{/*!this.state.allValid}>*/}
           <Text style={styles.buttonText}>SUBMIT</Text>
         </TouchableHighlight>
       </KeyboardAwareScrollView>
