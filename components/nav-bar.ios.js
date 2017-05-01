@@ -6,10 +6,10 @@ import React, { Component } from 'react';
 import { TabBarIOS } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Graphs from './scenes/graphs';
-import Meters from './scenes/meters';
-import Overview from './scenes/overview';
-import Settings from './scenes/settings';
+import Graphs from '../scenes/graphs';
+import Meters from '../scenes/meters';
+import Overview from '../scenes/overview';
+import Settings from '../scenes/settings';
 
 
 export default class NavBarIOS extends Component {
