@@ -76,7 +76,7 @@ export default class NavBarIOS extends Component {
                             selectedTab: 'Meters',
                         });
                     }}>
-                    <Meters meterId={this.props.meterId}/>
+                    <Meters pushRoute={this.props.pushRoute} meterId={this.props.meterId}/>
                 </Icon.TabBarItem>
                 <Icon.TabBarItem
                     title="Settings"

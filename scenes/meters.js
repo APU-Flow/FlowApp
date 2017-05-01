@@ -4,7 +4,9 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, Alert, View, TouchableHighlight, ListView } from 'react-native';
+import { StyleSheet, Text, Alert, View, TouchableHighlight, ListView, AsyncStorage } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class Meters extends Component {
 
@@ -92,8 +94,8 @@ export default class Meters extends Component {
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Device Overview'
           renderRow={this.dropdownRenderRow}
+          //disabled={this.state.meterList.length === 0}
           onSelect={this.viewMeter}
-          disabled={this.state.meterList.length === 0}
         />
         <ModalDropdown style={styles.dropdown}
           options={this.state.meterList}
@@ -101,8 +103,8 @@ export default class Meters extends Component {
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Drop A Meter'
           renderRow={this.dropdownRenderRow}
+          //disabled={this.state.meterList.length === 0}
           onSelect={this.dropMeter}
-          disabled={this.state.meterList.length === 0}
         />
         {/*<TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
           <Text style={styles.buttonText}>Add a Meter</Text>
@@ -127,9 +129,8 @@ export default class Meters extends Component {
 
   viewMeter(index, value) {
     this.props.pushRoute({
-      name: 'meterGraphs',
-      passProps: {meterId: value},
-      sceneConfig: Navigator.SceneConfigs.PushFromRight
+      name: 'graphs',
+      passProps: {meterId: value}
     });
     return false; //this turns the selected option back to the original
   }
