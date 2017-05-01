@@ -1,8 +1,9 @@
 // meters.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, Alert, View, TouchableHighlight, Navigator, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, Alert, View, TouchableHighlight, ListView, AsyncStorage } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ModalDropdown from 'react-native-modal-dropdown';
 
@@ -17,10 +18,11 @@ export default class Meters extends Component {
   constructor(props) {
     super(props);
 
-    // Initialize state variables
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
+      dataSource: ds.cloneWithRows(['Kitchen Sink', 'Upstairs Shower', 'Downstairs Bathroom Sink', 'Upstairs Bathroom Sink']),
       meterList: [],
-      submitReport: ''
+      submitReport: '',
     };
 
     this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
@@ -93,8 +95,8 @@ export default class Meters extends Component {
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Device Overview'
           renderRow={this.dropdownRenderRow}
-          onSelect={this.viewMeter}
           disabled={this.state.meterList.length === 0}
+          onSelect={this.viewMeter}
         />
         <ModalDropdown style={styles.dropdown}
           options={this.state.meterList}
@@ -102,12 +104,12 @@ export default class Meters extends Component {
           dropdownStyle={styles.dropdownDropdown}
           defaultValue='Drop A Meter'
           renderRow={this.dropdownRenderRow}
-          onSelect={this.dropMeter}
           disabled={this.state.meterList.length === 0}
+          onSelect={this.dropMeter}
         />
-        {/*<TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
+        <TouchableHighlight style={styles.button} onPress={this.addMeter}>
           <Text style={styles.buttonText}>Add a Meter</Text>
-        </TouchableHighlight>*/}
+        </TouchableHighlight>
         <Text>{this.state.submitReport}</Text>
       </KeyboardAwareScrollView>
     );
@@ -128,9 +130,8 @@ export default class Meters extends Component {
 
   viewMeter(index, value) {
     this.props.pushRoute({
-      name: 'meterGraphs',
-      passProps: {meterId: value},
-      sceneConfig: Navigator.SceneConfigs.PushFromRight
+      name: 'graphs',
+      passProps: {meterId: value}
     });
     return false; //this turns the selected option back to the original
   }
@@ -169,19 +170,19 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 15
   },
-  buttonContainer: {
+  button: {
+    margin: 8,
     backgroundColor: 'rgb(31,58,147)',
-    paddingVertical: 15,
-    marginTop:42,
-    justifyContent:'center'
+    height: 45,
+    justifyContent: 'center',
+    marginTop: 15
   },
   buttonText: {
     textAlign: 'center',
-    color: '#FFF',
-    fontWeight: '700',
-    fontSize: 20
+    textAlignVertical: 'center',
+    color: 'white',
+    fontSize: 18
   },
-
   dropdown: {
     margin: 8,
     borderColor:  'rgb(31,58,147)',

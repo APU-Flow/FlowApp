@@ -1,5 +1,6 @@
 // overview.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 
@@ -101,7 +102,7 @@ export default class Overview extends Component {
       <View style={styles.container}>
         <Text style={styles.title}>Overview</Text>
         <View>
-          <Text style={styles.label}>Ml</Text>
+          <Text style={styles.label}>mL</Text>
         </View>
         <Chart
         color={this.state.graphColor}
@@ -120,7 +121,7 @@ export default class Overview extends Component {
         hideVerticalGridLines={true}
 
         widthPercent={1}
-        verticalGridStep={5}
+        verticalGridStep={1}
         horizontalGridStep={2}
 
         type='bar'
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: 'white',
-    marginTop: 45,
+    marginTop: 75,
     fontSize: 40,
     fontWeight: '400',
     marginBottom: 2

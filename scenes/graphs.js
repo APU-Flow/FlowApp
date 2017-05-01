@@ -1,12 +1,13 @@
-// meter-graphs.js
+// graphs.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { StyleSheet, Alert, Text, AsyncStorage, View, TouchableHighlight} from 'react-native';
 import Chart from 'react-native-chart';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-export default class MeterGraphs extends Component {
+export default class Graphs extends Component {
 
   static get propTypes() {
     return {
@@ -213,7 +214,7 @@ export default class MeterGraphs extends Component {
           <Text style={styles.title}>Device Overview</Text>
         </View>
         <View>
-          <Text style={styles.label}>Ml</Text>
+          <Text style={styles.label}>mL</Text>
         </View>
         <ModalDropdown style={styles.dropdown}
           options={this.state.graphList}
@@ -249,7 +250,7 @@ export default class MeterGraphs extends Component {
           hideVerticalGridLines={true}
 
           widthPercent={1}
-          verticalGridStep={5}
+          verticalGridStep={1}
           horizontalGridStep={2}
 
           type={this.state.graphType}

@@ -1,5 +1,6 @@
 // nav-drawer.android.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { StyleSheet, DrawerLayoutAndroid, View, Text, TouchableHighlight, Alert, BackAndroid } from 'react-native';

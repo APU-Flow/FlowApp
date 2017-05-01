@@ -43,6 +43,7 @@ export default class Register extends Component {
         <Text style={styles.text}>Register</Text>
         <TextInput style={[styles.field, !this.state.fieldValidities[0] && styles.invalid]}
           borderColor={this.state.fieldValidities[0] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="First Name"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -51,6 +52,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[1] && styles.invalid]}
           borderColor={this.state.fieldValidities[1] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Last Name"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -59,6 +61,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[2] && styles.invalid]}
           borderColor={this.state.fieldValidities[2] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Email Address"
           placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="email-address"
@@ -68,6 +71,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[3] && styles.invalid]}
           borderColor={this.state.fieldValidities[3] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
@@ -77,6 +81,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[4] && styles.invalid]}
           borderColor={this.state.fieldValidities[4] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Re-enter Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
@@ -86,6 +91,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[5] && styles.invalid]}
           borderColor={this.state.fieldValidities[5] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Street Address"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -94,6 +100,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[6] && styles.invalid]}
           borderColor={this.state.fieldValidities[6] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="City"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="words"
@@ -102,6 +109,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[7] && styles.invalid]}
           borderColor={this.state.fieldValidities[7] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="State"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="characters"
@@ -110,6 +118,7 @@ export default class Register extends Component {
         />
         <TextInput style={[styles.field, !this.state.fieldValidities[8] && styles.invalid]}
           borderColor={this.state.fieldValidities[8] ? 'green' : 'grey'}
+          borderWidth={2}
           placeholder="Zip"
           placeholderTextColor="rgba(255,255,255,0.5)"
           keyboardType="numeric"

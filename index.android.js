@@ -1,5 +1,6 @@
 // index.android.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { AppRegistry, Navigator, Text, AsyncStorage, Alert } from 'react-native';
@@ -7,13 +8,14 @@ import { AppRegistry, Navigator, Text, AsyncStorage, Alert } from 'react-native'
 import AddMeter from './scenes/add-meter';
 import ChangeAccount from './scenes/change-account';
 import Login from './scenes/login';
-import MeterGraphs from './scenes/meter-graphs';
+import Graphs from './scenes/graphs';
 import Meters from './scenes/meters';
-import NavDrawerAndroid from './components/nav-drawer.android';
 import Overview from './scenes/overview';
 import Register from './scenes/register';
 import Settings from './scenes/settings';
 import Splash from './scenes/splash';
+import NavDrawerAndroid from './components/nav-drawer.android';
+
 
 export default class FlowApp extends Component {
 
@@ -68,9 +70,9 @@ export default class FlowApp extends Component {
             case 'overview':
               scene = <Overview {...route.passProps}/>;
               break;
-            case 'meterGraphs':
+            case 'graphs':
               drawerLock = 'locked-closed';
-              scene = <MeterGraphs {...route.passProps}/>;
+              scene = <Graphs {...route.passProps}/>;
               break;
           }
 

@@ -1,8 +1,10 @@
 // settings.js
 // Flow
+'use strict';
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, Alert, ScrollView, View, TouchableHighlight, AsyncStorage } from 'react-native';
+
 
 export default class Settings extends Component {
 
@@ -15,9 +17,10 @@ export default class Settings extends Component {
   constructor(props) {
     super(props);
 
-    //this.dropdownRenderRow = this.dropdownRenderRow.bind(this);
+    this.state = {
+      meterList: ['Meter 1', 'Meter 2', 'Meter 3']
+    };
     this.confirmDeleteHistory = this.confirmDeleteHistory.bind(this);
-    this.contactUs = this.contactUs.bind(this);
   }
 
 
@@ -26,27 +29,21 @@ export default class Settings extends Component {
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Settings</Text>
 
-        <TouchableHighlight onPress={this.props.logout}>
+        <TouchableHighlight style={styles.button} onPress={this.props.logout}>
           <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Logout / Change Account</Text>
+            <Text style={styles.buttonText}>Logout</Text>
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={this.confirmDeleteHistory}>
+        <TouchableHighlight style={styles.button} onPress={this.confirmDeleteHistory}>
           <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Delete Data History</Text>
+            <Text style={styles.buttonText}>Delete Data History</Text>
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={this.contactUs}>
-          <View style={styles.dropdown}>
-            <Text style={styles.dropdownText}>Contact Us</Text>
-          </View>
-        </TouchableHighlight>
       </ScrollView>
     );
   }
-
 
   confirmDeleteHistory() {
     Alert.alert(
@@ -68,17 +65,17 @@ export default class Settings extends Component {
                 'x-access-token': token
               }
             })
-            .then((response) => {
-              switch (response.status) {
-                case 200:
-                  response.json().then((responseObject) => {
-                    Alert.alert('Successful');
-                  });
-                  break;
-                default:
-                  response.json().then((responseObject) => Alert.alert('Failure', responseObject.message));
-              }
-            }); // End fetch() callbacks
+              .then((response) => {
+                switch (response.status) {
+                  case 200:
+                    response.json().then((responseObject) => {
+                      Alert.alert('Successful');
+                    });
+                    break;
+                  default:
+                    response.json().then((responseObject) => Alert.alert('Failure', responseObject.message));
+                }
+              }); // End fetch() callbacks
           }); // End AsyncStorage getItem
         }} // End 'Yes' button function
       ],
@@ -86,17 +83,13 @@ export default class Settings extends Component {
     ); // End confirmation alert
   }
 
-  contactUs() {
-    Alert.alert('See more from the Flow Team:', 'https://github.com/APU-Flow');
-  }
-
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     flex: 1,
-    backgroundColor:'rgb(52,152,219)',
+    flexDirection: 'column',
+    backgroundColor: 'rgb(52,152,219)',
   },
   title: {
     textAlign: 'center',
@@ -106,20 +99,24 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 15
   },
-
+  button: {
+    margin: 8,
+    backgroundColor: 'rgb(31,58,147)',
+    height: 45,
+    justifyContent: 'center',
+    marginTop: 15
+  },
+  buttonText: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: 'white',
+    fontSize: 18
+  },
   dropdown: {
     margin: 8,
-    borderColor:  'rgb(31,58,147)',
+    borderColor: 'rgb(31,58,147)',
     backgroundColor: 'rgb(31,58,147)',
     borderWidth: 1,
     borderRadius: 1,
-  },
-  dropdownText: {
-    marginVertical: 10,
-    marginHorizontal: 6,
-    fontSize: 18,
-    color: 'white',
-    textAlign: 'center',
-    textAlignVertical: 'center',
   },
 });
