@@ -106,18 +106,8 @@ export default class Settings extends Component {
     ); // End confirmation alert
   }
 
-
-  dropdownRenderRow(rowData, rowID, highlighted) {
-    let evenRow = rowID % 2;
-    return (
-      <TouchableHighlight underlayColor='cornflowerblue'>
-       <View style={[styles.dropdownRow, {backgroundColor: evenRow ? 'rgb(31,58,147)' : 'rgb(31,58,147)'}]}>
-          <Text style={[styles.dropdownRowText, highlighted && {color: 'white'}]}>
-             {rowData}
-          </Text>
-        </View>
-      </TouchableHighlight>
-    );
+  contactUs() {
+    Alert.alert('See more from the Flow Team:', 'https://github.com/APU-Flow');
   }
 
   addMeter(index, value) {

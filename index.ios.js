@@ -4,12 +4,15 @@
 import React, { Component } from 'react';
 import { AppRegistry, Navigator, Text, AsyncStorage, Alert} from 'react-native';
 
+import AddMeter from './scenes/add-meter';
 import NavBarIOS from './components/nav-bar.ios';
 import Settings from './scenes/settings';
 import Meters from './scenes/meters';
 import ChangeAccount from './scenes/change-account';
-import Splash from './scenes/splash';
 import Login from './scenes/login';
+import MeterGraphs from './scenes/meter-graphs';
+import Meters from './scenes/meters';
+import Overview from './scenes/overview';
 import Register from './scenes/register';
 import Overview from './scenes/overview';
 import Test from './scenes/test';

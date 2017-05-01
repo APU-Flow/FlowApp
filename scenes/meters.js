@@ -85,11 +85,31 @@ export default class Meters extends Component {
 
   render() {
     return (
-     <ListView
-        style={styles.container}
-        dataSource={this.state.dataSource}
-        renderRow={(data) => <View><Text>{data}</Text></View>}
-      />
+      <KeyboardAwareScrollView style={styles.container}>
+        <Text style={styles.title}>Meters</Text>
+        <ModalDropdown style={styles.dropdown}
+          options={this.state.meterList}
+          textStyle={styles.dropdownText}
+          dropdownStyle={styles.dropdownDropdown}
+          defaultValue='Device Overview'
+          renderRow={this.dropdownRenderRow}
+          onSelect={this.viewMeter}
+          disabled={this.state.meterList.length === 0}
+        />
+        <ModalDropdown style={styles.dropdown}
+          options={this.state.meterList}
+          textStyle={styles.dropdownText}
+          dropdownStyle={styles.dropdownDropdown}
+          defaultValue='Drop A Meter'
+          renderRow={this.dropdownRenderRow}
+          onSelect={this.dropMeter}
+          disabled={this.state.meterList.length === 0}
+        />
+        {/*<TouchableHighlight style={styles.buttonContainer} onPress={this.addMeter}>
+          <Text style={styles.buttonText}>Add a Meter</Text>
+        </TouchableHighlight>*/}
+        <Text>{this.state.submitReport}</Text>
+      </KeyboardAwareScrollView>
     );
   }
 

@@ -54,13 +54,13 @@ export default class FlowApp extends Component {
               scene = <Register pushRoute={navigator.push}/>;
               break;
             case 'settings':
-              scene = <Settings logout={() => this.logout(navigator)} {...route.passProps} />;
+              scene = <Settings logout={() => this.logout(navigator)} {...route.passProps}/>;
               break;
             case 'changeAccount':
               scene = <ChangeAccount/>;
               break;
             case 'meters':
-              scene = <Meters pushRoute={navigator.push} {...route.passProps} />;
+              scene = <Meters pushRoute={navigator.push} {...route.passProps}/>;
               break;
             case 'addMeter':
               scene = <AddMeter finishAction={() => navigator.pop()}/>;
@@ -70,7 +70,7 @@ export default class FlowApp extends Component {
               break;
             case 'meterGraphs':
               drawerLock = 'locked-closed';
-              scene = <MeterGraphs {...route.passProps} />;
+              scene = <MeterGraphs {...route.passProps}/>;
               break;
           }
 
