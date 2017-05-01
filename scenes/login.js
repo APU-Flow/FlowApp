@@ -29,6 +29,7 @@ export default class LoginForm extends Component {
         <TextInput style={styles.field}
           placeholder="Email"
           placeholderTextColor="rgba(255,255,255,0.5)"
+          keyboardType="email-address"
           autoCapitalize="none"
           returnKeyType="next"
           onChangeText={(text) => this.setState({ email: text })}
@@ -37,7 +38,7 @@ export default class LoginForm extends Component {
           placeholder="Password"
           placeholderTextColor="rgba(255,255,255,0.5)"
           autoCapitalize="none"
-          returnKeyType="next"
+          returnKeyType="done"
           secureTextEntry={true}
           onChangeText={(text) => this.setState({ password: text })}
         />

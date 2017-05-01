@@ -2,17 +2,26 @@
 // Flow
 
 import React, { Component } from 'react';
-import { AppRegistry, Navigator, Text } from 'react-native';
+import { AppRegistry, Navigator, Text, AsyncStorage, Alert } from 'react-native';
 
-import Settings from './scenes/settings';
-import Meters from './scenes/meters';
+import AddMeter from './scenes/add-meter';
 import ChangeAccount from './scenes/change-account';
-import Splash from './scenes/splash';
 import Login from './scenes/login';
-import Register from './scenes/register';
+import MeterGraphs from './scenes/meter-graphs';
+import Meters from './scenes/meters';
 import Overview from './scenes/overview';
+import Register from './scenes/register';
+import Settings from './scenes/settings';
+import Splash from './scenes/splash';
 
 export default class FlowApp extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.logout = this.logout.bind(this);
+  }
+
 
   render() {
     return (
@@ -24,25 +33,31 @@ export default class FlowApp extends Component {
 
           switch (route.name) {
             case 'splash':
-              scene = <Splash pushRoute={navigator.push} />;
+              scene = <Splash pushRoute={navigator.push}/>;
               break;
             case 'login':
-              scene = <Login pushRoute={navigator.push} {...route.passProps} />;
+              scene = <Login pushRoute={navigator.push}/>;
               break;
             case 'register':
-              scene = <Register pushRoute={navigator.push} {...route.passProps} />;
+              scene = <Register pushRoute={navigator.push}/>;
               break;
             case 'settings':
-              scene = <Settings {...route.passsProps} />;
+              scene = <Settings logout={() => this.logout(navigator)} {...route.passProps}/>;
               break;
             case 'changeAccount':
-              scene = <ChangeAccount {...route.passProps} />;
+              scene = <ChangeAccount/>;
               break;
             case 'meters':
-              scene = <Meters {...route.passProps} />;
+              scene = <Meters pushRoute={navigator.push} {...route.passProps}/>;
+              break;
+            case 'addMeter':
+              scene = <AddMeter finishAction={() => navigator.pop()}/>;
               break;
             case 'overview':
-              scene = <Overview {...route.passProps} />;
+              scene = <Overview {...route.passProps}/>;
+              break;
+            case 'meterGraphs':
+              scene = <MeterGraphs {...route.passProps}/>;
               break;
           }
 
@@ -50,6 +65,15 @@ export default class FlowApp extends Component {
         }}
       />
     );
+  }
+
+
+  logout(navigator) {
+    AsyncStorage.multiRemove(['email', 'token', 'firstName'], (err) => {
+      if (err) Alert.alert('Error', err.toString());
+
+      navigator.resetTo({name: 'splash'});
+    });
   }
 }
 
