@@ -17,7 +17,6 @@ export default class Meters extends Component {
   constructor(props) {
     super(props);
 
-    // TODO: create a route to pull in active meters associated with user 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(['Kitchen Sink', 'Upstairs Shower', 'Downstairs Bathroom Sink', 'Upstairs Bathroom Sink']),

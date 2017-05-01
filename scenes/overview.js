@@ -102,7 +102,7 @@ export default class Overview extends Component {
       <View style={styles.container}>
         <Text style={styles.title}>Overview</Text>
         <View>
-          <Text style={styles.label}>Ml</Text>
+          <Text style={styles.label}>mL</Text>
         </View>
         <Chart
         color={this.state.graphColor}

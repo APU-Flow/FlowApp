@@ -213,7 +213,7 @@ export default class MeterGraphs extends Component {
           <Text style={styles.title}>Device Overview</Text>
         </View>
         <View>
-          <Text style={styles.label}>Ml</Text>
+          <Text style={styles.label}>mL</Text>
         </View>
         <ModalDropdown style={styles.dropdown}
           options={this.state.graphList}
