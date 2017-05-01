@@ -64,7 +64,8 @@ export default class FlowApp extends Component {
             <NavBarIOS
               selectedTab={route.name}
               pushRoute={navigator.push}
-              logout={() => this.logout(navigator)}>
+              logout={() => this.logout(navigator)}
+              routePassProps={route.passProps}>
 
                 {scene}
 

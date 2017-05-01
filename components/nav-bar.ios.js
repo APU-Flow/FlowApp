@@ -17,8 +17,10 @@ export default class NavBarIOS extends Component {
   static get propTypes() {
     return {
       logout: React.PropTypes.func.isRequired,
+      pushRoute: React.PropTypes.func.isRequired,
       selectedTab: React.PropTypes.string,
       children: React.PropTypes.element.isRequired,
+      routePassProps: React.PropTypes.object
     };
   }
 
@@ -50,7 +52,7 @@ export default class NavBarIOS extends Component {
               selectedTab: 'overview',
             });
           }}>
-          <Overview />
+          <Overview {...this.props.routePassProps}/>
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Graphs"
@@ -62,7 +64,7 @@ export default class NavBarIOS extends Component {
               selectedTab: 'graphs',
             });
           }}>
-          <Graphs meterId={this.props.meterId} />
+          <Graphs {...this.props.routePassProps}/>
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Meters"
@@ -74,7 +76,7 @@ export default class NavBarIOS extends Component {
               selectedTab: 'Meters',
             });
           }}>
-          <Meters pushRoute={this.props.pushRoute} meterId={this.props.meterId}/>
+          <Meters pushRoute={this.props.pushRoute} {...this.props.routePassProps}/>
         </Icon.TabBarItem>
         <Icon.TabBarItem
             title="Settings"
@@ -86,7 +88,7 @@ export default class NavBarIOS extends Component {
                 selectedTab: 'settings',
               });
             }}>
-          <Settings logout={this.props.logout} />
+          <Settings logout={this.props.logout} {...this.props.routePassProps}/>
         </Icon.TabBarItem>
       </TabBarIOS>
     );
