@@ -1,16 +1,18 @@
 {
   "name": "flowapp",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "React Native application for Flow, a smart home device used for tracking water usage",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
+  "author": "Flow Team",
   "repository": {
     "type": "git",
     "url": "git@github.com:APU-Flow/FlowApp"
   },
+  "license": "Apache-2.0",
   "dependencies": {
     "lodash": "^4.17.4",
     "react": "~15.4.0-rc.4",
